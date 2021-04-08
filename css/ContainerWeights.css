@@ -1,0 +1,31 @@
+.cw-calculator {
+    position:fixed;
+    bottom:0;
+    right:0;
+    background-color:#d8f5fa;
+    padding:10px;
+    margin:10px;
+    border: 2px #70c8d8 solid;
+    border-radius:10px;
+}
+.cw-buttons {
+    position:relative;
+    display:block;
+    padding:10px;
+    min-width:225px;
+    min-height:300px;
+}
+.cw-row {
+    width:100%;
+}
+.cw-button {
+    width:64px;
+    height:64px;
+    margin:5px;
+    border-radius: 32px;
+    background-color:#fff;
+    font-size:50px;
+}
+.cw-zero {
+    width: 138px;
+}
