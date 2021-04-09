@@ -4,14 +4,14 @@ ContainerWeights.selectedContainer = undefined;
 ContainerWeights.selectedWeight = undefined;
 ContainerWeights.selectedServings = undefined;
 ContainerWeights.containers = [
-    { 'name': 'Large Strainer', 'weight': 147 },
+    //{ 'name': 'Large Strainer', 'weight': 147 },
     //{ 'name': 'Rice Cooker Bowl', 'weight': 176 },
     //{ 'name': 'Glass Bowl No Lip', 'weight': 786 },
     { 'name': 'Mixer Bowl', 'weight': 780 },
-    { 'name': 'Wok', 'weight': 1048 },
+    //{ 'name': 'Wok', 'weight': 1048 },
     { 'name': 'Pasta pot', 'weight': 1446 },
     { 'name': 'Medium Saucepan', 'weight': 1023 },
-    { 'name': 'Red Bowl', 'weight': 156 },
+    //{ 'name': 'Red Bowl', 'weight': 156 },
     { 'name': 'Smaller saucepan', 'weight': 715 },
     { 'name': 'Smallest saucepan', 'weight': 626 },
     { 'name': 'Safinox saucepan', 'weight': 704 },
