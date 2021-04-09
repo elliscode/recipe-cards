@@ -68,7 +68,7 @@
     border-radius: 25px;
     font-size:25px;
 }
-.cw-close-button > button:focus {
+.cw-close-button:focus {
     outline: none; 
 }
 .cw-input {
@@ -83,5 +83,14 @@
     border-style:inset;
 }
 .cw-input:focus {
+    outline: none; 
+}
+.cw-start {
+    margin:0;
+    padding:0;
+    border:none;
+    background-color:transparent;
+}
+.cw-start:focus {
     outline: none; 
 }

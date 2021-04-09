@@ -31,6 +31,7 @@ ContainerWeights.init = function () {
     ContainerWeights.calculatorDiv = document.createElement("div");
     ContainerWeights.calculatorDiv.classList.add('cw-calculator');
     body.appendChild(ContainerWeights.calculatorDiv);
+    ContainerWeights.startButton();
 };
 ContainerWeights.clear = function () {
     let i = ContainerWeights.calculatorDiv.children.length;
@@ -38,7 +39,15 @@ ContainerWeights.clear = function () {
         ContainerWeights.calculatorDiv.children[j].remove();
     }
 };
+ContainerWeights.startButton = function() {
+    let button = document.createElement('button');
+    button.innerText = String.fromCodePoint(0x1f372);
+    button.classList.add('cw-start');
+    button.addEventListener('click', ContainerWeights.initContainerChoice);
+    ContainerWeights.calculatorDiv.appendChild(button);
+}
 ContainerWeights.initContainerChoice = function () {
+    ContainerWeights.clear();
     let div = ContainerWeights.calculatorDiv;
     let header = document.createElement('h3');
     header.innerText = "Select your container:"
@@ -176,7 +185,7 @@ ContainerWeights.createButton = function (innerText, parent) {
     parent.appendChild(button);
     return button;
 };
-ContainerWeights.displayResult = function() {
+ContainerWeights.displayResult = function () {
     let value = (ContainerWeights.selectedWeight - ContainerWeights.selectedContainer.weight) / ContainerWeights.selectedServings;
 
     let div = ContainerWeights.calculatorDiv;
@@ -193,6 +202,7 @@ ContainerWeights.displayResult = function() {
     let close = document.createElement('button');
     close.classList.add('cw-close-button');
     close.innerText = 'close';
+    close.addEventListener('click', function () { ContainerWeights.clear(); ContainerWeights.startButton(); });
     div.appendChild(close);
 }
 ContainerWeights.init();
