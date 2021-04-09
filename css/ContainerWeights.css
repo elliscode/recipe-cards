@@ -7,6 +7,11 @@
     margin:10px;
     border: 2px #70c8d8 solid;
     border-radius:10px;
+    user-select:none;
+}
+.cw-calculator > h3 {
+    padding:0;
+    margin:0;
 }
 .cw-buttons {
     position:relative;
@@ -14,6 +19,7 @@
     padding:10px;
     min-width:225px;
     min-height:300px;
+    outline: none; 
 }
 .cw-row {
     width:100%;
@@ -23,9 +29,59 @@
     height:64px;
     margin:5px;
     border-radius: 32px;
-    background-color:#fff;
+    background-color:#d8f5fa;
     font-size:50px;
 }
-.cw-zero {
+.cw-button:focus {
+    outline: none; 
+}
+.cw-wide {
     width: 138px;
+}
+.cw-container-choice {
+    min-width:225px;
+    min-height:225px;
+    max-height:300px;
+    display:block;
+    position:relative;
+    padding:10px;
+    overflow-y:scroll;
+}
+.cw-container-choice > button {
+    cursor:pointer;
+    display:block;
+    margin:5px;
+    height:50px;
+    padding: 8px 20px;
+    border-radius: 25px;
+    font-size:25px;
+}
+.cw-container-choice > button:focus {
+    outline: none; 
+}
+.cw-close-button {
+    cursor:pointer;
+    display:block;
+    margin:5px;
+    height:50px;
+    padding: 8px 20px;
+    border-radius: 25px;
+    font-size:25px;
+}
+.cw-close-button > button:focus {
+    outline: none; 
+}
+.cw-input {
+    height:64px;
+    width:225px;
+    margin:5px;
+    border-radius: 32px;
+    background-color:#fff;
+    font-size:50px;
+    text-align:right;
+    font-family:monospace;
+    border-style:inset;
+}
+.cw-input:focus {
+    outline: none; 
 }
