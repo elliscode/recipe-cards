@@ -5,8 +5,8 @@ ContainerWeights.selectedWeight = undefined;
 ContainerWeights.selectedServings = undefined;
 ContainerWeights.containers = [
     { 'name': 'Large Strainer', 'weight': 147 },
-    { 'name': 'Rice Cooker Bowl', 'weight': 176 },
-    { 'name': 'Glass Bowl No Lip', 'weight': 786 },
+    //{ 'name': 'Rice Cooker Bowl', 'weight': 176 },
+    //{ 'name': 'Glass Bowl No Lip', 'weight': 786 },
     { 'name': 'Mixer Bowl', 'weight': 780 },
     { 'name': 'Wok', 'weight': 1048 },
     { 'name': 'Pasta pot', 'weight': 1446 },
@@ -16,11 +16,12 @@ ContainerWeights.containers = [
     { 'name': 'Smallest saucepan', 'weight': 626 },
     { 'name': 'Safinox saucepan', 'weight': 704 },
     { 'name': 'Nonstick wok', 'weight': 1346 },
-    { 'name': 'Pyrex 2.5 qt', 'weight': 1005 },
-    { 'name': 'Pyrex 1.5 qt', 'weight': 775 },
-    { 'name': 'Pyrex 1 qt', 'weight': 572 },
+    //{ 'name': 'Pyrex 2.5 qt', 'weight': 1005 },
+    //{ 'name': 'Pyrex 1.5 qt', 'weight': 775 },
+    //{ 'name': 'Pyrex 1 qt', 'weight': 572 },
     { 'name': 'Steel strainer', 'weight': 434 },
-    { 'name': 'Big Bullet', 'weight': 160 },
+    { 'name': 'Custom', 'weight': -1 },
+    //{ 'name': 'Big Bullet', 'weight': 160 },
 ];
 ContainerWeights.init = function () {
     let bodies = document.getElementsByTagName('body');
@@ -30,6 +31,11 @@ ContainerWeights.init = function () {
     }
     ContainerWeights.calculatorDiv = document.createElement("div");
     ContainerWeights.calculatorDiv.classList.add('cw-calculator');
+    ContainerWeights.calculatorDiv.classList.add('no-select');
+    ContainerWeights.calculatorDiv.addEventListener('touchstart', function (event) { event.preventDefault(); }, { 'passive': false });
+    ContainerWeights.calculatorDiv.addEventListener('touchend', function (event) { event.preventDefault(); }, { 'passive': false });
+    ContainerWeights.calculatorDiv.addEventListener('touchmove', function (event) { event.preventDefault(); }, { 'passive': false });
+    ContainerWeights.calculatorDiv.addEventListener('touchcancel', function (event) { event.preventDefault(); }, { 'passive': false });
     body.appendChild(ContainerWeights.calculatorDiv);
     ContainerWeights.startButton();
 };
@@ -39,28 +45,44 @@ ContainerWeights.clear = function () {
         ContainerWeights.calculatorDiv.children[j].remove();
     }
 };
-ContainerWeights.startButton = function() {
+ContainerWeights.startButton = function () {
     let button = document.createElement('button');
     button.innerText = String.fromCodePoint(0x1f372);
     button.classList.add('cw-start');
-    button.addEventListener('click', ContainerWeights.initContainerChoice);
+    button.addEventListener('click', function (event) { ContainerWeights.initContainerChoice(event); event.preventDefault(); });
+    button.addEventListener('touchstart', function (event) { ContainerWeights.initContainerChoice(event); event.preventDefault(); }, { 'passive': false });
     ContainerWeights.calculatorDiv.appendChild(button);
 }
 ContainerWeights.initContainerChoice = function () {
     ContainerWeights.clear();
     let div = ContainerWeights.calculatorDiv;
     let header = document.createElement('h3');
-    header.innerText = "Select your container:"
+    header.innerText = "Select your container:";
     div.appendChild(header);
     let scrollDiv = document.createElement('div');
+    scrollDiv.addEventListener('touchstart', function (event) { event.stopPropagation(); }, { 'passive': false });
+    scrollDiv.addEventListener('touchend', function (event) { event.stopPropagation(); }, { 'passive': false });
+    scrollDiv.addEventListener('touchmove', function (event) { event.stopPropagation(); }, { 'passive': false });
+    scrollDiv.addEventListener('touchcancel', function (event) { event.stopPropagation(); }, { 'passive': false });
+    ContainerWeights.calculatorDiv.addEventListener('touchcancel', function (event) { event.preventDefault(); }, { 'passive': false });
     scrollDiv.classList.add('cw-container-choice');
+    ContainerWeights.containers = ContainerWeights.containers.sort(function (a, b) {
+        if (a.name > b.name) { return 1; }
+        if (a.name < b.name) { return -1; }
+        return 0;
+    });
     for (let container of ContainerWeights.containers) {
         let item = document.createElement('button');
         item.innerText = container.name;
-        item.addEventListener('click', ContainerWeights.selectContainer);
+        item.addEventListener('click', function (event) { ContainerWeights.selectContainer(event); event.preventDefault(); });
+        item.addEventListener('touchstart', function (event) { event.stopPropagation(); }, { 'passive': false });
+        item.addEventListener('touchend', function (event) { event.stopPropagation(); }, { 'passive': false });
+        item.addEventListener('touchmove', function (event) { event.stopPropagation(); }, { 'passive': false });
+        item.addEventListener('touchcancel', function (event) { event.stopPropagation(); }, { 'passive': false });
         scrollDiv.appendChild(item);
     }
     div.appendChild(scrollDiv);
+    ContainerWeights.addClose(div);
 }
 ContainerWeights.initButtons = function (headerText, successMethod) {
     let div = ContainerWeights.calculatorDiv;
@@ -117,9 +139,11 @@ ContainerWeights.initButtons = function (headerText, successMethod) {
 
     for (let button of buttonDiv.getElementsByClassName('cw-button')) {
         button.addEventListener('click', function (event) { ContainerWeights.press(event, successMethod); });
+        button.addEventListener('touchstart', function (event) { ContainerWeights.press(event, successMethod); }, { 'passive': false });
     }
 
     div.appendChild(buttonDiv);
+    ContainerWeights.addClose(div);
 };
 ContainerWeights.press = function (event, successMethod) {
     let inputs = ContainerWeights.calculatorDiv.getElementsByClassName('cw-input');
@@ -154,22 +178,36 @@ ContainerWeights.selectContainer = function (event) {
         }
     }
     if (ContainerWeights.selectedContainer) {
-        ContainerWeights.clear();
-        ContainerWeights.initButtons("Input the total weight:", function () {
-            let input = ContainerWeights.getElementByClassName('cw-input');
-            if (ContainerWeights.selectedContainer.weight < parseFloat(input.innerText)) {
-                ContainerWeights.selectedWeight = parseFloat(input.innerText);
-                ContainerWeights.clear();
-                ContainerWeights.initButtons("Input the number of servings:", function () {
-                    let input = ContainerWeights.getElementByClassName('cw-input');
-                    ContainerWeights.selectedServings = parseFloat(input.innerText);
+        if ('Custom' == ContainerWeights.selectedContainer.name) {
+            ContainerWeights.clear();
+            ContainerWeights.initButtons("Input container weight:", function () {
+                let input = ContainerWeights.getElementByClassName('cw-input');
+                let value = parseFloat(input.innerText);
+                if (0 < value) {
+                    ContainerWeights.selectedContainer.weight = value;
                     ContainerWeights.clear();
-                    ContainerWeights.displayResult();
-                });
-            }
-        });
+                    ContainerWeights.initButtons("Input total weight:", ContainerWeights.totalWeightMethod);
+                }
+            });
+        } else {
+            ContainerWeights.clear();
+            ContainerWeights.initButtons("Input total weight:", ContainerWeights.totalWeightMethod);
+        }
     }
 };
+ContainerWeights.totalWeightMethod = function () {
+    let input = ContainerWeights.getElementByClassName('cw-input');
+    if (ContainerWeights.selectedContainer.weight < parseFloat(input.innerText)) {
+        ContainerWeights.selectedWeight = parseFloat(input.innerText);
+        ContainerWeights.clear();
+        ContainerWeights.initButtons("Input number of servings:", function () {
+            let input = ContainerWeights.getElementByClassName('cw-input');
+            ContainerWeights.selectedServings = parseFloat(input.innerText);
+            ContainerWeights.clear();
+            ContainerWeights.displayResult();
+        });
+    }
+}
 ContainerWeights.getElementByClassName = function (className) {
     let items = ContainerWeights.calculatorDiv.getElementsByClassName(className);
     let output = undefined;
@@ -199,10 +237,14 @@ ContainerWeights.displayResult = function () {
     count.innerText = Math.floor(value) + ' g';
     div.appendChild(count);
 
+    ContainerWeights.addClose(div);
+};
+ContainerWeights.addClose = function (div) {
     let close = document.createElement('button');
     close.classList.add('cw-close-button');
     close.innerText = 'close';
     close.addEventListener('click', function () { ContainerWeights.clear(); ContainerWeights.startButton(); });
+    close.addEventListener('touchstart', function () { ContainerWeights.clear(); ContainerWeights.startButton(); }, { 'passive': false });
     div.appendChild(close);
-}
+};
 ContainerWeights.init();
