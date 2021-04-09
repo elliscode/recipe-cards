@@ -56,6 +56,7 @@ ContainerWeights.startButton = function () {
 ContainerWeights.initContainerChoice = function () {
     ContainerWeights.clear();
     let div = ContainerWeights.calculatorDiv;
+    ContainerWeights.addClose(div);
     let header = document.createElement('h3');
     header.innerText = "Select your container:";
     div.appendChild(header);
@@ -82,10 +83,10 @@ ContainerWeights.initContainerChoice = function () {
         scrollDiv.appendChild(item);
     }
     div.appendChild(scrollDiv);
-    ContainerWeights.addClose(div);
 }
 ContainerWeights.initButtons = function (headerText, successMethod) {
     let div = ContainerWeights.calculatorDiv;
+    ContainerWeights.addClose(div);
 
     let header = document.createElement('h3');
     header.innerText = headerText; // 
@@ -143,7 +144,6 @@ ContainerWeights.initButtons = function (headerText, successMethod) {
     }
 
     div.appendChild(buttonDiv);
-    ContainerWeights.addClose(div);
 };
 ContainerWeights.press = function (event, successMethod) {
     let inputs = ContainerWeights.calculatorDiv.getElementsByClassName('cw-input');
@@ -227,6 +227,7 @@ ContainerWeights.displayResult = function () {
     let value = (ContainerWeights.selectedWeight - ContainerWeights.selectedContainer.weight) / ContainerWeights.selectedServings;
 
     let div = ContainerWeights.calculatorDiv;
+    ContainerWeights.addClose(div);
 
     let header = document.createElement('h3');
     header.innerText = 'Each serving weighs:';
@@ -236,15 +237,16 @@ ContainerWeights.displayResult = function () {
     count.classList.add('cw-input');
     count.innerText = Math.floor(value) + ' g';
     div.appendChild(count);
-
-    ContainerWeights.addClose(div);
 };
 ContainerWeights.addClose = function (div) {
     let close = document.createElement('button');
     close.classList.add('cw-close-button');
-    close.innerText = 'close';
+    close.innerText = '\u2715';
     close.addEventListener('click', function () { ContainerWeights.clear(); ContainerWeights.startButton(); });
-    close.addEventListener('touchstart', function () { ContainerWeights.clear(); ContainerWeights.startButton(); }, { 'passive': false });
+    close.addEventListener('touchstart', function (event) { event.stopPropagation(); }, { 'passive': false });
+    close.addEventListener('touchend', function (event) { event.stopPropagation(); }, { 'passive': false });
+    close.addEventListener('touchmove', function (event) { event.stopPropagation(); }, { 'passive': false });
+    close.addEventListener('touchcancel', function (event) { event.stopPropagation(); }, { 'passive': false });
     div.appendChild(close);
 };
 ContainerWeights.init();
