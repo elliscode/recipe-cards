@@ -47,7 +47,7 @@ ContainerWeights.clear = function () {
 };
 ContainerWeights.startButton = function () {
     let button = document.createElement('button');
-    button.innerText = String.fromCodePoint(0x1f372);
+    button.innerText = String.fromCodePoint(0x1F9EE);
     button.classList.add('cw-start');
     button.addEventListener('click', function (event) { ContainerWeights.initContainerChoice(event); event.preventDefault(); });
     button.addEventListener('touchstart', function (event) { ContainerWeights.initContainerChoice(event); event.preventDefault(); }, { 'passive': false });

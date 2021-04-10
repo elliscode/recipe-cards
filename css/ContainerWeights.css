@@ -16,9 +16,11 @@
     border: 2px #70c8d8 solid;
     border-radius:10px;
 }
+/*
 .cw-calculator * {
     font-family:'Times New Roman', Times, serif;
 }
+*/
 .cw-calculator > h3 {
     padding:0;
     margin:0;
