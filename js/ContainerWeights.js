@@ -24,11 +24,7 @@ ContainerWeights.containers = [
     //{ 'name': 'Big Bullet', 'weight': 160 },
 ];
 ContainerWeights.init = function () {
-    let bodies = document.getElementsByTagName('body');
-    let body = undefined;
-    for (let bodaaaay of bodies) {
-        body = bodaaaay;
-    }
+    let body = ContainerWeights.getFirstElementByTagName('body');
     ContainerWeights.calculatorDiv = document.createElement("div");
     ContainerWeights.calculatorDiv.classList.add('cw-calculator');
     ContainerWeights.calculatorDiv.classList.add('no-select');
@@ -45,6 +41,15 @@ ContainerWeights.clear = function () {
         ContainerWeights.calculatorDiv.children[j].remove();
     }
 };
+ContainerWeights.getFirstElementByTagName = function(name){
+    let items = document.getElementsByTagName(name);
+    let output = undefined;
+    for (let item of items) {
+        output = item;
+        break;
+    }
+    return output;
+}
 ContainerWeights.startButton = function () {
     let button = document.createElement('button');
     button.innerText = String.fromCodePoint(0x1F9EE);
@@ -56,7 +61,7 @@ ContainerWeights.startButton = function () {
 ContainerWeights.initContainerChoice = function () {
     ContainerWeights.clear();
     let div = ContainerWeights.calculatorDiv;
-    ContainerWeights.addClose(div);
+    ContainerWeights.addClose(ContainerWeights.calculatorDiv);
     let header = document.createElement('h3');
     header.innerText = "Select your container:";
     div.appendChild(header);
@@ -86,7 +91,6 @@ ContainerWeights.initContainerChoice = function () {
 }
 ContainerWeights.initButtons = function (headerText, successMethod) {
     let div = ContainerWeights.calculatorDiv;
-    ContainerWeights.addClose(div);
 
     let header = document.createElement('h3');
     header.innerText = headerText; // 
@@ -180,30 +184,76 @@ ContainerWeights.selectContainer = function (event) {
     if (ContainerWeights.selectedContainer) {
         if ('Custom' == ContainerWeights.selectedContainer.name) {
             ContainerWeights.clear();
-            ContainerWeights.initButtons("Input container weight:", function () {
+            ContainerWeights.addClose(ContainerWeights.calculatorDiv);
+            ContainerWeights.initButtons("Container weight:", function () {
                 let input = ContainerWeights.getElementByClassName('cw-input');
                 let value = parseFloat(input.innerText);
                 if (0 < value) {
                     ContainerWeights.selectedContainer.weight = value;
                     ContainerWeights.clear();
+                    ContainerWeights.addClose(ContainerWeights.calculatorDiv);
+                    ContainerWeights.displayStatus(ContainerWeights.selectedContainer);
                     ContainerWeights.initButtons("Input total weight:", ContainerWeights.totalWeightMethod);
                 }
             });
         } else {
             ContainerWeights.clear();
+            ContainerWeights.addClose(ContainerWeights.calculatorDiv);
+            ContainerWeights.displayStatus(ContainerWeights.selectedContainer);
             ContainerWeights.initButtons("Input total weight:", ContainerWeights.totalWeightMethod);
         }
     }
 };
+ContainerWeights.displayStatus = function(container, total, servings) {
+    let body = ContainerWeights.getFirstElementByTagName('body');
+    let leftDiv = ContainerWeights.calculatorDiv;
+
+    if(container) {
+        let p = document.createElement('p');
+        let text = container.name + " ";
+        p.append(text);
+        let span = document.createElement('span');
+        span.innerText = "(" + container.weight +" g)";
+        span.classList.add('smol');
+        p.appendChild(span);
+        leftDiv.appendChild(p);
+    }
+    if(total) {
+        let p = document.createElement('p');
+        let text = "Total weight: " + total + " g";
+        p.append(text);
+        // let span = document.createElement('span');
+        // span.innerText = "(" + total + " - " + container.weight + " = " + (total-container.weight) + " g)";
+        // span.classList.add('smol');
+        // p.appendChild(span);
+        leftDiv.appendChild(p);
+    }
+    if(servings) {
+        let p = document.createElement('p');
+        let text = "Total servings: " + servings + " ";
+        p.append(text);
+        // let span = document.createElement('span');
+        // span.innerText = "( (" + total + " - " + container.weight + ") / " + (servings) + ")";
+        // span.classList.add('smol');
+        // p.appendChild(span);
+        leftDiv.appendChild(p);
+    }
+
+    body.appendChild(leftDiv);
+}
 ContainerWeights.totalWeightMethod = function () {
     let input = ContainerWeights.getElementByClassName('cw-input');
     if (ContainerWeights.selectedContainer.weight < parseFloat(input.innerText)) {
         ContainerWeights.selectedWeight = parseFloat(input.innerText);
         ContainerWeights.clear();
-        ContainerWeights.initButtons("Input number of servings:", function () {
+        ContainerWeights.addClose(ContainerWeights.calculatorDiv);
+        ContainerWeights.displayStatus(ContainerWeights.selectedContainer, ContainerWeights.selectedWeight);
+        ContainerWeights.initButtons("Input servings:", function () {
             let input = ContainerWeights.getElementByClassName('cw-input');
             ContainerWeights.selectedServings = parseFloat(input.innerText);
             ContainerWeights.clear();
+            ContainerWeights.addClose(ContainerWeights.calculatorDiv);
+            ContainerWeights.displayStatus(ContainerWeights.selectedContainer, ContainerWeights.selectedWeight, ContainerWeights.selectedServings);
             ContainerWeights.displayResult();
         });
     }
@@ -227,15 +277,15 @@ ContainerWeights.displayResult = function () {
     let value = (ContainerWeights.selectedWeight - ContainerWeights.selectedContainer.weight) / ContainerWeights.selectedServings;
 
     let div = ContainerWeights.calculatorDiv;
-    ContainerWeights.addClose(div);
 
     let header = document.createElement('h3');
     header.innerText = 'Each serving weighs:';
-    div.appendChild(header);
 
     let count = document.createElement('div');
     count.classList.add('cw-input');
     count.innerText = Math.floor(value) + ' g';
+
+    div.appendChild(header);
     div.appendChild(count);
 };
 ContainerWeights.addClose = function (div) {

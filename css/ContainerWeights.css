@@ -15,6 +15,21 @@
     margin:10px;
     border: 2px #70c8d8 solid;
     border-radius:10px;
+    z-index:100;
+}
+.cw-selection-status {
+    position:fixed;
+    top:0;
+    left:0;
+    background-color:#d8f5fa;
+    padding:10px;
+    margin:10px;
+    border: 2px #70c8d8 solid;
+    border-radius:10px;
+    z-index:99;
+}
+.cw-selection-status p {
+    margin:0;
 }
 /*
 .cw-calculator * {
@@ -24,7 +39,7 @@
 .cw-calculator > h3 {
     padding:0;
     margin:0;
-    margin-top:30px;
+    font-size:20px;
 }
 .cw-buttons {
     position:relative;
@@ -38,7 +53,7 @@
 }
 .cw-button {
     width:64px;
-    height:50px;
+    height:45px;
     margin:5px;
     border-radius: 32px;
     background-color:#d8f5fa;
@@ -112,4 +127,7 @@
 }
 .cw-start:focus {
     outline: none; 
+}
+.smol {
+    font-size:small;
 }
