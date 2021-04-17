@@ -3,6 +3,7 @@ ContainerWeights.calculatorDiv = undefined;
 ContainerWeights.selectedContainer = undefined;
 ContainerWeights.selectedWeight = undefined;
 ContainerWeights.selectedServings = undefined;
+ContainerWeights.existingButton = undefined;
 ContainerWeights.containers = [
     //{ 'name': 'Large Strainer', 'weight': 147 },
     //{ 'name': 'Rice Cooker Bowl', 'weight': 176 },
@@ -23,7 +24,11 @@ ContainerWeights.containers = [
     { 'name': 'Custom', 'weight': -1 },
     //{ 'name': 'Big Bullet', 'weight': 160 },
 ];
-ContainerWeights.init = function () {
+ContainerWeights.init = function (existingButton) {
+    if(existingButton) {
+        ContainerWeights.existingButton = existingButton;
+        ContainerWeights.existingButton.addEventListener('click',ContainerWeights.initContainerChoice);
+    }   
     let body = ContainerWeights.getFirstElementByTagName('body');
     ContainerWeights.calculatorDiv = document.createElement("div");
     ContainerWeights.calculatorDiv.classList.add('cw-calculator');
@@ -51,14 +56,23 @@ ContainerWeights.getFirstElementByTagName = function(name){
     return output;
 }
 ContainerWeights.startButton = function () {
-    let button = document.createElement('button');
-    button.innerText = String.fromCodePoint(0x1F9EE);
-    button.classList.add('cw-start');
-    button.addEventListener('click', function (event) { ContainerWeights.initContainerChoice(event); event.preventDefault(); });
-    button.addEventListener('touchstart', function (event) { ContainerWeights.initContainerChoice(event); event.preventDefault(); }, { 'passive': false });
-    ContainerWeights.calculatorDiv.appendChild(button);
+    if(ContainerWeights.existingButton) {
+        ContainerWeights.calculatorDiv.style.display = 'none';
+    } else {
+        let button = document.createElement('button');
+        button.innerText = String.fromCodePoint(0x1F9EE);
+        button.classList.add('cw-start');
+        button.addEventListener('click', function (event) { ContainerWeights.initContainerChoice(event); event.preventDefault(); });
+        button.addEventListener('touchstart', function (event) { ContainerWeights.initContainerChoice(event); event.preventDefault(); }, { 'passive': false });
+        ContainerWeights.calculatorDiv.appendChild(button); 
+    }
 }
 ContainerWeights.initContainerChoice = function () {
+    if('none' == ContainerWeights.calculatorDiv.style.display) {
+        ContainerWeights.calculatorDiv.style.display = 'block'
+    } else if (ContainerWeights.existingButton) {
+        ContainerWeights.startButton();
+    }
     ContainerWeights.clear();
     let div = ContainerWeights.calculatorDiv;
     ContainerWeights.addClose(ContainerWeights.calculatorDiv);
@@ -299,4 +313,3 @@ ContainerWeights.addClose = function (div) {
     close.addEventListener('touchcancel', function (event) { event.stopPropagation(); }, { 'passive': false });
     div.appendChild(close);
 };
-ContainerWeights.init();
