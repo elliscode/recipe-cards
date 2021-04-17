@@ -203,23 +203,14 @@ let foldedHeight = undefined;
 let expandedHeight = undefined;
 let onResize = function (force) {
     resizeBottomBoy(force);
-    resizeContentDiv();
 };
-let resizeContentDiv = function () {
-    let bottomBar = document.getElementById('bottom-bar');
-    if(bottomBar) {
-        let height = (window.innerHeight - bottomBarHeight - 10) + 'px';
-        let contentDiv = document.getElementById('content');
-        contentDiv.style.height = height;
-        bottomBar.style.height = bottomBarHeight + 'px';
-    }
-}
+let buffer = undefined;
 let resizeBottomBoy = function(force) {
     let bottomBoy = document.getElementById('bottom-boy');
     let contentDiv = document.getElementById('content');
     let contentDivHeight = contentDiv.offsetHeight;
     if (undefined != force) {
-        bottomBoy.style.height = Math.max(5, Math.round(contentDivHeight - foldedHeight)) + 'px';
+        bottomBoy.style.height = Math.max(5, Math.round(contentDivHeight - foldedHeight - bottomBarHeight)) + 'px';
     } else {
         let lastCard = document.getElementById('lastCard');
         let childDivs = lastCard.getElementsByTagName('div');
@@ -239,7 +230,7 @@ let resizeBottomBoy = function(force) {
                 foldedHeight = lastCardHeight;
             }
         }
-        let calculatedHeight = Math.max(5, Math.round(contentDivHeight - lastCardHeight)) + 'px';
+        let calculatedHeight = Math.max(5, Math.round(contentDivHeight - lastCardHeight - bottomBarHeight)) + 'px';
         if (bottomBoy.style.height != calculatedHeight) {
             bottomBoy.style.height = calculatedHeight;
         }
