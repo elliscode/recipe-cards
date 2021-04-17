@@ -210,7 +210,7 @@ let resizeBottomBoy = function(force) {
     let contentDiv = document.getElementById('content');
     let contentDivHeight = contentDiv.offsetHeight;
     if (undefined != force) {
-        bottomBoy.style.height = Math.max(5, Math.round(contentDivHeight - foldedHeight - bottomBarHeight)) + 'px';
+        bottomBoy.style.height = Math.max(5, Math.round(contentDivHeight - foldedHeight)) + 'px';
     } else {
         let lastCard = document.getElementById('lastCard');
         let childDivs = lastCard.getElementsByTagName('div');
@@ -230,7 +230,7 @@ let resizeBottomBoy = function(force) {
                 foldedHeight = lastCardHeight;
             }
         }
-        let calculatedHeight = Math.max(5, Math.round(contentDivHeight - lastCardHeight - bottomBarHeight)) + 'px';
+        let calculatedHeight = Math.max(5, Math.round(contentDivHeight - lastCardHeight)) + 'px';
         if (bottomBoy.style.height != calculatedHeight) {
             bottomBoy.style.height = calculatedHeight;
         }
