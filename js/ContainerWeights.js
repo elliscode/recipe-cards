@@ -70,6 +70,8 @@ ContainerWeights.startButton = function () {
 ContainerWeights.initContainerChoice = function () {
     if('none' == ContainerWeights.calculatorDiv.style.display) {
         ContainerWeights.calculatorDiv.style.display = 'block'
+    } else if (ContainerWeights.existingButton) {
+        ContainerWeights.startButton();
     }
     ContainerWeights.clear();
     let div = ContainerWeights.calculatorDiv;
