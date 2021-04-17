@@ -9,11 +9,13 @@
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <link rel="icon" type="image/png" href="img/favicon.png" />
 <link rel="stylesheet" href="css/stylesheet.css" />
+<link rel="stylesheet" href="css/ContainerWeights.css" />
 </head>
 <body id="body">
 <div id="content">
+<div id="scroll">
 <h1>Recipes</h1>
-
+<div id="recipes">
 <!--
 
 <div class="recipe" category="
@@ -57,11 +59,138 @@
 - optimized for mobile
 </div>
 
+<div class="recipe" category="Example Category" link="https://google.com">
+# Example Recipe
+
+## Ingredients
+
+- 1 tbsp sugar
+- 1/2 cup spice
+- 30g everything nice
+
+## Directions
+
+### to create your own recipe
+
+- create a div with class "recipe"
+- set the category
+- optionally include a link to the original
+- save your html file and refresh the page
+
+### features
+
+- automatically fixes capitalization for consistency
+- automatically changes fractions to their corresponding HTML symbols
+- automatically fixes known unit spacing in recipes
+- reads basic markdown, including headers, numbered lists, and bulleted lists
+- includes easy shortcut buttons at the bottom of each card
+- automatically groups recipes by category and sorts by recipe title alphabetically
+- optimized for mobile
+</div>
+
+<div class="recipe" category="Example Category" link="https://google.com">
+# Example Recipe 4
+
+## Ingredients
+
+- 1 tbsp sugar
+- 1/2 cup spice
+- 30g everything nice
+
+## Directions
+
+### to create your own recipe
+
+- create a div with class "recipe"
+- set the category
+- optionally include a link to the original
+- save your html file and refresh the page
+
+### features
+
+- automatically fixes capitalization for consistency
+- automatically changes fractions to their corresponding HTML symbols
+- automatically fixes known unit spacing in recipes
+- reads basic markdown, including headers, numbered lists, and bulleted lists
+- includes easy shortcut buttons at the bottom of each card
+- automatically groups recipes by category and sorts by recipe title alphabetically
+- optimized for mobile
+</div>
+
+<div class="recipe" category="Example Category" link="https://google.com">
+# Example Recipe 3
+
+## Ingredients
+
+- 1 tbsp sugar
+- 1/2 cup spice
+- 30g everything nice
+
+## Directions
+
+### to create your own recipe
+
+- create a div with class "recipe"
+- set the category
+- optionally include a link to the original
+- save your html file and refresh the page
+
+### features
+
+- automatically fixes capitalization for consistency
+- automatically changes fractions to their corresponding HTML symbols
+- automatically fixes known unit spacing in recipes
+- reads basic markdown, including headers, numbered lists, and bulleted lists
+- includes easy shortcut buttons at the bottom of each card
+- automatically groups recipes by category and sorts by recipe title alphabetically
+- optimized for mobile
+</div>
+
+<div class="recipe" category="Example Category" link="https://google.com">
+# Example Recipe 2
+
+## Ingredients
+
+- 1 tbsp sugar
+- 1/2 cup spice
+- 30g everything nice
+
+## Directions
+
+### to create your own recipe
+
+- create a div with class "recipe"
+- set the category
+- optionally include a link to the original
+- save your html file and refresh the page
+
+### features
+
+- automatically fixes capitalization for consistency
+- automatically changes fractions to their corresponding HTML symbols
+- automatically fixes known unit spacing in recipes
+- reads basic markdown, including headers, numbered lists, and bulleted lists
+- includes easy shortcut buttons at the bottom of each card
+- automatically groups recipes by category and sorts by recipe title alphabetically
+- optimized for mobile
+</div>
+
+
+
 <!--recipe divs-->
 </div>
-<div id="info"><p>text copied</p></div>
-<div id="hide"></div>
 <div id="bottom-boy"></div>
+</div>
+<div id="info"><p>text copied</p></div>
+</div>
+<div id="hide"></div>
+<div id="bottom-bar">
+    <button id="pie-chart"><img src="img/pie-chart.png"/></button>
+</div>
 </body>
 <script src="js/recipe_formatting.js"></script>
+<script src="js/ContainerWeights.js"></script>
+<script>
+    ContainerWeights.init(document.getElementById('pie-chart'));
+</script>
 </html>

@@ -38,6 +38,8 @@ categoryMap.set(5, 'Dips And Sauces');
 categoryMap.set(6, 'Drinks');
 categoryMap.set(7, 'Desserts');
 
+const bottomBarHeight = 60;
+
 let recipes = new Map();
 
 let determineCategoryNumberFromCategoryName = function (category) {
@@ -67,7 +69,7 @@ let copyToClipboard = function (event, markdown, tag) {
     let text = formatCard(card, markdown, tag);
     navigator.clipboard.writeText(text);
     let info = document.getElementById('info');
-    info.style.display = 'block';
+    info.style.display = 'inline-block';
     info.innerText = 'Copied ' + card.firstChild.innerText + ' to clipboard';
     startGradualFade(info);
 };
@@ -198,11 +200,26 @@ let removeHiderDiv = function () {
     hideDiv.remove();
 };
 let foldedHeight = undefined;
-let expandedHeight = undefined; ``
+let expandedHeight = undefined;
 let onResize = function (force) {
+    resizeBottomBoy(force);
+    resizeContentDiv();
+};
+let resizeContentDiv = function () {
+    let bottomBar = document.getElementById('bottom-bar');
+    if(bottomBar) {
+        let height = (window.innerHeight - bottomBarHeight - 10) + 'px';
+        let contentDiv = document.getElementById('content');
+        contentDiv.style.height = height;
+        bottomBar.style.height = bottomBarHeight + 'px';
+    }
+}
+let resizeBottomBoy = function(force) {
     let bottomBoy = document.getElementById('bottom-boy');
+    let contentDiv = document.getElementById('content');
+    let contentDivHeight = contentDiv.offsetHeight;
     if (undefined != force) {
-        bottomBoy.style.height = Math.max(0, Math.round(window.innerHeight - foldedHeight)) + 'px';
+        bottomBoy.style.height = Math.max(5, Math.round(contentDivHeight - foldedHeight)) + 'px';
     } else {
         let lastCard = document.getElementById('lastCard');
         let childDivs = lastCard.getElementsByTagName('div');
@@ -212,7 +229,7 @@ let onResize = function (force) {
                 expanded = false;
             }
         }
-        let lastCardHeight = (lastCard.clientHeight + 20);
+        let lastCardHeight = (lastCard.offsetHeight + 5);
         if (expanded) {
             if (undefined == expandedHeight) {
                 expandedHeight = lastCardHeight;
@@ -222,12 +239,12 @@ let onResize = function (force) {
                 foldedHeight = lastCardHeight;
             }
         }
-        let calculatedHeight = Math.max(0, Math.round(window.innerHeight - lastCardHeight)) + 'px';
+        let calculatedHeight = Math.max(5, Math.round(contentDivHeight - lastCardHeight)) + 'px';
         if (bottomBoy.style.height != calculatedHeight) {
             bottomBoy.style.height = calculatedHeight;
         }
     }
-};
+}
 let callbackClick = function (event) {
     let id = event.srcElement.getAttribute('related');
     let div = document.getElementById(id);
@@ -355,7 +372,7 @@ let removeRedundantNumbers = function(line) {
     return line;
 }
 let buildRecipeCards = function () {
-    let content = document.getElementById('content');
+    let content = document.getElementById('recipes');
     let categories = Array.from(recipes.keys());
     categories.sort();
     let j = 0;
