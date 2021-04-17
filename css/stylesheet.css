@@ -103,6 +103,7 @@ body {
     background-color:#f9feff;
     padding:0;
     margin:0;
+    overflow:hidden;
 }
 li {
     margin-top:7px;
