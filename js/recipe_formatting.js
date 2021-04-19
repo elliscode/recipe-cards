@@ -379,21 +379,21 @@ let buildRecipeCards = function () {
 
             let img = document.createElement('img');
             img.classList.add('copy');
-            img.setAttribute('src', 'img/copy.png');
+            img.setAttribute('src', 'img/copy.png?v=001');
             img.setAttribute('related', id);
             img.onclick = copyRecipe;
             divItem.appendChild(img);
 
             let redditImg = document.createElement('img');
             redditImg.classList.add('reddit');
-            redditImg.setAttribute('src', 'img/reddit_button.png');
+            redditImg.setAttribute('src', 'img/reddit_button.png?v=001');
             redditImg.setAttribute('related', id);
             redditImg.onclick = copyMarkdown;
             divItem.appendChild(redditImg);
 
             let printImg = document.createElement('img');
             printImg.classList.add('ellis');
-            printImg.setAttribute('src', 'img/print.png?v=1');
+            printImg.setAttribute('src', 'img/print.png?v=001');
             printImg.setAttribute('related', id);
             printImg.onclick = print;
             divItem.appendChild(printImg);
@@ -410,7 +410,7 @@ let buildRecipeCards = function () {
                 link.setAttribute('href', recipeJson.linkText);
                 let linkImg = document.createElement('img');
                 linkImg.classList.add('link');
-                linkImg.setAttribute('src', 'img/link.png');
+                linkImg.setAttribute('src', 'img/link.png?v=001');
                 link.appendChild(linkImg);
                 divItem.appendChild(link);
             }
