@@ -199,6 +199,8 @@ let foldedHeight = undefined;
 let expandedHeight = undefined;
 let buffer = undefined;
 let callbackClick = function (event) {
+    let body = document.getElementById('body');
+    body.classList.add('noverflow');
     let id = event.srcElement.getAttribute('related');
     let div = document.getElementById(id);
     div.classList.add('fill');
@@ -244,7 +246,6 @@ let parseMarkdownRecipes = function () {
         let lines = text.split(/[\r\n]+/).map(line => line.trim()).filter(line => line.length > 0);
         let recipeJson = { 'category': category, 'categoryNumber': categoryNumber, 'linkText': linkText, 'originalIndex': i };
         let divItem = document.createElement('div');
-        divItem.classList.add('accordion');
         for (let lineIndex = 0; lineIndex < lines.length; lineIndex++) {
             let line = lines[lineIndex];
             if (line.startsWith('# ')) {
@@ -326,6 +327,8 @@ let closeRecipes = function () {
         fill.classList.remove('fill');
         fill.style.display = 'none';
     }
+    let body = document.getElementById('body');
+    body.classList.remove('noverflow');
 }
 let buildRecipeCards = function () {
     let body = document.getElementById('body');

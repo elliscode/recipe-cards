@@ -31,29 +31,31 @@ h3 {
     text-align:right;
     padding-right:10px;
     padding-top:0px;
+    cursor:pointer;
 }
 .copy {
     position:fixed;
     bottom:4px;
     right:4px;
+    cursor:pointer;
 }
 .ellis {
     position:fixed;
     bottom:4px;
-    right:76px;
+    right:112px;
+    cursor:pointer;
 }
 .reddit {
     position:fixed;
     bottom:4px;
-    right:40px;
+    right:58px;
+    cursor:pointer;
 }
 .link {
-    position:fixed ;
+    position:fixed;
     bottom:4px;
-    right:112px;
-}
-.accordion {
-    margin-bottom:30px;
+    right:166px;
+    cursor:pointer;
 }
 #info {
     display:none;
@@ -64,14 +66,15 @@ h3 {
     background-color:#e2fad8;
     border: 2px #79d870 solid;
     border-radius:10px;
-    position:absolute;
+    position:fixed;
     bottom:0px;
     left:0;
-    z-index:5;  
+    z-index:5;
 }
 #info > p {
     margin:0;
     padding:0;
+    font-size:20px;
 }
 .card {
     background-color:#d8f5fa;
@@ -96,9 +99,12 @@ h3 {
     position:fixed;
     top:0;
     left:0;
-    padding-bottom:20px;
+    padding-bottom:50px;
     width:100%;
     height:100%;
+}
+.noverflow {
+    overflow: hidden;
 }
 #bottom-bar {
     width:100%;
@@ -139,33 +145,14 @@ h3 {
 }
 body {
     background-color:#f9feff;
-    padding:0;
+    padding:10px;
     margin:0;
-    overflow:hidden;
 }
 li {
     margin-top:7px;
 }
 h4 {
     margin-bottom:0px;
-}
-#content {
-    display:block;
-    position:fixed;
-    width:100%;
-    height:100%;
-    padding:0;
-    margin:0;
-    overflow:hidden;
-}
-#scroll {
-    display:block;
-    position:relative;
-    overflow-y:scroll;
-    padding:10px;
-    padding-bottom:0;
-    height:100%;
-    margin:0;
 }
 #recipes {
     /*padding-bottom:70px;*/
@@ -175,12 +162,17 @@ h4 {
     * {
         visibility:hidden;
     }
+    #recipes, h1 {
+        height:0;
+        overflow:hidden;
+        margin:0;
+    }
     .fill {
         visibility:visible;
         position:relative;
         background-color:transparent;
         border:none;
-	overflow:visible;
+	    overflow:visible;
     }
     .fill * {
         visibility:visible;
