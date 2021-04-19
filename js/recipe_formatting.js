@@ -65,7 +65,7 @@ let copyPhone = function (event) {
 let copyToClipboard = function (event, markdown, tag) {
     let id = event.srcElement.getAttribute('related');
     let div = document.getElementById(id);
-    let card = div.parentElement;
+    let card = div;
     let text = formatCard(card, markdown, tag);
     navigator.clipboard.writeText(text);
     let info = document.getElementById('info');
@@ -85,14 +85,10 @@ let formatCard = function (card, markdown, tag) {
     let output = '';
     let singleLine = '\n';
 
-    let headerTwo = card;
-    while (undefined != headerTwo && 'H2' != headerTwo.tagName) {
-        headerTwo = headerTwo.previousElementSibling;
-    }
-    let categoryHeader = headerTwo.innerText;
+    let categoryHeader = card.getAttribute('category');
 
     let recipeTitle = card.children[0].innerText;
-    let div = card.children[1];
+    let div = card;
 
     let linkText = undefined;
     for (let linkImg of card.getElementsByClassName('link')) {
@@ -187,9 +183,9 @@ let startGradualFade = function (element) {
     copyTimeout = setTimeout(gradualFade, 1500, element);
 };
 let gradualFade = function (element) {
-    element.style.opacity -= 0.05;
+    element.style.opacity -= 0.01;
     if (element.style.opacity > 0) {
-        copyTimeout = setTimeout(gradualFade, 50, element);
+        copyTimeout = setTimeout(gradualFade, 10, element);
     } else {
         element.style.display = 'none';
         copyTimeout = undefined;
@@ -201,51 +197,13 @@ let removeHiderDiv = function () {
 };
 let foldedHeight = undefined;
 let expandedHeight = undefined;
-let onResize = function (force) {
-    resizeBottomBoy(force);
-};
 let buffer = undefined;
-let resizeBottomBoy = function(force) {
-    let bottomBoy = document.getElementById('bottom-boy');
-    let contentDiv = document.getElementById('content');
-    let contentDivHeight = contentDiv.offsetHeight;
-    if (undefined != force) {
-        bottomBoy.style.height = Math.max(5, Math.round(contentDivHeight - foldedHeight - bottomBarHeight)) + 'px';
-    } else {
-        let lastCard = document.getElementById('lastCard');
-        let childDivs = lastCard.getElementsByTagName('div');
-        let expanded = true;
-        for (let childDiv of childDivs) {
-            if ('none' == childDiv.style.display) {
-                expanded = false;
-            }
-        }
-        let lastCardHeight = (lastCard.offsetHeight + 5);
-        if (expanded) {
-            if (undefined == expandedHeight) {
-                expandedHeight = lastCardHeight;
-            }
-        } else {
-            if (undefined == foldedHeight) {
-                foldedHeight = lastCardHeight;
-            }
-        }
-        let calculatedHeight = Math.max(5, Math.round(contentDivHeight - lastCardHeight - bottomBarHeight)) + 'px';
-        if (bottomBoy.style.height != calculatedHeight) {
-            bottomBoy.style.height = calculatedHeight;
-        }
-    }
-}
 let callbackClick = function (event) {
     let id = event.srcElement.getAttribute('related');
     let div = document.getElementById(id);
-    if (div.style.display == 'none') {
-        div.style.display = 'block';
-        onResize();
-    } else {
-        onResize(true);
-        div.style.display = 'none';
-    }
+    div.classList.add('fill');
+    div.classList.add('higher');
+    div.style.display = 'block';
 };
 let capitalize = function (input) {
     let output = '';
@@ -362,7 +320,15 @@ let removeRedundantNumbers = function(line) {
 
     return line;
 }
+let closeRecipes = function () {
+    let fills = document.getElementsByClassName('fill');
+    for(let fill of fills) {
+        fill.classList.remove('fill');
+        fill.style.display = 'none';
+    }
+}
 let buildRecipeCards = function () {
+    let body = document.getElementById('body');
     let content = document.getElementById('recipes');
     let categories = Array.from(recipes.keys());
     categories.sort();
@@ -378,6 +344,7 @@ let buildRecipeCards = function () {
         recipeNames.sort();
         for (let key of recipeNames) {
             let card = document.createElement('div');
+            card.classList.add('outer');
             card.classList.add('card');
             content.appendChild(card);
 
@@ -394,7 +361,18 @@ let buildRecipeCards = function () {
             card.appendChild(header);
 
             let divItem = recipeJson.div;
+            divItem.classList.add('card');
+            divItem.setAttribute('category', category);
+            let header2 = document.createElement('h3');
+            header2.textContent = recipeJson.title;
+            divItem.insertBefore(header2, divItem.firstChild);
             divItem.setAttribute('id', id);
+
+            let closeButton = document.createElement('button');
+            closeButton.classList.add('close-recipe');
+            closeButton.innerText = '\u00D7';
+            closeButton.addEventListener('click', closeRecipes);
+            divItem.appendChild(closeButton);
 
             let img = document.createElement('img');
             img.classList.add('copy');
@@ -410,13 +388,19 @@ let buildRecipeCards = function () {
             redditImg.onclick = copyMarkdown;
             divItem.appendChild(redditImg);
 
+            let printImg = document.createElement('img');
+            printImg.classList.add('ellis');
+            printImg.setAttribute('src', 'img/print.png?v=1');
+            printImg.setAttribute('related', id);
+            printImg.onclick = print;
+            divItem.appendChild(printImg);
 
-            let ellisImg = document.createElement('img');
-            ellisImg.classList.add('ellis');
-            ellisImg.setAttribute('src', 'img/at.png?v=1');
-            ellisImg.setAttribute('related', id);
-            ellisImg.onclick = copyPhone;
-            divItem.appendChild(ellisImg);
+            // let ellisImg = document.createElement('img');
+            // ellisImg.classList.add('ellis');
+            // ellisImg.setAttribute('src', 'img/at.png?v=1');
+            // ellisImg.setAttribute('related', id);
+            // ellisImg.onclick = copyPhone;
+            // divItem.appendChild(ellisImg);
 
             if (undefined != recipeJson.linkText) {
                 let link = document.createElement('a');
@@ -429,7 +413,7 @@ let buildRecipeCards = function () {
             }
 
             divItem.style.display = 'none';
-            card.appendChild(divItem);
+            body.appendChild(divItem);
 
             lastHeader = header;
             lastCard = card;
@@ -438,8 +422,9 @@ let buildRecipeCards = function () {
     lastHeader.setAttribute('last', true);
     lastCard.setAttribute('id', 'lastCard');
 };
+let print = function () {
+    window.print();
+}
 parseMarkdownRecipes();
 buildRecipeCards();
-let interval = setInterval(onResize, 500);
-onResize();
 removeHiderDiv();
