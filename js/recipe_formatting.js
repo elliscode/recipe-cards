@@ -157,14 +157,14 @@ let formatCard = function (card, markdown, tag) {
     return output;
 };
 let reformatAllCards = function () {
-    let cards = document.getElementsByClassName('card');
+    let contents = document.getElementsByClassName('card-content');
     let orderedCards = [];
     let output = '';
-    for (let card of cards) {
-        orderedCards[card.getAttribute('originalIndex')] = card;
+    for (let content of contents) {
+        orderedCards[content.getAttribute('originalIndex')] = content;
     }
-    for(let card of orderedCards) {
-        output += formatCard(card, true, true);
+    for(let content of orderedCards) {
+        output += formatCard(content.parentElement, true, true);
     }
     console.log(output);
 };
@@ -356,8 +356,6 @@ let buildRecipeCards = function () {
             let id = 'id' + j++;
             let recipeJson = recipes.get(categoryNumber).get(key);
 
-            card.setAttribute('originalIndex', recipeJson.originalIndex);
-
             let header = document.createElement('h3');
             header.setAttribute('related', id);
             header.textContent = recipeJson.title;
@@ -367,6 +365,7 @@ let buildRecipeCards = function () {
 
             let divItem = recipeJson.div;
             divItem.classList.add('card-content');
+            divItem.setAttribute('originalIndex', recipeJson.originalIndex);
             let parentDiv = document.createElement('div');
             parentDiv.classList.add('card');
             parentDiv.setAttribute('category', category);
