@@ -2,7 +2,11 @@
 
 ## setup
 
-`./configure.sh`
+```
+./configure.sh
+```
+
+This will clone the https://github.com/elliscode/container-weights-calculator and https://github.com/elliscode/serving-calculator utilities as subdirectories, which the navigation links at the top of the page refer to.
 
 ## info
 
