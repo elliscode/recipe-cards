@@ -34,7 +34,7 @@
         margin:0px;
     }
     .close-recipe {
-        position:fixed;
+        position:absolute;
         top:4px;
         right:4px;
         background-color:transparent;
@@ -46,25 +46,25 @@
         cursor:pointer;
     }
     .copy {
-        position:fixed;
+        position:absolute;
         bottom:4px;
         right:4px;
         cursor:pointer;
     }
     .ellis {
-        position:fixed;
+        position:absolute;
         bottom:4px;
         right:112px;
         cursor:pointer;
     }
     .reddit {
-        position:fixed;
+        position:absolute;
         bottom:4px;
         right:58px;
         cursor:pointer;
     }
     .link {
-        position:fixed;
+        position:absolute;
         bottom:4px;
         right:166px;
         cursor:pointer;
@@ -111,9 +111,12 @@
         position:fixed;
         top:0;
         left:0;
-        padding-bottom:50px;
         width:100%;
         height:100%;
+    }
+    .card-content {
+        padding-bottom:50px;
+        position:relative;
     }
     li {
         margin-top:7px;

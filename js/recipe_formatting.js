@@ -340,8 +340,6 @@ let buildRecipeCards = function () {
     let categories = Array.from(recipes.keys());
     categories.sort();
     let j = 0;
-    let lastHeader = undefined;
-    let lastCard = undefined;
     for (let categoryNumber of categories) {
         let category = categoryMap.get(categoryNumber);
         let categoryHeader = document.createElement('h2');
@@ -368,12 +366,15 @@ let buildRecipeCards = function () {
             card.appendChild(header);
 
             let divItem = recipeJson.div;
-            divItem.classList.add('card');
-            divItem.setAttribute('category', category);
+            divItem.classList.add('card-content');
+            let parentDiv = document.createElement('div');
+            parentDiv.classList.add('card');
+            parentDiv.setAttribute('category', category);
+            parentDiv.appendChild(divItem);
+            parentDiv.setAttribute('id', id);
             let header2 = document.createElement('h3');
             header2.textContent = recipeJson.title;
             divItem.insertBefore(header2, divItem.firstChild);
-            divItem.setAttribute('id', id);
 
             let closeButton = document.createElement('button');
             closeButton.classList.add('close-recipe');
@@ -412,15 +413,10 @@ let buildRecipeCards = function () {
                 divItem.appendChild(link);
             }
 
-            divItem.style.display = 'none';
-            body.appendChild(divItem);
-
-            lastHeader = header;
-            lastCard = card;
+            parentDiv.style.display = 'none';
+            body.appendChild(parentDiv);
         }
     }
-    lastHeader.setAttribute('last', true);
-    lastCard.setAttribute('id', 'lastCard');
 };
 let print = function () {
     window.print();
