@@ -5,28 +5,12 @@
     html {
         -webkit-text-size-adjust: 100%; /* Prevent font scaling in landscape while allowing user zoom */
     }
-    html, body {
-        overflow:hidden;
-    }
-    #scroll {
-        padding:0;
-        margin:0;
-        position:absolute;
-        top:0;
-        left:0;
-        width:100%;
-        height:100%;
-        overflow:auto;
+    body {
+        background-color:#f9feff;
     }
     #wrapper {
-        background-color:#f9feff;
         padding:10px;
         margin:0;
-    }
-    .noverflow {
-        overflow:hidden;
-        touch-action: none;
-        -ms-touch-action: none;
     }
     #hide {
         width:100%;
@@ -113,7 +97,7 @@
     }
     .outer {
         position:relative;
-        margin:10px;
+        margin:10px 0px;
         border-radius:10px;
     }
     .higher {
@@ -144,7 +128,7 @@
     }
 }
 @media print {
-    #recipes, h1, #icons, #info {
+    #wrapper, #info {
         display:none;
     }
     .fill * {
