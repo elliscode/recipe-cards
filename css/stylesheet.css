@@ -47,25 +47,25 @@
     }
     .copy {
         position:absolute;
-        bottom:4px;
+        bottom:0;
         right:4px;
         cursor:pointer;
     }
     .ellis {
         position:absolute;
-        bottom:4px;
+        bottom:0;
         right:112px;
         cursor:pointer;
     }
     .reddit {
         position:absolute;
-        bottom:4px;
+        bottom:0;
         right:58px;
         cursor:pointer;
     }
     .link {
         position:absolute;
-        bottom:4px;
+        bottom:0;
         right:166px;
         cursor:pointer;
     }
@@ -117,6 +117,8 @@
     .card-content {
         padding-bottom:50px;
         position:relative;
+        min-height:100%;
+        box-sizing:border-box;
     }
     li {
         margin-top:7px;
