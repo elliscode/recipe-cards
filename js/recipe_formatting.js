@@ -70,7 +70,7 @@ let copyToClipboard = function (event, markdown, tag) {
     navigator.clipboard.writeText(text);
     let info = document.getElementById('info');
     info.style.display = 'inline-block';
-    info.innerText = 'Copied ' + card.firstChild.innerText + ' to clipboard';
+    info.innerText = 'Copied ' + card.firstChild.firstChild.innerText + ' to clipboard';
     startGradualFade(info);
 };
 let formatCard = function (card, markdown, tag) {
@@ -87,8 +87,8 @@ let formatCard = function (card, markdown, tag) {
 
     let categoryHeader = card.getAttribute('category');
 
-    let recipeTitle = card.children[0].innerText;
-    let div = card;
+    let div = card.children[0];
+    let recipeTitle = div.children[0].innerText;
 
     let linkText = undefined;
     for (let linkImg of card.getElementsByClassName('link')) {
