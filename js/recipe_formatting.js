@@ -424,22 +424,7 @@ let buildRecipeCards = function () {
 };
 let print = function () {
     window.print();
-}
-let setResizeMethods = function () {
-    window.addEventListener('resize', delayResize);
-}
-let delayTimeout = undefined;
-let delayResize = function () {
-    if(delayTimeout) {
-        clearTimeout(delayTimeout);
-    }
-    delayTimeout = setTimeout(resize, 500);
-}
-let resize = function () {
-    window.scrollTo(0,0);
-    console.log('resized');
-}
-setResizeMethods();
+};
 parseMarkdownRecipes();
 buildRecipeCards();
 removeHiderDiv();
