@@ -34,7 +34,7 @@
         margin:0px;
     }
     .close-recipe {
-        position:absolute;
+        position:fixed;
         top:4px;
         right:4px;
         background-color:transparent;
