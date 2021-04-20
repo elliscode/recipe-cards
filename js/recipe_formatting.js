@@ -200,7 +200,7 @@ let expandedHeight = undefined;
 let buffer = undefined;
 let callbackClick = function (event) {
     let body = document.getElementById('body');
-    body.style.overflow = 'hidden';
+    body.classList.add('noverflow');
     let id = event.srcElement.getAttribute('related');
     let div = document.getElementById(id);
     div.classList.add('fill');
@@ -328,7 +328,7 @@ let closeRecipes = function () {
         fill.style.display = 'none';
     }
     let body = document.getElementById('body');
-    body.style.overflow = 'auto';
+    body.classList.remove('noverflow');
 }
 let buildRecipeCards = function () {
     let body = document.getElementById('body');

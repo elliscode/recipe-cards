@@ -5,6 +5,12 @@ body {
     background-color:#f9feff;
     padding:10px;
     margin:0;
+    position:relative;
+}
+.noverflow {
+    overflow:hidden;
+    touch-action: none;
+    -ms-touch-action: none;
 }
 #hide {
     width:100%;
