@@ -199,8 +199,8 @@ let foldedHeight = undefined;
 let expandedHeight = undefined;
 let buffer = undefined;
 let callbackClick = function (event) {
-    let body = document.getElementById('body');
-    body.classList.add('noverflow');
+    let recipes = document.getElementById('recipes');
+    recipes.style.display = 'none';
     let id = event.srcElement.getAttribute('related');
     let div = document.getElementById(id);
     div.classList.add('fill');
@@ -327,8 +327,8 @@ let closeRecipes = function () {
         fill.classList.remove('fill');
         fill.style.display = 'none';
     }
-    let body = document.getElementById('body');
-    body.classList.remove('noverflow');
+    let recipes = document.getElementById('recipes');
+    recipes.style.display = 'block';
 }
 let buildRecipeCards = function () {
     let body = document.getElementById('body');
