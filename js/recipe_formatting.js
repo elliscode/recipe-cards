@@ -199,8 +199,8 @@ let foldedHeight = undefined;
 let expandedHeight = undefined;
 let buffer = undefined;
 let callbackClick = function (event) {
-    let body = document.getElementById('body');
-    body.classList.add('noverflow');
+    let wrapper = document.getElementById('wrapper');
+    wrapper.classList.add('noverflow');
     let id = event.srcElement.getAttribute('related');
     let div = document.getElementById(id);
     div.classList.add('fill');
@@ -327,11 +327,11 @@ let closeRecipes = function () {
         fill.classList.remove('fill');
         fill.style.display = 'none';
     }
-    let body = document.getElementById('body');
-    body.classList.remove('noverflow');
+    let wrapper = document.getElementById('wrapper');
+    wrapper.classList.remove('noverflow');
 }
 let buildRecipeCards = function () {
-    let body = document.getElementById('body');
+    let wrapper = document.getElementById('wrapper');
     let content = document.getElementById('recipes');
     let categories = Array.from(recipes.keys());
     categories.sort();
@@ -409,7 +409,7 @@ let buildRecipeCards = function () {
             }
 
             divItem.style.display = 'none';
-            body.appendChild(divItem);
+            wrapper.appendChild(divItem);
 
             lastHeader = header;
             lastCard = card;
