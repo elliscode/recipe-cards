@@ -1,35 +1,47 @@
-let glyphMap = new Map();
-glyphMap.set('\u00B0', { 'regex': /([0-9]+)\s*f\b/gi, 'replace': '$1\u00B0F', 'plaintext': '' });
-glyphMap.set('\u2189', { 'regex': /\b0\/3\b/gi, 'replace': '\u2189', 'plaintext': '0/3' });
-glyphMap.set('\u2152', { 'regex': /\b1\/10\b/gi, 'replace': '\u2152', 'plaintext': '1/10' });
-glyphMap.set('\u2151', { 'regex': /\b1\/9\b/gi, 'replace': '\u2151', 'plaintext': '1/9' });
-glyphMap.set('\u215B', { 'regex': /\b1\/8\b/gi, 'replace': '\u215B', 'plaintext': '1/8' });
-glyphMap.set('\u2150', { 'regex': /\b1\/7\b/gi, 'replace': '\u2150', 'plaintext': '1/7' });
-glyphMap.set('\u2159', { 'regex': /\b1\/6\b/gi, 'replace': '\u2159', 'plaintext': '1/6' });
-glyphMap.set('\u2155', { 'regex': /\b1\/5\b/gi, 'replace': '\u2155', 'plaintext': '1/5' });
-glyphMap.set('\u00BC', { 'regex': /\b1\/4\b/gi, 'replace': '\u00BC', 'plaintext': '1/4' });
-glyphMap.set('\u2153', { 'regex': /\b1\/3\b/gi, 'replace': '\u2153', 'plaintext': '1/3' });
-glyphMap.set('\u00BD', { 'regex': /\b1\/2\b/gi, 'replace': '\u00BD', 'plaintext': '1/2' });
-glyphMap.set('\u2156', { 'regex': /\b2\/5\b/gi, 'replace': '\u2156', 'plaintext': '2/5' });
-glyphMap.set('\u2154', { 'regex': /\b2\/3\b/gi, 'replace': '\u2154', 'plaintext': '2/3' });
-glyphMap.set('\u215C', { 'regex': /\b3\/8\b/gi, 'replace': '\u215C', 'plaintext': '3/8' });
-glyphMap.set('\u2157', { 'regex': /\b3\/5\b/gi, 'replace': '\u2157', 'plaintext': '3/5' });
-glyphMap.set('\u00BE', { 'regex': /\b3\/4\b/gi, 'replace': '\u00BE', 'plaintext': '3/4' });
-glyphMap.set('\u2158', { 'regex': /\b4\/5\b/gi, 'replace': '\u2158', 'plaintext': '4/5' });
-glyphMap.set('\u215D', { 'regex': /\b5\/8\b/gi, 'replace': '\u215D', 'plaintext': '5/8' });
-glyphMap.set('\u215A', { 'regex': /\b5\/6\b/gi, 'replace': '\u215A', 'plaintext': '5/6' });
-glyphMap.set('\u215E', { 'regex': /\b7\/8\b/gi, 'replace': '\u215E', 'plaintext': '7/8' });
-glyphMap.set('\u2013', { 'regex': /[-]+/gi, 'replace': '\u2013', 'plaintext': '-' });
-glyphMap.set('\u00d7', { 'regex': /([0-9])\s*x\s*([0-9])/gi, 'replace': '$1\u00d7$2', 'plaintext': 'x' });
+interface GlyphUnit {
+    regex : RegExp;
+    replace : string;
+    plaintext : string;
+}
 
-let unitMap = new Map();
-unitMap.set('TBSP', { 'replace': '$1 TBSP', 'regex': /([0-9]+)\s*TBSP/gi, 'words': /\b(tablespoons|tablespoon|tbsps)\b/gi });
-unitMap.set('tsp', { 'replace': '$1 tsp', 'regex': /([0-9]+)\s*tsp/gi, 'words': /\b(teaspoons|teaspoon|tsps)\b/gi });
-unitMap.set('g', { 'replace': '$1 g', 'regex': /([0-9]+)\s*g/gi, 'words': /\b(grams|gram|gs)\b/gi });
-unitMap.set('ml', { 'replace': '$1 ml', 'regex': /([0-9]+)\s*ml/gi, 'words': /\b(milliliters|milliliter|mls)\b/gi });
-unitMap.set('oz', { 'replace': '$1 oz', 'regex': /([0-9]+)\s*oz/gi, 'words': /\b(ounces|ounce|fluid ounces|fluid ounce|fl oz|floz)\b/gi });
+let glyphMap = new Map<string, GlyphUnit>();
+glyphMap.set('\u00B0', { regex: /([0-9]+)\s*f\b/gi, replace: '$1\u00B0F', plaintext: '' });
+glyphMap.set('\u2189', { regex: /\b0\/3\b/gi, replace: '\u2189', plaintext: '0/3' });
+glyphMap.set('\u2152', { regex: /\b1\/10\b/gi, replace: '\u2152', plaintext: '1/10' });
+glyphMap.set('\u2151', { regex: /\b1\/9\b/gi, replace: '\u2151', plaintext: '1/9' });
+glyphMap.set('\u215B', { regex: /\b1\/8\b/gi, replace: '\u215B', plaintext: '1/8' });
+glyphMap.set('\u2150', { regex: /\b1\/7\b/gi, replace: '\u2150', plaintext: '1/7' });
+glyphMap.set('\u2159', { regex: /\b1\/6\b/gi, replace: '\u2159', plaintext: '1/6' });
+glyphMap.set('\u2155', { regex: /\b1\/5\b/gi, replace: '\u2155', plaintext: '1/5' });
+glyphMap.set('\u00BC', { regex: /\b1\/4\b/gi, replace: '\u00BC', plaintext: '1/4' });
+glyphMap.set('\u2153', { regex: /\b1\/3\b/gi, replace: '\u2153', plaintext: '1/3' });
+glyphMap.set('\u00BD', { regex: /\b1\/2\b/gi, replace: '\u00BD', plaintext: '1/2' });
+glyphMap.set('\u2156', { regex: /\b2\/5\b/gi, replace: '\u2156', plaintext: '2/5' });
+glyphMap.set('\u2154', { regex: /\b2\/3\b/gi, replace: '\u2154', plaintext: '2/3' });
+glyphMap.set('\u215C', { regex: /\b3\/8\b/gi, replace: '\u215C', plaintext: '3/8' });
+glyphMap.set('\u2157', { regex: /\b3\/5\b/gi, replace: '\u2157', plaintext: '3/5' });
+glyphMap.set('\u00BE', { regex: /\b3\/4\b/gi, replace: '\u00BE', plaintext: '3/4' });
+glyphMap.set('\u2158', { regex: /\b4\/5\b/gi, replace: '\u2158', plaintext: '4/5' });
+glyphMap.set('\u215D', { regex: /\b5\/8\b/gi, replace: '\u215D', plaintext: '5/8' });
+glyphMap.set('\u215A', { regex: /\b5\/6\b/gi, replace: '\u215A', plaintext: '5/6' });
+glyphMap.set('\u215E', { regex: /\b7\/8\b/gi, replace: '\u215E', plaintext: '7/8' });
+glyphMap.set('\u2013', { regex: /[-]+/gi, replace: '\u2013', plaintext: '-' });
+glyphMap.set('\u00d7', { regex: /([0-9])\s*x\s*([0-9])/gi, replace: '$1\u00d7$2', plaintext: 'x' });
 
-let categoryMap = new Map();
+interface RegexUnit {
+    replace : string;
+    regex : RegExp;
+    words : RegExp;
+}
+
+let unitMap = new Map<string, RegexUnit>();
+unitMap.set('TBSP', { replace: '$1 TBSP', regex: /([0-9]+)\s*TBSP/gi, words: /\b(tablespoons|tablespoon|tbsps)\b/gi });
+unitMap.set('tsp', { replace: '$1 tsp', regex: /([0-9]+)\s*tsp/gi, words: /\b(teaspoons|teaspoon|tsps)\b/gi });
+unitMap.set('g', { replace: '$1 g', regex: /([0-9]+)\s*g/gi, words: /\b(grams|gram|gs)\b/gi });
+unitMap.set('ml', { replace: '$1 ml', regex: /([0-9]+)\s*ml/gi, words: /\b(milliliters|milliliter|mls)\b/gi });
+unitMap.set('oz', { replace: '$1 oz', regex: /([0-9]+)\s*oz/gi, words: /\b(ounces|ounce|fluid ounces|fluid ounce|fl oz|floz)\b/gi });
+
+let categoryMap = new Map<number, string>();
 categoryMap.set(1, 'Meals');
 categoryMap.set(2, 'Sides');
 categoryMap.set(3, 'Snacks');
@@ -38,12 +50,12 @@ categoryMap.set(5, 'Dips And Sauces');
 categoryMap.set(6, 'Drinks');
 categoryMap.set(7, 'Desserts');
 
-const bottomBarHeight = 60;
+const bottomBarHeight : number = 60;
 
-let recipes = new Map();
+let recipes = new Map<number, Map<string, any>>();
 
-let determineCategoryNumberFromCategoryName = function (category) {
-    let maxNumber = 0;
+let determineCategoryNumberFromCategoryName = function (category : string) : number {
+    let maxNumber : number = 0;
     for (let number of categoryMap.keys()) {
         if (categoryMap.get(number).includes(category)) {
             return number;
@@ -53,46 +65,61 @@ let determineCategoryNumberFromCategoryName = function (category) {
     categoryMap.set(maxNumber + 1, category);
     return maxNumber + 1;
 };
-let copyRecipe = function (event) {
-    copyToClipboard(event, false);
+let copyRecipe = function (event : MouseEvent) {
+    copyToClipboard(event, false, false);
 };
-let copyMarkdown = function (event) {
-    copyToClipboard(event, true);
+let copyMarkdown = function (event : MouseEvent) {
+    copyToClipboard(event, true, false);
 };
-let copyPhone = function (event) {
+let copyPhone = function (event : MouseEvent) {
     copyToClipboard(event, true, true);
 };
-let copyToClipboard = function (event, markdown, tag) {
-    let id = event.srcElement.getAttribute('related');
-    let div = document.getElementById(id);
-    let card = div;
+let copyToClipboard = function (event : MouseEvent, markdown : boolean, tag : boolean) {
+    let target : EventTarget = event.target;
+    if(!(target instanceof HTMLElement)) {
+        return;
+    }
+    let htmlTarget : HTMLElement = target as HTMLElement;
+    let id : string = htmlTarget.getAttribute('related');
+    let div : HTMLElement = document.getElementById(id);
+    let card : HTMLElement = div;
     let text = formatCard(card, markdown, tag);
     navigator.clipboard.writeText(text);
-    let info = document.getElementById('info');
+    let info : HTMLElement = document.getElementById('info');
     info.style.display = 'inline-block';
-    info.innerText = 'Copied ' + card.firstChild.firstChild.innerText + ' to clipboard';
+    info.innerText = 'Copied ' + card.firstChild.firstChild.textContent + ' to clipboard';
     startGradualFade(info);
 };
-let formatCard = function (card, markdown, tag) {
-    if (undefined == markdown) {
-        markdown = false;
+let formatCard = function (card : HTMLElement, markdown : boolean, tag : boolean) : string {
+    let doubleSpace : boolean = markdown && !tag;
+    let output : string = '';
+    let singleLine : string = '\n';
+
+    let categoryHeader : string = card.getAttribute('category');
+
+    let divElement : Element = card.children[0];
+    if(!(divElement instanceof HTMLElement)) {
+        return output;
     }
-    if (undefined == tag) {
-        tag = false;
+    let div : HTMLElement = divElement as HTMLElement;
+    let recipeHeaderElement : Element = div.children[0];
+    if(!(recipeHeaderElement instanceof HTMLElement)) {
+        return output;
     }
-
-    let doubleSpace = markdown && !tag;
-    let output = '';
-    let singleLine = '\n';
-
-    let categoryHeader = card.getAttribute('category');
-
-    let div = card.children[0];
-    let recipeTitle = div.children[0].innerText;
+    let recipeHeader : HTMLElement = recipeHeaderElement as HTMLElement;
+    let recipeTitle = recipeHeader.innerText;
 
     let linkText = undefined;
-    for (let linkImg of card.getElementsByClassName('link')) {
-        linkText = linkImg.parentElement.href;
+    for (let linkImgElement of card.getElementsByClassName('link')) {
+        if(!(linkImgElement instanceof HTMLImageElement)) {
+            continue;
+        }
+        let linkImg : HTMLImageElement = linkImgElement as HTMLImageElement;
+        if(!(linkImg.parentElement instanceof HTMLAnchorElement)) {
+            continue;
+        }
+        let a = linkImg.parentElement as HTMLAnchorElement;
+        linkText = a.href;
     }
 
     if (tag) {
@@ -109,26 +136,30 @@ let formatCard = function (card, markdown, tag) {
     output += recipeTitle + singleLine + singleLine;
 
     for (let child of div.children) {
-        if ('H4' == child.tagName) {
-            if (markdown) {
-                output += '## ';
+        if(child instanceof HTMLHeadingElement) {
+            let header : HTMLHeadingElement = child as HTMLHeadingElement;
+            if ('H4' == header.tagName) {
+                if (markdown) {
+                    output += '## ';
+                }
+            } else if ('H5' == header.tagName) {
+                if (markdown) {
+                    output += '### ';
+                }
+            } else if ('H6' == header.tagName) {
+                if (markdown) {
+                    output += '#### ';
+                }
             }
-            output += unglyph(child.innerText);
+            output += unglyph(header.innerText);
             output += singleLine + singleLine;
-        } else if ('H5' == child.tagName) {
-            if (markdown) {
-                output += '### ';
-            }
-            output += unglyph(child.innerText);
-            output += singleLine + singleLine;
-        } else if ('H6' == child.tagName) {
-            if (markdown) {
-                output += '#### ';
-            }
-            output += unglyph(child.innerText);
-            output += singleLine + singleLine;
-        } else if ('UL' == child.tagName) {
-            for (let li of child.children) {
+        } else if (child instanceof HTMLUListElement) {
+            let list : HTMLUListElement = child as HTMLUListElement;
+            for (let liCandidate of list.children) {
+                if(!(liCandidate instanceof HTMLLIElement)) {
+                    continue;
+                }
+                let li : HTMLLIElement = liCandidate as HTMLLIElement;
                 output += '- ' + unglyph(li.innerText);
                 output += singleLine;
                 if (doubleSpace) {
@@ -138,8 +169,9 @@ let formatCard = function (card, markdown, tag) {
             if (!doubleSpace) {
                 output += singleLine;
             }
-        } else if ('P' == child.tagName) {
-            output += unglyph(child.innerText);
+        } else if (child instanceof HTMLParagraphElement) {
+            let paragraph : HTMLParagraphElement = child as HTMLParagraphElement;
+            output += unglyph(paragraph.innerText);
             output += singleLine;
             if (doubleSpace) {
                 output += singleLine;
@@ -209,7 +241,7 @@ let callbackClick = function (event) {
     div.classList.add('higher');
     div.style.display = 'block';
 };
-let capitalize = function (input) {
+let capitalize = function (input : string) : string {
     let output = '';
     let words = input.split(/\s+/).filter(Boolean);
     for (let word of words) {
@@ -239,20 +271,20 @@ let parseMarkdownRecipes = function () {
         let element = elements[i];
         let text = element.textContent;
         element.remove();
-        let category = capitalize(element.getAttribute('category'));
-        let categoryNumber = determineCategoryNumberFromCategoryName(category);
+        let category : string = capitalize(element.getAttribute('category'));
+        let categoryNumber : number = determineCategoryNumberFromCategoryName(category);
         let linkText = undefined;
         if (element.hasAttribute('link')) {
             linkText = element.getAttribute('link');
         }
         let lines = text.split(/[\r\n]+/).map(line => line.trim()).filter(line => line.length > 0);
-        let recipeJson = { 'category': category, 'categoryNumber': categoryNumber, 'linkText': linkText, 'originalIndex': i };
+        let recipeJson = { 'title': '', 'category': category, 'categoryNumber': categoryNumber, 'linkText': linkText, 'originalIndex': i };
         let divItem = document.createElement('div');
         for (let lineIndex = 0; lineIndex < lines.length; lineIndex++) {
             let line = lines[lineIndex];
             if (line.startsWith('# ')) {
                 line = capitalize(line.substr(2));
-                recipeJson['title'] = line;
+                recipeJson.title = line;
             } else if (line.startsWith('## ')) {
                 line = capitalize(line.substr(3));
                 let element = document.createElement('h4');
@@ -324,10 +356,14 @@ let removeRedundantNumbers = function(line) {
     return line;
 }
 let closeRecipes = function () {
-    let fills = document.getElementsByClassName('fill');
+    let fills : HTMLCollectionOf<Element> = document.getElementsByClassName('fill');
     for(let fill of fills) {
-        fill.classList.remove('fill');
-        fill.style.display = 'none';
+        if(!(fill instanceof HTMLElement)) {
+            continue;
+        }
+        let fillHtmlElement : HTMLElement = fill as HTMLElement;
+        fillHtmlElement.classList.remove('fill');
+        fillHtmlElement.style.display = 'none';
     }
     let wrapper = document.getElementById('wrapper');
     wrapper.style.display = 'block';
@@ -399,7 +435,7 @@ let buildRecipeCards = function () {
             printImg.classList.add('ellis');
             printImg.setAttribute('src', 'img/print.png?v=001');
             printImg.setAttribute('related', id);
-            printImg.onclick = print;
+            printImg.onclick = printRecipe;
             divItem.appendChild(printImg);
 
             if (undefined != recipeJson.linkText) {
@@ -417,7 +453,7 @@ let buildRecipeCards = function () {
         }
     }
 };
-let print = function () {
+let printRecipe = function () {
     window.print();
 };
 parseMarkdownRecipes();
