@@ -1,10 +1,11 @@
 interface GlyphUnit {
-    regex : RegExp;
-    replace : string;
-    plaintext : string;
+    regex: RegExp;
+    replace: string;
+    plaintext: string;
 }
 
 let glyphMap = new Map<string, GlyphUnit>();
+
 glyphMap.set('\u00B0', { regex: /([0-9]+)\s*f\b/gi, replace: '$1\u00B0F', plaintext: '' });
 glyphMap.set('\u2189', { regex: /\b0\/3\b/gi, replace: '\u2189', plaintext: '0/3' });
 glyphMap.set('\u2152', { regex: /\b1\/10\b/gi, replace: '\u2152', plaintext: '1/10' });
@@ -29,9 +30,9 @@ glyphMap.set('\u2013', { regex: /[-]+/gi, replace: '\u2013', plaintext: '-' });
 glyphMap.set('\u00d7', { regex: /([0-9])\s*x\s*([0-9])/gi, replace: '$1\u00d7$2', plaintext: 'x' });
 
 interface RegexUnit {
-    replace : string;
-    regex : RegExp;
-    words : RegExp;
+    replace: string;
+    regex: RegExp;
+    words: RegExp;
 }
 
 let unitMap = new Map<string, RegexUnit>();
@@ -50,12 +51,12 @@ categoryMap.set(5, 'Dips And Sauces');
 categoryMap.set(6, 'Drinks');
 categoryMap.set(7, 'Desserts');
 
-const bottomBarHeight : number = 60;
+const bottomBarHeight: number = 60;
 
 let recipes = new Map<number, Map<string, any>>();
 
-let determineCategoryNumberFromCategoryName = function (category : string) : number {
-    let maxNumber : number = 0;
+let determineCategoryNumberFromCategoryName = function (category: string): number {
+    let maxNumber: number = 0;
     for (let number of categoryMap.keys()) {
         if (categoryMap.get(number).includes(category)) {
             return number;
@@ -65,57 +66,57 @@ let determineCategoryNumberFromCategoryName = function (category : string) : num
     categoryMap.set(maxNumber + 1, category);
     return maxNumber + 1;
 };
-let copyRecipe = function (event : MouseEvent) {
+let copyRecipe = function (event: MouseEvent): void {
     copyToClipboard(event, false, false);
 };
-let copyMarkdown = function (event : MouseEvent) {
+let copyMarkdown = function (event: MouseEvent): void {
     copyToClipboard(event, true, false);
 };
-let copyPhone = function (event : MouseEvent) {
+let copyPhone = function (event: MouseEvent): void {
     copyToClipboard(event, true, true);
 };
-let copyToClipboard = function (event : MouseEvent, markdown : boolean, tag : boolean) {
-    let target : EventTarget = event.target;
-    if(!(target instanceof HTMLElement)) {
+let copyToClipboard = function (event: MouseEvent, markdown: boolean, tag: boolean): void {
+    let target: EventTarget = event.target;
+    if (!(target instanceof HTMLElement)) {
         return;
     }
-    let htmlTarget : HTMLElement = target as HTMLElement;
-    let id : string = htmlTarget.getAttribute('related');
-    let div : HTMLElement = document.getElementById(id);
-    let card : HTMLElement = div;
+    let htmlTarget: HTMLElement = target as HTMLElement;
+    let id: string = htmlTarget.getAttribute('related');
+    let div: HTMLElement = document.getElementById(id);
+    let card: HTMLElement = div;
     let text = formatCard(card, markdown, tag);
     navigator.clipboard.writeText(text);
-    let info : HTMLElement = document.getElementById('info');
+    let info: HTMLElement = document.getElementById('info');
     info.style.display = 'inline-block';
     info.innerText = 'Copied ' + card.firstChild.firstChild.textContent + ' to clipboard';
     startGradualFade(info);
 };
-let formatCard = function (card : HTMLElement, markdown : boolean, tag : boolean) : string {
-    let doubleSpace : boolean = markdown && !tag;
-    let output : string = '';
-    let singleLine : string = '\n';
+let formatCard = function (card: HTMLElement, markdown: boolean, tag: boolean): string {
+    let doubleSpace: boolean = markdown && !tag;
+    let output: string = '';
+    let singleLine: string = '\n';
 
-    let categoryHeader : string = card.getAttribute('category');
+    let categoryHeader: string = card.getAttribute('category');
 
-    let divElement : Element = card.children[0];
-    if(!(divElement instanceof HTMLElement)) {
+    let divElement: Element = card.children[0];
+    if (!(divElement instanceof HTMLElement)) {
         return output;
     }
-    let div : HTMLElement = divElement as HTMLElement;
-    let recipeHeaderElement : Element = div.children[0];
-    if(!(recipeHeaderElement instanceof HTMLElement)) {
+    let div: HTMLElement = divElement as HTMLElement;
+    let recipeHeaderElement: Element = div.children[0];
+    if (!(recipeHeaderElement instanceof HTMLElement)) {
         return output;
     }
-    let recipeHeader : HTMLElement = recipeHeaderElement as HTMLElement;
+    let recipeHeader: HTMLElement = recipeHeaderElement as HTMLElement;
     let recipeTitle = recipeHeader.innerText;
 
     let linkText = undefined;
     for (let linkImgElement of card.getElementsByClassName('link')) {
-        if(!(linkImgElement instanceof HTMLImageElement)) {
+        if (!(linkImgElement instanceof HTMLImageElement)) {
             continue;
         }
-        let linkImg : HTMLImageElement = linkImgElement as HTMLImageElement;
-        if(!(linkImg.parentElement instanceof HTMLAnchorElement)) {
+        let linkImg: HTMLImageElement = linkImgElement as HTMLImageElement;
+        if (!(linkImg.parentElement instanceof HTMLAnchorElement)) {
             continue;
         }
         let a = linkImg.parentElement as HTMLAnchorElement;
@@ -136,8 +137,8 @@ let formatCard = function (card : HTMLElement, markdown : boolean, tag : boolean
     output += recipeTitle + singleLine + singleLine;
 
     for (let child of div.children) {
-        if(child instanceof HTMLHeadingElement) {
-            let header : HTMLHeadingElement = child as HTMLHeadingElement;
+        if (child instanceof HTMLHeadingElement) {
+            let header: HTMLHeadingElement = child as HTMLHeadingElement;
             if ('H4' == header.tagName) {
                 if (markdown) {
                     output += '## ';
@@ -154,12 +155,12 @@ let formatCard = function (card : HTMLElement, markdown : boolean, tag : boolean
             output += unglyph(header.innerText);
             output += singleLine + singleLine;
         } else if (child instanceof HTMLUListElement) {
-            let list : HTMLUListElement = child as HTMLUListElement;
+            let list: HTMLUListElement = child as HTMLUListElement;
             for (let liCandidate of list.children) {
-                if(!(liCandidate instanceof HTMLLIElement)) {
+                if (!(liCandidate instanceof HTMLLIElement)) {
                     continue;
                 }
-                let li : HTMLLIElement = liCandidate as HTMLLIElement;
+                let li: HTMLLIElement = liCandidate as HTMLLIElement;
                 output += '- ' + unglyph(li.innerText);
                 output += singleLine;
                 if (doubleSpace) {
@@ -170,7 +171,7 @@ let formatCard = function (card : HTMLElement, markdown : boolean, tag : boolean
                 output += singleLine;
             }
         } else if (child instanceof HTMLParagraphElement) {
-            let paragraph : HTMLParagraphElement = child as HTMLParagraphElement;
+            let paragraph: HTMLParagraphElement = child as HTMLParagraphElement;
             output += unglyph(paragraph.innerText);
             output += singleLine;
             if (doubleSpace) {
@@ -188,15 +189,20 @@ let formatCard = function (card : HTMLElement, markdown : boolean, tag : boolean
 
     return output;
 };
-let reformatAllCards = function () {
-    let contents = document.getElementsByClassName('card-content');
-    let orderedCards = [];
-    let output = '';
+let reformatAllCards = function (): void {
+    let contents: HTMLCollectionOf<Element> = document.getElementsByClassName('card-content');
+    let orderedCards: Map<number, HTMLDivElement> = new Map<number, HTMLDivElement>();
+    let output: string = '';
     for (let content of contents) {
         orderedCards[content.getAttribute('originalIndex')] = content;
     }
-    for(let content of orderedCards) {
-        output += formatCard(content.parentElement, true, true);
+    let keys: number[] = [];
+    for (let key of orderedCards.keys()) {
+        keys.push(key);
+    }
+    let sortedKeys: number[] = keys.sort();
+    for (let key of sortedKeys) {
+        output += formatCard(orderedCards[key].parentElement, true, true);
     }
     console.log(output);
 };
@@ -241,7 +247,7 @@ let callbackClick = function (event) {
     div.classList.add('higher');
     div.style.display = 'block';
 };
-let capitalize = function (input : string) : string {
+let capitalize = function (input: string): string {
     let output = '';
     let words = input.split(/\s+/).filter(Boolean);
     for (let word of words) {
@@ -249,59 +255,67 @@ let capitalize = function (input : string) : string {
     }
     return output.trim()
 };
-let sanitize = function (text) {
-    text = text.replaceAll(/\s+/g, ' ').trim();
-    for(let key of unitMap.keys())  {
+let sanitize = function (text: string): string {
+    text = text.replace(/\s+/g, ' ').trim();
+    for (let key of unitMap.keys()) {
         let item = unitMap.get(key);
-        text = text.replaceAll(item.words, key);
+        text = text.replace(item.words, key);
     }
     for (let key of unitMap.keys()) {
         let item = unitMap.get(key);
-        text = text.replaceAll(item.regex, item.replace);
+        text = text.replace(item.regex, item.replace);
     }
     for (let key of glyphMap.keys()) {
         let item = glyphMap.get(key);
-        text = text.replaceAll(item.regex, item.replace);
+        text = text.replace(item.regex, item.replace);
     }
     return text;
 };
-let parseMarkdownRecipes = function () {
-    let elements = document.getElementsByClassName("recipe");
+interface RecipeJson {
+    title: string;
+    category: string;
+    categoryNumber: number;
+    linkText: string;
+    originalIndex: number;
+    div: HTMLDivElement;
+}
+let parseMarkdownRecipes = function (): void {
+    let elements: HTMLCollectionOf<Element> = document.getElementsByClassName("recipe");
     for (let i = elements.length - 1; i >= 0; i--) {
-        let element = elements[i];
-        let text = element.textContent;
+        let element: Element = elements[i];
+        let text: string = element.textContent;
         element.remove();
-        let category : string = capitalize(element.getAttribute('category'));
-        let categoryNumber : number = determineCategoryNumberFromCategoryName(category);
-        let linkText = undefined;
+        let category: string = capitalize(element.getAttribute('category'));
+        let categoryNumber: number = determineCategoryNumberFromCategoryName(category);
+        let linkText: string = undefined;
         if (element.hasAttribute('link')) {
             linkText = element.getAttribute('link');
         }
-        let lines = text.split(/[\r\n]+/).map(line => line.trim()).filter(line => line.length > 0);
-        let recipeJson = { 'title': '', 'category': category, 'categoryNumber': categoryNumber, 'linkText': linkText, 'originalIndex': i };
-        let divItem = document.createElement('div');
-        for (let lineIndex = 0; lineIndex < lines.length; lineIndex++) {
-            let line = lines[lineIndex];
+        let lines: string[] = text.split(/[\r\n]+/).map(line => line.trim()).filter(line => line.length > 0);
+        let recipeJson: RecipeJson = { 'title': '', 'category': category, 'categoryNumber': categoryNumber, 'linkText': linkText, 'originalIndex': i, 'div': undefined, };
+        let divItem: HTMLDivElement = document.createElement('div');
+        for (let lineIndex: number = 0; lineIndex < lines.length; lineIndex++) {
+            let line: string = lines[lineIndex];
             if (line.startsWith('# ')) {
                 line = capitalize(line.substr(2));
                 recipeJson.title = line;
             } else if (line.startsWith('## ')) {
                 line = capitalize(line.substr(3));
-                let element = document.createElement('h4');
+                let element: HTMLHeadingElement = document.createElement('h4');
                 element.innerText = line;
                 divItem.appendChild(element);
             } else if (line.startsWith('### ')) {
                 line = capitalize(line.substr(4));
-                let element = document.createElement('h5');
+                let element: HTMLHeadingElement = document.createElement('h5');
                 element.innerText = line;
                 divItem.appendChild(element);
             } else if (line.startsWith('#### ')) {
                 line = capitalize(line.substr(4));
-                let element = document.createElement('h6');
+                let element: HTMLHeadingElement = document.createElement('h6');
                 element.innerText = line;
                 divItem.appendChild(element);
             } else if (findIfBulletAndHowWide(line) > 0) {
-                let list = document.createElement('ul');
+                let list: HTMLUListElement = document.createElement('ul');
 
                 lineIndex = lineIndex - 1;
                 while (lineIndex + 1 < lines.length && findIfBulletAndHowWide(lines[lineIndex + 1]) > 0) {
@@ -318,22 +332,22 @@ let parseMarkdownRecipes = function () {
                 divItem.appendChild(list);
             } else { // you shouldnt ever gethere but i suppose it wouldbe a paragraph element?
                 line = sanitize(line.substr(2));
-                let element = document.createElement('p');
+                let element: HTMLParagraphElement = document.createElement('p');
                 element.innerText = line;
                 divItem.appendChild(element);
             }
         }
-        recipeJson['div'] = divItem;
+        recipeJson.div = divItem;
         if (!recipes.has(categoryNumber)) {
-            recipes.set(categoryNumber, new Map());
+            recipes.set(categoryNumber, new Map<string, any>());
         }
         recipes.get(categoryNumber).set(recipeJson.title, recipeJson);
     }
 };
-let findIfBulletAndHowWide = function (line) {
-    let numberedLine = /^([0-9]+\.\s+).*$/;
-    let starredLine = /^(\*\s+).*$/;
-    let dashLine = /^(\-\s+).*$/;
+let findIfBulletAndHowWide = function (line: string): number {
+    let numberedLine: RegExp = /^([0-9]+\.\s+).*$/;
+    let starredLine: RegExp = /^(\*\s+).*$/;
+    let dashLine: RegExp = /^(\-\s+).*$/;
     if (dashLine.test(line)) {
         let match = line.match(dashLine);
         return match[1].length;
@@ -347,21 +361,21 @@ let findIfBulletAndHowWide = function (line) {
 
     return -1;
 }
-let removeRedundantNumbers = function(line) {
-    let redundantNumbers = /^1\s+([0-9]+)/g
-    if(redundantNumbers.test(line)) {
-        line = line.replaceAll(redundantNumbers, '$1');
+let removeRedundantNumbers = function (line: string): string {
+    let redundantNumbers: RegExp = /^1\s+([0-9]+)/g
+    if (redundantNumbers.test(line)) {
+        line = line.replace(redundantNumbers, '$1');
     }
 
     return line;
 }
-let closeRecipes = function () {
-    let fills : HTMLCollectionOf<Element> = document.getElementsByClassName('fill');
-    for(let fill of fills) {
-        if(!(fill instanceof HTMLElement)) {
+let closeRecipes = function (): void {
+    let fills: HTMLCollectionOf<Element> = document.getElementsByClassName('fill');
+    for (let fill of fills) {
+        if (!(fill instanceof HTMLElement)) {
             continue;
         }
-        let fillHtmlElement : HTMLElement = fill as HTMLElement;
+        let fillHtmlElement: HTMLElement = fill as HTMLElement;
         fillHtmlElement.classList.remove('fill');
         fillHtmlElement.style.display = 'none';
     }
@@ -370,12 +384,12 @@ let closeRecipes = function () {
     window.scrollTo(0, scrollPos);
     scrollPos = undefined;
 }
-let buildRecipeCards = function () {
-    let body = document.getElementById('body');
-    let content = document.getElementById('recipes');
-    let categories = Array.from(recipes.keys());
+let buildRecipeCards = function (): void {
+    let body: Element = document.getElementById('body');
+    let content: Element = document.getElementById('recipes');
+    let categories: number[] = Array.from(recipes.keys());
     categories.sort();
-    let j = 0;
+    let j: number = 0;
     for (let categoryNumber of categories) {
         let category = categoryMap.get(categoryNumber);
         let categoryHeader = document.createElement('h2');
