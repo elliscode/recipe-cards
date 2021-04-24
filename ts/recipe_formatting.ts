@@ -131,15 +131,14 @@ let formatCard = function (card: HTMLElement, markdown: boolean, tag: boolean): 
         output += '>' + singleLine;
     }
 
-    if (markdown) {
-        output += '# ';
-    }
-    output += recipeTitle + singleLine + singleLine;
-
     for (let child of div.children) {
         if (child instanceof HTMLHeadingElement) {
             let header: HTMLHeadingElement = child as HTMLHeadingElement;
-            if ('H4' == header.tagName) {
+            if ('H3' == header.tagName) {
+                if (markdown) {
+                    output += '# ';
+                }
+            } else if ('H4' == header.tagName) {
                 if (markdown) {
                     output += '## ';
                 }
