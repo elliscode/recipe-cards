@@ -238,6 +238,8 @@ let buffer = undefined;
 let scrollPos = undefined;
 let callbackClick = function (event) {
     scrollPos = window.scrollY;
+    let body = document.getElementById('body');
+    body.classList.add('body-inactive');
     let wrapper = document.getElementById('wrapper');
     wrapper.style.display = 'none';
     let id = event.srcElement.getAttribute('related');
@@ -378,6 +380,8 @@ let closeRecipes = function (): void {
         fillHtmlElement.classList.remove('fill');
         fillHtmlElement.style.display = 'none';
     }
+    let body = document.getElementById('body');
+    body.classList.remove('body-inactive');
     let wrapper = document.getElementById('wrapper');
     wrapper.style.display = 'block';
     window.scrollTo(0, scrollPos);
