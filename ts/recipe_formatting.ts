@@ -200,7 +200,7 @@ let reformatAllCards = function (): void {
     for (const [key, value] of orderedCards.entries()) {
         keys.push(key);
     }
-    let sortedKeys: number[] = keys.sort();
+    let sortedKeys: number[] = keys.sort((a,b)=>{return a-b;});
     for (let key of sortedKeys) {
         output += formatCard(orderedCards.get(key).parentElement, true, true);
     }
