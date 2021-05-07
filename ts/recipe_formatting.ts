@@ -193,15 +193,16 @@ let reformatAllCards = function (): void {
     let orderedCards: Map<number, HTMLDivElement> = new Map<number, HTMLDivElement>();
     let output: string = '';
     for (let content of contents) {
-        orderedCards[content.getAttribute('originalIndex')] = content;
+        let htmlDivElement : HTMLDivElement = content as HTMLDivElement;
+        orderedCards.set(parseInt(content.getAttribute('originalIndex')), htmlDivElement);
     }
     let keys: number[] = [];
-    for (let key of orderedCards.keys()) {
+    for (const [key, value] of orderedCards.entries()) {
         keys.push(key);
     }
     let sortedKeys: number[] = keys.sort();
     for (let key of sortedKeys) {
-        output += formatCard(orderedCards[key].parentElement, true, true);
+        output += formatCard(orderedCards.get(key).parentElement, true, true);
     }
     console.log(output);
 };
