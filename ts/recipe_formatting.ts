@@ -497,13 +497,30 @@ let search = function (term: string) {
     for (let child of recipeDiv.children) {
         child.classList.remove('not-visible');
     }
+    let previousHeader: HTMLHeadingElement = undefined;
+    let previousCount: number = 0;
     for (let child of recipeDiv.children) {
-        if (!(child instanceof HTMLDivElement)) {
-            continue;
+        if (child instanceof HTMLHeadingElement) {
+            togglePreviousHeader(previousHeader, previousCount);
+            previousHeader = child as HTMLHeadingElement;
+            previousCount = 0;
         }
-        if (!!term && !child.innerText.toLowerCase().includes(term.toLowerCase())) {
-            child.classList.add('not-visible');
+        if (child instanceof HTMLDivElement) {
+            if (!!term && !child.innerText.toLowerCase().includes(term.toLowerCase())) {
+                child.classList.add('not-visible');
+            } else {
+                previousCount++;
+            }
         }
+    }
+    togglePreviousHeader(previousHeader, previousCount);
+};
+let togglePreviousHeader = function (previousHeader: HTMLElement, previousCount: number) {
+    if (!previousHeader) {
+        return;
+    }
+    if (previousCount == 0) {
+        previousHeader.classList.add('not-visible');
     }
 };
 parseMarkdownRecipes();
