@@ -401,29 +401,17 @@ let buildRecipeCards = function (): void {
         let recipeNames = Array.from(recipes.get(categoryNumber).keys());
         recipeNames.sort();
         for (let key of recipeNames) {
-            let card = document.createElement('div');
-            card.classList.add('outer');
-            card.classList.add('card');
-            content.appendChild(card);
 
             j = j + 1;
 
             let id = 'id' + j;
-            card.id = 'card' + j;
             let recipeJson = recipes.get(categoryNumber).get(key);
 
-            let header = document.createElement('h3');
-            header.setAttribute('related', id);
-            header.textContent = recipeJson.title;
-            header.onclick = callbackClick;
-            header.style.cursor = 'pointer';
-            card.appendChild(header);
+            let card = createCard(recipeJson.title);
 
-            let pinImg = document.createElement('img');
-            pinImg.classList.add('pin');
-            pinImg.setAttribute('src', 'img/pin.png?v=001');
-            pinImg.addEventListener('click', pinRecipe);
-            card.appendChild(pinImg);
+            content.appendChild(card);
+            card.firstElementChild.setAttribute('related', id);
+            card.id = 'card' + j;
 
             let divItem = recipeJson.div;
             divItem.classList.add('card-content');
@@ -479,6 +467,25 @@ let buildRecipeCards = function (): void {
         }
     }
 };
+let createCard = function(title : string) : HTMLElement {
+    let card = document.createElement('div');
+    card.classList.add('outer');
+    card.classList.add('card');
+
+    let header = document.createElement('h3');
+    header.textContent = title;
+    header.onclick = callbackClick;
+    header.style.cursor = 'pointer';
+    card.appendChild(header);
+
+    let pinImg = document.createElement('img');
+    pinImg.classList.add('pin');
+    pinImg.setAttribute('src', 'img/pin.png?v=001');
+    pinImg.addEventListener('click', pinRecipe);
+    card.appendChild(pinImg);
+
+    return card;
+}
 let appendRemoveIcon = function (card : HTMLElement) {
     let oldPins = card.getElementsByClassName('pin');
     for(let oldPin of oldPins) {
@@ -513,12 +520,14 @@ let pinRecipe = function(this: HTMLElement, ev: Event) {
         pinnedHeader.id = 'pinned-header';
         recipesDiv.insertBefore(pinnedHeader, recipesDiv.firstChild);
     }
-    let clonedNode : HTMLElement = card.cloneNode(true) as HTMLElement;
-    clonedNode.id = '';
-    clonedNode.setAttribute('true-node-id', card.id);
-    recipesDiv.insertBefore(clonedNode, pinnedHeader.nextSibling);
-    appendRemoveIcon(clonedNode);
     card.classList.add('hidden-for-pin');
+    // create new card thing
+    let trueHeader = card.firstElementChild;
+    let clonedNode = createCard(trueHeader.textContent);
+    recipesDiv.insertBefore(clonedNode, pinnedHeader.nextElementSibling);
+    clonedNode.setAttribute('true-node-id', card.id);
+    clonedNode.firstElementChild.setAttribute('related', trueHeader.getAttribute('related'));
+    appendRemoveIcon(clonedNode);
 };
 let printRecipe = function () {
     window.print();
