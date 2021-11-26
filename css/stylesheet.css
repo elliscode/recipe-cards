@@ -155,7 +155,11 @@
         right:0;
         width:46px;
         height:46px;
-        font-size: 25px;
+        font-size: 15px;
+        border-radius: 0;
+        background-color:#d8f5fa;
+        border-width: 1px;
+        border-color:rgb(118,118,118);
     }
     #search-group {
         position:relative;
