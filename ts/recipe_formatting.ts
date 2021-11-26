@@ -417,6 +417,12 @@ let buildRecipeCards = function (): void {
             header.style.cursor = 'pointer';
             card.appendChild(header);
 
+            let pinImg = document.createElement('img');
+            pinImg.classList.add('pin');
+            pinImg.setAttribute('src', 'img/pin.png?v=001');
+            pinImg.addEventListener('click', pinRecipe);
+            card.appendChild(pinImg);
+
             let divItem = recipeJson.div;
             divItem.classList.add('card-content');
             divItem.setAttribute('originalIndex', recipeJson.originalIndex);
@@ -471,6 +477,21 @@ let buildRecipeCards = function (): void {
         }
     }
 };
+let pinRecipe = function(this: HTMLElement, ev: Event) {
+    let recipesDiv : HTMLElement = document.getElementById('recipes');
+    if (!recipesDiv) {
+        return;
+    }
+    console.log(this.parentElement);
+    let pinnedHeader : HTMLElement = document.getElementById('pinned-header');
+    if(!pinnedHeader) {
+        pinnedHeader = document.createElement('h2');
+        pinnedHeader.innerText = 'Pinned';
+        pinnedHeader.id = 'pinned-header';
+        recipesDiv.insertBefore(pinnedHeader, recipesDiv.firstChild);
+    }
+    recipesDiv.insertBefore(this.parentElement, pinnedHeader.nextSibling);
+}
 let printRecipe = function () {
     window.print();
 };
@@ -499,6 +520,9 @@ let search = function (term: string) {
     }
     let previousHeader: HTMLHeadingElement = undefined;
     let previousCount: number = 0;
+    if(!term) {
+        return;
+    }
     for (let child of recipeDiv.children) {
         if (child instanceof HTMLHeadingElement) {
             togglePreviousHeader(previousHeader, previousCount);
