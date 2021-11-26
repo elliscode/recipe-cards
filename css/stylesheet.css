@@ -206,6 +206,9 @@
     .not-visible {
         display:none;
     }
+    .hidden-for-pin {
+        display:none;
+    }
 }
 @media print {
     #wrapper, #info {

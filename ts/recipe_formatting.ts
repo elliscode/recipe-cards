@@ -54,7 +54,6 @@ categoryMap.set(7, 'Desserts');
 const bottomBarHeight: number = 60;
 
 let recipes = new Map<number, Map<string, any>>();
-
 let determineCategoryNumberFromCategoryName = function (category: string): number {
     let maxNumber: number = 0;
     for (let number of categoryMap.keys()) {
@@ -407,7 +406,10 @@ let buildRecipeCards = function (): void {
             card.classList.add('card');
             content.appendChild(card);
 
-            let id = 'id' + j++;
+            j = j + 1;
+
+            let id = 'id' + j;
+            card.id = 'card' + j;
             let recipeJson = recipes.get(categoryNumber).get(key);
 
             let header = document.createElement('h3');
@@ -477,12 +479,33 @@ let buildRecipeCards = function (): void {
         }
     }
 };
+let appendRemoveIcon = function (card : HTMLElement) {
+    let oldPins = card.getElementsByClassName('pin');
+    for(let oldPin of oldPins) {
+        oldPin.remove();
+    }
+    let pinImg = document.createElement('img');
+    pinImg.classList.add('pin');
+    pinImg.setAttribute('src', 'img/pin_blu.png?v=001');
+    pinImg.addEventListener('click', removePin);
+    card.appendChild(pinImg);
+};
+let removePin = function(this : HTMLElement , ev : Event) {
+    let card = this.parentElement;
+    let nodeId = card.getAttribute('true-node-id');
+    document.getElementById(nodeId).classList.remove('hidden-for-pin');
+    card.remove();
+    let pinnedHeader : HTMLElement = document.getElementById('pinned-header');
+    if('h2' == pinnedHeader.nextElementSibling.tagName.toLowerCase()) {
+        pinnedHeader.remove();
+    }
+}
 let pinRecipe = function(this: HTMLElement, ev: Event) {
     let recipesDiv : HTMLElement = document.getElementById('recipes');
     if (!recipesDiv) {
         return;
     }
-    console.log(this.parentElement);
+    let card : HTMLElement = this.parentElement;
     let pinnedHeader : HTMLElement = document.getElementById('pinned-header');
     if(!pinnedHeader) {
         pinnedHeader = document.createElement('h2');
@@ -490,8 +513,13 @@ let pinRecipe = function(this: HTMLElement, ev: Event) {
         pinnedHeader.id = 'pinned-header';
         recipesDiv.insertBefore(pinnedHeader, recipesDiv.firstChild);
     }
-    recipesDiv.insertBefore(this.parentElement, pinnedHeader.nextSibling);
-}
+    let clonedNode : HTMLElement = card.cloneNode(true) as HTMLElement;
+    clonedNode.id = '';
+    clonedNode.setAttribute('true-node-id', card.id);
+    recipesDiv.insertBefore(clonedNode, pinnedHeader.nextSibling);
+    appendRemoveIcon(clonedNode);
+    card.classList.add('hidden-for-pin');
+};
 let printRecipe = function () {
     window.print();
 };
