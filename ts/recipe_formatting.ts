@@ -520,6 +520,7 @@ let pinRecipe = function(this: HTMLElement, ev: Event) {
         pinnedHeader.id = 'pinned-header';
         recipesDiv.insertBefore(pinnedHeader, recipesDiv.firstChild);
     }
+    pinnedHeader.classList.remove('not-visible');
     card.classList.add('hidden-for-pin');
     // create new card thing
     let trueHeader = card.firstElementChild;
