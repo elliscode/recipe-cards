@@ -46,13 +46,14 @@
         position:fixed;
         top:4px;
         right:4px;
-        background-color:transparent;
         font-size:30px;
-        border:none;
+        border-radius: 15px;
+        border-style: none;
         text-align:right;
         padding-right:10px;
         padding-top:0px;
         cursor:pointer;
+        background-color:rgba(216, 245, 250, 0.8);
     }
     .copy {
         position:absolute;
@@ -139,6 +140,28 @@
         position:absolute;
         top:21px;
         right:10px;
+    }
+    #search {
+        width:calc(100% - 46px);
+        font-size:20px;
+        height:46px;
+        padding-left:10px;
+        padding-right:10px;
+        box-sizing: border-box;
+    }
+    #search-clear {
+        position:absolute;
+        top:0;
+        right:0;
+        width:46px;
+        height:46px;
+        font-size: 25px;
+    }
+    #search-group {
+        position:relative;
+    }
+    .not-visible {
+        display:none;
     }
 }
 @media print {

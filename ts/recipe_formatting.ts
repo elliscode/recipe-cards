@@ -193,14 +193,14 @@ let reformatAllCards = function (): void {
     let orderedCards: Map<number, HTMLDivElement> = new Map<number, HTMLDivElement>();
     let output: string = '';
     for (let content of contents) {
-        let htmlDivElement : HTMLDivElement = content as HTMLDivElement;
+        let htmlDivElement: HTMLDivElement = content as HTMLDivElement;
         orderedCards.set(parseInt(content.getAttribute('originalIndex')), htmlDivElement);
     }
     let keys: number[] = [];
     for (const [key, value] of orderedCards.entries()) {
         keys.push(key);
     }
-    let sortedKeys: number[] = keys.sort((a,b)=>{return a-b;});
+    let sortedKeys: number[] = keys.sort((a, b) => { return a - b; });
     for (let key of sortedKeys) {
         output += formatCard(orderedCards.get(key).parentElement, true, true);
     }
@@ -474,6 +474,46 @@ let buildRecipeCards = function (): void {
 let printRecipe = function () {
     window.print();
 };
+let clearBarCallback = function (this: HTMLElement, ev: Event) {
+    let searchBar: HTMLElement = document.getElementById('search');
+    if (searchBar instanceof HTMLInputElement) {
+        searchBar.value = '';
+        search(undefined);
+    }
+};
+let searchBarCallback = function (this: HTMLElement, ev: Event) {
+    console.log(this);
+    console.log(ev);
+    if (this instanceof HTMLInputElement) {
+        let inputElement = this as HTMLInputElement;
+        search(inputElement.value);
+    } else {
+        search(undefined);
+    }
+};
+let search = function (term: string) {
+    let recipeDiv: HTMLElement = document.getElementById("recipes");
+    // let childrenToShow: Element[] = [...recipeDiv.children];
+    for (let child of recipeDiv.children) {
+        child.classList.remove('not-visible');
+    }
+    for (let child of recipeDiv.children) {
+        if (!(child instanceof HTMLDivElement)) {
+            continue;
+        }
+        if (!!term && !child.innerText.toLowerCase().includes(term.toLowerCase())) {
+            child.classList.add('not-visible');
+        }
+    }
+};
 parseMarkdownRecipes();
 buildRecipeCards();
-removeHiderDiv();
+let searchBar: HTMLElement = document.getElementById('search');
+if (!!searchBar) {
+    searchBar.addEventListener('input', searchBarCallback);
+}
+let searchClear: HTMLElement = document.getElementById('search-clear');
+if (!!searchClear) {
+    searchClear.addEventListener('click', clearBarCallback);
+}
+setTimeout(function () { removeHiderDiv(); }, 50);
