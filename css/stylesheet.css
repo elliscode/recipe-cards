@@ -6,7 +6,7 @@
         -webkit-text-size-adjust: 100%; /* Prevent font scaling in landscape while allowing user zoom */
     }
     /* this is for dynamic scroll port, used to work fine back when safari had a different bar */
-    /*
+    
     body {
         background-color:#f9feff;
     }
@@ -20,9 +20,9 @@
         padding:10px;
         margin:0;
     }
-    */
-    /* This is for fixed scroll port */
     
+    /* This is for fixed scroll port */
+    /*
     body {
         background-color:#f9feff;
         touch-action: none;
@@ -49,7 +49,7 @@
         margin:0;
         overflow-y:auto;
     }
-    
+    */
     #hide {
         width:100%;
         height:100%;
