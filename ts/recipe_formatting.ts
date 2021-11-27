@@ -240,6 +240,7 @@ let callbackClick = function (event) {
     scrollPos = window.scrollY;
     let body = document.getElementById('body');
     body.classList.add('body-inactive');
+    window.scrollTo(0,0);
     let wrapper = document.getElementById('wrapper');
     wrapper.style.display = 'none';
     let id = event.srcElement.getAttribute('related');
