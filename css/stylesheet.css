@@ -82,13 +82,13 @@
     }
     .halve {
         position:absolute;
-        top:35px;
+        top:30px;
         right:0px;
         cursor:pointer;
     }
     .double {
         position:absolute;
-        top:35px;
+        top:30px;
         right:55px;
         cursor:pointer;
     }
