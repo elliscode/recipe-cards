@@ -459,6 +459,7 @@ let buildRecipeCards = function (): void {
             servingInput.value = recipeJson.servings.toString();
             servingInput.setAttribute('originalValue', recipeJson.servings.toString());
             servingInput.addEventListener('input', modifyRecipeByCallback);
+            servingInput.inputMode = 'decimal';
             servingsDiv.appendChild(servingInput);
 
             let resetImg = document.createElement('img');
@@ -527,14 +528,24 @@ let buildRecipeCards = function (): void {
 let doubleRecipe = function(this: HTMLElement, ev: Event) {
     let servingsDiv = this.parentElement;
     let input = servingsDiv.getElementsByTagName('input')[0];
-    input.value = (parseFloat(input.value) * 2.0).toString();
+    let newValue = parseFloat(input.value) * 2.0;
+    if(!newValue) {
+        input.value = input.getAttribute('originalValue');
+    } else {
+        input.value = (newValue).toString();
+    }
     let card = servingsDiv.parentElement;
     modifyRecipeBy(card, input);
 };
 let halveRecipe = function(this: HTMLElement, ev: Event) {
     let servingsDiv = this.parentElement;
     let input = servingsDiv.getElementsByTagName('input')[0];
-    input.value = (parseFloat(input.value) / 2.0).toString();
+    let newValue = parseFloat(input.value) / 2.0;
+    if(!newValue) {
+        input.value = input.getAttribute('originalValue');
+    } else {
+        input.value = (newValue).toString();
+    }
     let card = servingsDiv.parentElement;
     modifyRecipeBy(card, input);
 }
