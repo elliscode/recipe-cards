@@ -285,8 +285,10 @@ interface RecipeJson {
     linkText: string;
     originalIndex: number;
     div: HTMLDivElement;
+    servings: number;
 }
 let parseMarkdownRecipes = function (): void {
+    let servingsRegex = /^\s*servings[\s:]*([0-9]+)\s*/i;
     let elements: HTMLCollectionOf<Element> = document.getElementsByClassName("recipe");
     for (let i = elements.length - 1; i >= 0; i--) {
         let element: Element = elements[i];
@@ -299,11 +301,13 @@ let parseMarkdownRecipes = function (): void {
             linkText = element.getAttribute('link');
         }
         let lines: string[] = text.split(/[\r\n]+/).map(line => line.trim()).filter(line => line.length > 0);
-        let recipeJson: RecipeJson = { 'title': '', 'category': category, 'categoryNumber': categoryNumber, 'linkText': linkText, 'originalIndex': i, 'div': undefined, };
+        let recipeJson: RecipeJson = { 'title': '', 'category': category, 'categoryNumber': categoryNumber, 'linkText': linkText, 'originalIndex': i, 'div': undefined, 'servings': 2 };
         let divItem: HTMLDivElement = document.createElement('div');
         for (let lineIndex: number = 0; lineIndex < lines.length; lineIndex++) {
             let line: string = lines[lineIndex];
-            if (line.startsWith('# ')) {
+            if (line.match(servingsRegex)) {
+                recipeJson.servings = parseFloat(line.match(servingsRegex)[1]);
+            } else if (line.startsWith('# ') && !recipeJson.title) {
                 line = capitalize(line.substr(2));
                 recipeJson.title = line;
             } else if (line.startsWith('## ')) {
@@ -361,7 +365,6 @@ let splitIntoNumberAndPart = function (line : string) : HTMLSpanElement[] {
         let numberPart = document.createElement('span');
         numberPart.innerText = result[1];
         numberPart.setAttribute('originalValue', eval(result[1]).toString());
-        numberPart.setAttribute('multiplier', '1');
         numberPart.classList.add('quantity');
         let wordPart = document.createElement('span');
         wordPart.innerText = result[2];
@@ -444,25 +447,46 @@ let buildRecipeCards = function (): void {
             header2.textContent = recipeJson.title;
             divItem.insertBefore(header2, divItem.firstChild);
 
-            let closeButton = document.createElement('button');
-            closeButton.classList.add('close-recipe');
-            closeButton.innerText = '\u00D7';
-            closeButton.addEventListener('click', closeRecipes);
-            divItem.appendChild(closeButton);
+            let servingsDiv = document.createElement('div');
+            servingsDiv.classList.add('servings');
+            divItem.insertBefore(servingsDiv, header2.nextSibling);
+            let servingsLabel = document.createElement('label');
+            servingsLabel.innerText = 'Servings: ';
+            servingsDiv.appendChild(servingsLabel); 
+
+            let servingInput = document.createElement('input');
+            servingInput.type = 'text';
+            servingInput.value = recipeJson.servings.toString();
+            servingInput.setAttribute('originalValue', recipeJson.servings.toString());
+            servingInput.addEventListener('input', modifyRecipeByCallback);
+            servingsDiv.appendChild(servingInput);
+
+            let resetImg = document.createElement('img');
+            resetImg.classList.add('reset');
+            resetImg.setAttribute('src', 'img/reset.png?v=001');
+            resetImg.setAttribute('related', id);
+            resetImg.addEventListener('click', resetRecipe);
+            servingsDiv.appendChild(resetImg);
 
             let halveImg = document.createElement('img');
             halveImg.classList.add('halve');
             halveImg.setAttribute('src', 'img/divide_by_two.png?v=001');
             halveImg.setAttribute('related', id);
             halveImg.addEventListener('click', halveRecipe);
-            divItem.appendChild(halveImg);
+            servingsDiv.appendChild(halveImg);
 
             let doubleImg = document.createElement('img');
             doubleImg.classList.add('double');
             doubleImg.setAttribute('src', 'img/times_two.png?v=001');
             doubleImg.setAttribute('related', id);
             doubleImg.addEventListener('click', doubleRecipe);
-            divItem.appendChild(doubleImg);
+            servingsDiv.appendChild(doubleImg);
+
+            let closeButton = document.createElement('button');
+            closeButton.classList.add('close-recipe');
+            closeButton.innerText = '\u00D7';
+            closeButton.addEventListener('click', closeRecipes);
+            divItem.appendChild(closeButton);
 
             let img = document.createElement('img');
             img.classList.add('copy');
@@ -501,27 +525,44 @@ let buildRecipeCards = function (): void {
     }
 };
 let doubleRecipe = function(this: HTMLElement, ev: Event) {
-    let card = this.parentElement;
-    modifyRecipeBy(card, 'multiply', 2);
+    let servingsDiv = this.parentElement;
+    let input = servingsDiv.getElementsByTagName('input')[0];
+    input.value = (parseFloat(input.value) * 2.0).toString();
+    let card = servingsDiv.parentElement;
+    modifyRecipeBy(card, input);
 };
 let halveRecipe = function(this: HTMLElement, ev: Event) {
-    let card = this.parentElement;
-    modifyRecipeBy(card, 'divide', 2);
+    let servingsDiv = this.parentElement;
+    let input = servingsDiv.getElementsByTagName('input')[0];
+    input.value = (parseFloat(input.value) / 2.0).toString();
+    let card = servingsDiv.parentElement;
+    modifyRecipeBy(card, input);
 }
-let modifyRecipeBy = function(card:HTMLElement, action: string, by: number) {
+let resetRecipe = function(this: HTMLElement, ev: Event) {
+    let servingsDiv = this.parentElement;
+    let input = servingsDiv.getElementsByTagName('input')[0];
+    input.value = input.getAttribute('originalValue');
+    let card = servingsDiv.parentElement;
+    modifyRecipeBy(card, input);
+}
+let modifyRecipeByCallback = function(this: HTMLInputElement, ev: Event){
+    modifyRecipeBy(this.parentElement.parentElement, this);
+}
+let modifyRecipeBy = function(card:HTMLElement, input:HTMLInputElement) {
+    let servings = parseFloat(input.value);
+    let originalServings = parseFloat(input.getAttribute('originalValue'));
+    let multiplier = servings / originalServings;
+    if(!multiplier) {
+        multiplier = 1;
+    }
+
     let quantities = card.getElementsByClassName('quantity');
     for(let quantity of quantities) {
-        let multiplier = parseFloat(quantity.getAttribute('multiplier'));
-        if('multiply' == action) {
-            multiplier = multiplier + multiplier;
-        } else if ('divide' == action) {
-            multiplier = multiplier / 2.0;
-        }
-        quantity.setAttribute('multiplier', multiplier.toString());
         let originalValue = parseFloat(quantity.getAttribute('originalValue'));
         let newValue = originalValue * multiplier;
         (quantity as HTMLElement).innerText = toFractionIfApplicable(newValue);
     }
+    // search for servings bar
 };
 let toFractionIfApplicable = function (value : number) : string {
     if ((1 / 10) - 0.001 < value && value < (1 / 10) + 0.001) { return '\u2152'; }
