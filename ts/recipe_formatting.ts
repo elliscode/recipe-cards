@@ -267,12 +267,17 @@ let sanitize = function (text: string): string {
         let item = unitMap.get(key);
         text = text.replace(item.regex, item.replace);
     }
-    for (let key of glyphMap.keys()) {
-        let item = glyphMap.get(key);
-        text = text.replace(item.regex, item.replace);
-    }
     return text;
 };
+let glyphParts = function (lineParts : HTMLSpanElement[] ) : HTMLSpanElement[] {
+    for(let linePart of lineParts) {
+        for (let key of glyphMap.keys()) {
+            let item = glyphMap.get(key);
+            linePart.innerText = linePart.innerText.replace(item.regex, item.replace);
+        }
+    }
+    return lineParts
+}
 interface RecipeJson {
     title: string;
     category: string;
@@ -325,15 +330,18 @@ let parseMarkdownRecipes = function (): void {
                     line = lines[lineIndex];
                     let width = findIfBulletAndHowWide(line);
                     line = sanitize(line.substr(width));
-                    line = removeRedundantNumbers(line);
+                    let lineParts : HTMLSpanElement[] = splitIntoNumberAndPart(line);
+                    lineParts = glyphParts(lineParts);
 
                     let element = document.createElement('li');
-                    element.innerText = line;
+                    for(let part of lineParts) {
+                        element.appendChild(part);
+                    }
                     list.appendChild(element);
                 }
                 divItem.appendChild(list);
             } else { // you shouldnt ever gethere but i suppose it wouldbe a paragraph element?
-                line = sanitize(line.substr(2));
+                line = sanitize(line.trim());
                 let element: HTMLParagraphElement = document.createElement('p');
                 element.innerText = line;
                 divItem.appendChild(element);
@@ -346,6 +354,24 @@ let parseMarkdownRecipes = function (): void {
         recipes.get(categoryNumber).set(recipeJson.title, recipeJson);
     }
 };
+let splitIntoNumberAndPart = function (line : string) : HTMLSpanElement[] {
+    let numberAndWords = /^([0-9\/\.]*)(.*)$/
+    let result = numberAndWords.exec(line);
+    if(result[1].length > 0) {
+        let numberPart = document.createElement('span');
+        numberPart.innerText = result[1];
+        numberPart.setAttribute('originalValue', eval(result[1]).toString());
+        numberPart.setAttribute('multiplier', '1');
+        numberPart.classList.add('quantity');
+        let wordPart = document.createElement('span');
+        wordPart.innerText = result[2];
+        return [numberPart, wordPart];
+    } else {
+        let wordPart = document.createElement('span');
+        wordPart.innerText = result[2];
+        return [wordPart];
+    }
+}
 let findIfBulletAndHowWide = function (line: string): number {
     let numberedLine: RegExp = /^([0-9]+\.\s+).*$/;
     let starredLine: RegExp = /^(\*\s+).*$/;
@@ -362,14 +388,6 @@ let findIfBulletAndHowWide = function (line: string): number {
     }
 
     return -1;
-}
-let removeRedundantNumbers = function (line: string): string {
-    let redundantNumbers: RegExp = /^1\s+([0-9]+)/g
-    if (redundantNumbers.test(line)) {
-        line = line.replace(redundantNumbers, '$1');
-    }
-
-    return line;
 }
 let closeRecipes = function (): void {
     let fills: HTMLCollectionOf<Element> = document.getElementsByClassName('fill');
@@ -432,6 +450,20 @@ let buildRecipeCards = function (): void {
             closeButton.addEventListener('click', closeRecipes);
             divItem.appendChild(closeButton);
 
+            let halveImg = document.createElement('img');
+            halveImg.classList.add('halve');
+            halveImg.setAttribute('src', 'img/divide_by_two.png?v=001');
+            halveImg.setAttribute('related', id);
+            halveImg.addEventListener('click', halveRecipe);
+            divItem.appendChild(halveImg);
+
+            let doubleImg = document.createElement('img');
+            doubleImg.classList.add('double');
+            doubleImg.setAttribute('src', 'img/times_two.png?v=001');
+            doubleImg.setAttribute('related', id);
+            doubleImg.addEventListener('click', doubleRecipe);
+            divItem.appendChild(doubleImg);
+
             let img = document.createElement('img');
             img.classList.add('copy');
             img.setAttribute('src', 'img/copy.png?v=001');
@@ -468,6 +500,50 @@ let buildRecipeCards = function (): void {
         }
     }
 };
+let doubleRecipe = function(this: HTMLElement, ev: Event) {
+    let card = this.parentElement;
+    modifyRecipeBy(card, 'multiply', 2);
+};
+let halveRecipe = function(this: HTMLElement, ev: Event) {
+    let card = this.parentElement;
+    modifyRecipeBy(card, 'divide', 2);
+}
+let modifyRecipeBy = function(card:HTMLElement, action: string, by: number) {
+    let quantities = card.getElementsByClassName('quantity');
+    for(let quantity of quantities) {
+        let multiplier = parseFloat(quantity.getAttribute('multiplier'));
+        if('multiply' == action) {
+            multiplier = multiplier + multiplier;
+        } else if ('divide' == action) {
+            multiplier = multiplier / 2.0;
+        }
+        quantity.setAttribute('multiplier', multiplier.toString());
+        let originalValue = parseFloat(quantity.getAttribute('originalValue'));
+        let newValue = originalValue * multiplier;
+        (quantity as HTMLElement).innerText = toFractionIfApplicable(newValue);
+    }
+};
+let toFractionIfApplicable = function (value : number) : string {
+    if ((1 / 10) - 0.001 < value && value < (1 / 10) + 0.001) { return '\u2152'; }
+    if ((1 / 9) - 0.001 < value && value < (1 / 9) + 0.001) { return '\u2151'; }
+    if ((1 / 8) - 0.001 < value && value < (1 / 8) + 0.001) { return '\u215B'; }
+    if ((1 / 7) - 0.001 < value && value < (1 / 7) + 0.001) { return '\u2150'; }
+    if ((1 / 6) - 0.001 < value && value < (1 / 6) + 0.001) { return '\u2159'; }
+    if ((1 / 5) - 0.001 < value && value < (1 / 5) + 0.001) { return '\u2155'; }
+    if ((1 / 4) - 0.001 < value && value < (1 / 4) + 0.001) { return '\u00BC'; }
+    if ((1 / 3) - 0.001 < value && value < (1 / 3) + 0.001) { return '\u2153'; }
+    if ((1 / 2) - 0.001 < value && value < (1 / 2) + 0.001) { return '\u00BD'; }
+    if ((2 / 5) - 0.001 < value && value < (2 / 5) + 0.001) { return '\u2156'; }
+    if ((2 / 3) - 0.001 < value && value < (2 / 3) + 0.001) { return '\u2154'; }
+    if ((3 / 8) - 0.001 < value && value < (3 / 8) + 0.001) { return '\u215C'; }
+    if ((3 / 5) - 0.001 < value && value < (3 / 5) + 0.001) { return '\u2157'; }
+    if ((3 / 4) - 0.001 < value && value < (3 / 4) + 0.001) { return '\u00BE'; }
+    if ((4 / 5) - 0.001 < value && value < (4 / 5) + 0.001) { return '\u2158'; }
+    if ((5 / 8) - 0.001 < value && value < (5 / 8) + 0.001) { return '\u215D'; }
+    if ((5 / 6) - 0.001 < value && value < (5 / 6) + 0.001) { return '\u215A'; }
+    if ((7 / 8) - 0.001 < value && value < (7 / 8) + 0.001) { return '\u215E'; }
+    return value.toString();
+}
 let createCard = function(title : string) : HTMLElement {
     let card = document.createElement('div');
     card.classList.add('outer');

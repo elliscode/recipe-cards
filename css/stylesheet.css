@@ -80,6 +80,18 @@
         cursor:pointer;
         background-color:rgba(216, 245, 250, 0.8);
     }
+    .halve {
+        position:absolute;
+        top:35px;
+        right:0px;
+        cursor:pointer;
+    }
+    .double {
+        position:absolute;
+        top:35px;
+        right:55px;
+        cursor:pointer;
+    }
     .copy {
         position:absolute;
         bottom:0;
