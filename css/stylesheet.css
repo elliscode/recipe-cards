@@ -79,47 +79,55 @@
         padding-top:0px;
         cursor:pointer;
         background-color:rgba(216, 245, 250, 0.8);
+        touch-action: manipulation;
     }
     .halve {
         position:absolute;
         top:30px;
         right:0px;
         cursor:pointer;
+        touch-action: manipulation;
     }
     .double {
         position:absolute;
         top:30px;
         right:55px;
         cursor:pointer;
+        touch-action: manipulation;
     }
     .copy {
         position:absolute;
         bottom:0;
         right:4px;
         cursor:pointer;
+        touch-action: manipulation;
     }
     .ellis {
         position:absolute;
         bottom:0;
         right:112px;
         cursor:pointer;
+        touch-action: manipulation;
     }
     .reddit {
         position:absolute;
         bottom:0;
         right:58px;
         cursor:pointer;
+        touch-action: manipulation;
     }
     .pin {
         position:absolute;
         top:3px;
         right:3px;
+        touch-action: manipulation;
     }
     .link {
         position:absolute;
         bottom:0;
         right:166px;
         cursor:pointer;
+        touch-action: manipulation;
     }
     #info {
         display:none;
