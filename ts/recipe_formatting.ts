@@ -175,6 +175,13 @@ let formatCard = function (card: HTMLElement, markdown: boolean, tag: boolean): 
             if (doubleSpace) {
                 output += singleLine;
             }
+        } else if (child instanceof HTMLDivElement) {
+            if(child.classList.contains('servings')) {
+                for(let input of child.getElementsByTagName('input')) {
+                    output += 'Servings: ' + input.value;
+                    output += singleLine + singleLine;
+                }
+            }
         }
     }
 
