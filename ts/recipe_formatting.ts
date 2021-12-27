@@ -531,6 +531,7 @@ let buildRecipeCards = function (): void {
             body.appendChild(parentDiv);
         }
     }
+    removeHiderDiv();
 };
 let doubleRecipe = function(this: HTMLElement, ev: Event) {
     let servingsDiv = this.parentElement;
@@ -731,4 +732,3 @@ let searchClear: HTMLElement = document.getElementById('search-clear');
 if (!!searchClear) {
     searchClear.addEventListener('click', clearBarCallback);
 }
-setTimeout(function () { removeHiderDiv(); }, 50);
