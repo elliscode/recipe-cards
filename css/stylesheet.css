@@ -45,7 +45,7 @@
         overflow-y:auto;
     }
     */
-    #hide {
+    .hide-page {
         width:100%;
         height:100%;
         position:fixed;
@@ -190,9 +190,6 @@
         padding:10px; 
         border: 2px #70c8d8 solid;
         box-sizing:border-box;
-        overflow-y: auto;
-    }
-    .outer {
         position:relative;
         margin:10px 0px;
         border-radius:10px;
@@ -206,7 +203,6 @@
         display:block;
     }
     .card-content {
-        padding-bottom:50px;
         position:relative;
         min-height:100%;
         box-sizing:border-box;
@@ -253,6 +249,9 @@
     }
     .hidden-for-pin {
         display:none;
+    }
+    .dont-show-if-no-js {
+        display:none!important;
     }
 }
 @media print {

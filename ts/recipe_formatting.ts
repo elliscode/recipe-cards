@@ -53,7 +53,8 @@ categoryMap.set(7, 'Desserts');
 
 const bottomBarHeight: number = 60;
 
-let recipes = new Map<number, Map<string, any>>();
+let recipes = new Map<string, any>();
+let recipeKeys : string[] = [];
 let determineCategoryNumberFromCategoryName = function (category: string): number {
     let maxNumber: number = 0;
     for (let number of categoryMap.keys()) {
@@ -235,10 +236,6 @@ let gradualFade = function (element) {
         copyTimeout = undefined;
     }
 };
-let removeHiderDiv = function () {
-    let hideDiv = document.getElementById("hide");
-    hideDiv.remove();
-};
 let foldedHeight = undefined;
 let expandedHeight = undefined;
 let buffer = undefined;
@@ -280,7 +277,7 @@ let glyphParts = function (lineParts : HTMLSpanElement[] ) : HTMLSpanElement[] {
     for(let linePart of lineParts) {
         for (let key of glyphMap.keys()) {
             let item = glyphMap.get(key);
-            linePart.innerText = linePart.innerText.replace(item.regex, item.replace);
+            linePart.innerText = linePart.innerText.replace(item.regex, item.plaintext);
         }
     }
     return lineParts
@@ -345,8 +342,11 @@ let parseMarkdownRecipes = function (): void {
                     lineParts = glyphParts(lineParts);
 
                     let element = document.createElement('li');
-                    for(let part of lineParts) {
-                        element.appendChild(part);
+                    if(lineParts.length > 1) {
+                        element.appendChild(lineParts[0]);
+                        element.appendChild(document.createTextNode(lineParts[1].innerText));
+                    } else {
+                        element.appendChild(document.createTextNode(lineParts[0].innerText));
                     }
                     list.appendChild(element);
                 }
@@ -359,10 +359,8 @@ let parseMarkdownRecipes = function (): void {
             }
         }
         recipeJson.div = divItem;
-        if (!recipes.has(categoryNumber)) {
-            recipes.set(categoryNumber, new Map<string, any>());
-        }
-        recipes.get(categoryNumber).set(recipeJson.title, recipeJson);
+        recipes.set(recipeJson.title, recipeJson);
+        recipeKeys.push(recipeJson.title);
     }
 };
 let splitIntoNumberAndPart = function (line : string) : HTMLSpanElement[] {
@@ -371,8 +369,6 @@ let splitIntoNumberAndPart = function (line : string) : HTMLSpanElement[] {
     if(result[1].length > 0) {
         let numberPart = document.createElement('span');
         numberPart.innerText = result[1];
-        numberPart.setAttribute('originalValue', eval(result[1]).toString());
-        numberPart.classList.add('quantity');
         let wordPart = document.createElement('span');
         wordPart.innerText = result[2];
         return [numberPart, wordPart];
@@ -417,121 +413,39 @@ let closeRecipes = function (): void {
     scrollPos = undefined;
 }
 let buildRecipeCards = function (): void {
-    let body: Element = document.getElementById('body');
     let content: Element = document.getElementById('recipes');
-    let categories: number[] = Array.from(recipes.keys());
-    categories.sort();
-    let j: number = 0;
-    for (let categoryNumber of categories) {
-        let category = categoryMap.get(categoryNumber);
-        let categoryHeader = document.createElement('h2');
-        categoryHeader.innerText = category;
-        content.appendChild(categoryHeader);
-        let recipeNames = Array.from(recipes.get(categoryNumber).keys());
-        recipeNames.sort();
-        for (let key of recipeNames) {
+    let recipeNames = recipeKeys.reverse();
+    for (let key of recipeNames) {
+        let recipeJson = recipes.get(key);
 
-            j = j + 1;
+        let card = createCard();
+        content.appendChild(card);
+        card.appendChild(recipeJson.div);
 
-            let id = 'id' + j;
-            let recipeJson = recipes.get(categoryNumber).get(key);
+        while(recipeJson.div.firstElementChild) {
+            card.appendChild(recipeJson.div.firstElementChild);
+        }
 
-            let card = createCard(recipeJson.title);
+        let divItem = card;
+        let header2 = document.createElement('h3');
+        header2.textContent = recipeJson.title;
+        divItem.insertBefore(header2, divItem.firstChild);
 
-            content.appendChild(card);
-            card.firstElementChild.setAttribute('related', id);
-            card.id = 'card' + j;
+        let categoryDiv = document.createElement('p');
+        divItem.insertBefore(categoryDiv, header2.nextSibling);
+        categoryDiv.appendChild(document.createTextNode('Category: ' + recipeJson.category));
 
-            let divItem = recipeJson.div;
-            divItem.classList.add('card-content');
-            divItem.setAttribute('originalIndex', recipeJson.originalIndex);
-            let parentDiv = document.createElement('div');
-            parentDiv.classList.add('card');
-            parentDiv.setAttribute('category', category);
-            parentDiv.appendChild(divItem);
-            parentDiv.setAttribute('id', id);
-            let header2 = document.createElement('h3');
-            header2.textContent = recipeJson.title;
-            divItem.insertBefore(header2, divItem.firstChild);
+        let servingsDiv = document.createElement('p');
+        divItem.insertBefore(servingsDiv, categoryDiv.nextSibling);
+        servingsDiv.appendChild(document.createTextNode('Servings: ' + recipeJson.servings.toString()));
 
-            let servingsDiv = document.createElement('div');
-            servingsDiv.classList.add('servings');
-            divItem.insertBefore(servingsDiv, header2.nextSibling);
-            let servingsLabel = document.createElement('label');
-            servingsLabel.innerText = 'Servings: ';
-            servingsDiv.appendChild(servingsLabel); 
-
-            let servingInput = document.createElement('input');
-            servingInput.type = 'text';
-            servingInput.value = recipeJson.servings.toString();
-            servingInput.setAttribute('originalValue', recipeJson.servings.toString());
-            servingInput.addEventListener('input', modifyRecipeByCallback);
-            servingInput.inputMode = 'decimal';
-            servingsDiv.appendChild(servingInput);
-
-            let resetImg = document.createElement('img');
-            resetImg.classList.add('reset');
-            resetImg.setAttribute('src', 'img/reset.png?v=001');
-            resetImg.setAttribute('related', id);
-            resetImg.addEventListener('click', resetRecipe);
-            servingsDiv.appendChild(resetImg);
-
-            let halveImg = document.createElement('img');
-            halveImg.classList.add('halve');
-            halveImg.setAttribute('src', 'img/divide_by_two.png?v=001');
-            halveImg.setAttribute('related', id);
-            halveImg.addEventListener('click', halveRecipe);
-            servingsDiv.appendChild(halveImg);
-
-            let doubleImg = document.createElement('img');
-            doubleImg.classList.add('double');
-            doubleImg.setAttribute('src', 'img/times_two.png?v=001');
-            doubleImg.setAttribute('related', id);
-            doubleImg.addEventListener('click', doubleRecipe);
-            servingsDiv.appendChild(doubleImg);
-
-            let closeButton = document.createElement('button');
-            closeButton.classList.add('close-recipe');
-            closeButton.innerText = '\u00D7';
-            closeButton.addEventListener('click', closeRecipes);
-            divItem.appendChild(closeButton);
-
-            let img = document.createElement('img');
-            img.classList.add('copy');
-            img.setAttribute('src', 'img/copy.png?v=001');
-            img.setAttribute('related', id);
-            img.onclick = copyRecipe;
-            divItem.appendChild(img);
-
-            let redditImg = document.createElement('img');
-            redditImg.classList.add('reddit');
-            redditImg.setAttribute('src', 'img/reddit_button.png?v=001');
-            redditImg.setAttribute('related', id);
-            redditImg.onclick = copyMarkdown;
-            divItem.appendChild(redditImg);
-
-            let printImg = document.createElement('img');
-            printImg.classList.add('ellis');
-            printImg.setAttribute('src', 'img/print.png?v=001');
-            printImg.setAttribute('related', id);
-            printImg.onclick = printRecipe;
-            divItem.appendChild(printImg);
-
-            if (undefined != recipeJson.linkText) {
-                let link = document.createElement('a');
-                link.setAttribute('href', recipeJson.linkText);
-                let linkImg = document.createElement('img');
-                linkImg.classList.add('link');
-                linkImg.setAttribute('src', 'img/link.png?v=001');
-                link.appendChild(linkImg);
-                divItem.appendChild(link);
-            }
-
-            parentDiv.style.display = 'none';
-            body.appendChild(parentDiv);
+        if (undefined != recipeJson.linkText) {
+            let link = document.createElement('a');
+            link.setAttribute('href', recipeJson.linkText);
+            link.innerText = "Source material"
+            divItem.appendChild(link);
         }
     }
-    removeHiderDiv();
 };
 let doubleRecipe = function(this: HTMLElement, ev: Event) {
     let servingsDiv = this.parentElement;
@@ -604,22 +518,9 @@ let toFractionIfApplicable = function (value : number) : string {
     if ((7 / 8) - 0.001 < value && value < (7 / 8) + 0.001) { return '\u215E'; }
     return value.toString();
 }
-let createCard = function(title : string) : HTMLElement {
+let createCard = function() : HTMLElement {
     let card = document.createElement('div');
-    card.classList.add('outer');
     card.classList.add('card');
-
-    let header = document.createElement('h3');
-    header.textContent = title;
-    header.onclick = callbackClick;
-    header.style.cursor = 'pointer';
-    card.appendChild(header);
-
-    let pinImg = document.createElement('img');
-    pinImg.classList.add('pin');
-    pinImg.setAttribute('src', 'img/pin.png?v=001');
-    pinImg.addEventListener('click', pinRecipe);
-    card.appendChild(pinImg);
 
     return card;
 }
@@ -644,29 +545,6 @@ let removePin = function(this : HTMLElement , ev : Event) {
         pinnedHeader.remove();
     }
 }
-let pinRecipe = function(this: HTMLElement, ev: Event) {
-    let recipesDiv : HTMLElement = document.getElementById('recipes');
-    if (!recipesDiv) {
-        return;
-    }
-    let card : HTMLElement = this.parentElement;
-    let pinnedHeader : HTMLElement = document.getElementById('pinned-header');
-    if(!pinnedHeader) {
-        pinnedHeader = document.createElement('h2');
-        pinnedHeader.innerText = 'Pinned';
-        pinnedHeader.id = 'pinned-header';
-        recipesDiv.insertBefore(pinnedHeader, recipesDiv.firstChild);
-    }
-    pinnedHeader.classList.remove('not-visible');
-    card.classList.add('hidden-for-pin');
-    // create new card thing
-    let trueHeader = card.firstElementChild;
-    let clonedNode = createCard(trueHeader.textContent);
-    recipesDiv.insertBefore(clonedNode, pinnedHeader.nextElementSibling);
-    clonedNode.setAttribute('true-node-id', card.id);
-    clonedNode.firstElementChild.setAttribute('related', trueHeader.getAttribute('related'));
-    appendRemoveIcon(clonedNode);
-};
 let printRecipe = function () {
     window.print();
 };
@@ -722,6 +600,13 @@ let togglePreviousHeader = function (previousHeader: HTMLElement, previousCount:
         previousHeader.classList.add('not-visible');
     }
 };
+let removeDontShowsIfNoJs = function () : void {
+    let allDontShows = document.getElementsByClassName('dont-show-if-no-js');
+    for(let dontShow of allDontShows) {
+        dontShow.classList.remove('dont-show-if-no-js');
+    }
+}
+removeDontShowsIfNoJs();
 parseMarkdownRecipes();
 buildRecipeCards();
 let searchBar: HTMLElement = document.getElementById('search');
