@@ -379,6 +379,7 @@ const halveRecipe = (ev: Event) => {
     modifyRecipe(card, numerator / denominator);
     input.value = numerator.toString();
 }
+let scrollPos = 0;
 const doubleRecipe = (ev: Event) => {
     const card: HTMLDivElement = (ev.target as HTMLElement).parentElement?.parentElement?.parentElement as HTMLDivElement;
     const input: HTMLInputElement = card.getElementsByTagName('input')[0];
@@ -392,6 +393,7 @@ const doubleRecipe = (ev: Event) => {
     input.value = numerator.toString();
 }
 const showRecipe = (ev: Event) => {
+    scrollPos = window.scrollY;
     const wrapper: HTMLDivElement = document.getElementById('wrapper') as HTMLDivElement;
     wrapper.style.display = 'none';
     const card: HTMLDivElement = (ev.target as HTMLHeadingElement).parentElement! as HTMLDivElement;
@@ -401,6 +403,9 @@ const showRecipe = (ev: Event) => {
     const contentDiv: HTMLDivElement = card.lastElementChild as HTMLDivElement;
     contentDiv.style.display = 'block';
     card.classList.add('fullscreen');
+    const placeholder = document.createElement('div');
+    placeholder.setAttribute('id','placeholder');
+    card.parentElement?.insertBefore(placeholder, card);
     document.body.appendChild(card);
 }
 const closeRecipes = (ev: Event) => {
@@ -413,7 +418,10 @@ const closeRecipes = (ev: Event) => {
     }
     contentDiv.style.display = 'none';
     card.classList.remove('fullscreen');
-    wrapper.appendChild(card);
+    const placeholder :HTMLDivElement = document.getElementById('placeholder') as HTMLDivElement;
+    placeholder.parentElement?.insertBefore(card, placeholder);
+    placeholder.remove();
+    window.scrollTo(0,scrollPos);
 }
 const copyRecipe = (ev: Event) => {
     console.log('please implement');
