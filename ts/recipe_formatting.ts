@@ -180,7 +180,7 @@ const rehomeTheChildren = (recipe: RecipeCard) => {
     recipe.card.setAttribute('servings', recipe.servings.value.toString());
 }
 
-const addPin = (card : HTMLDivElement) => {
+const addPin = (card: HTMLDivElement) => {
     let pinImg = document.createElement('img');
     pinImg.classList.add('pin');
     pinImg.setAttribute('src', 'img/pin.png?v=001');
@@ -188,7 +188,7 @@ const addPin = (card : HTMLDivElement) => {
     card.appendChild(pinImg);
 }
 
-const addUnPin = (card : HTMLDivElement) => {
+const addUnPin = (card: HTMLDivElement) => {
     let pinImg = document.createElement('img');
     pinImg.classList.add('pin');
     pinImg.setAttribute('src', 'img/pin_blu.png?v=001');
@@ -416,9 +416,10 @@ const showRecipe = (ev: Event) => {
     contentDiv.style.display = 'block';
     card.classList.add('fullscreen');
     const placeholder = document.createElement('div');
-    placeholder.setAttribute('id','placeholder');
+    placeholder.setAttribute('id', 'placeholder');
     card.parentElement?.insertBefore(placeholder, card);
     document.body.appendChild(card);
+    window.scrollTo(0, 0);
 }
 const closeRecipes = (ev: Event) => {
     const wrapper: HTMLDivElement = document.getElementById('wrapper') as HTMLDivElement;
@@ -430,10 +431,10 @@ const closeRecipes = (ev: Event) => {
     }
     contentDiv.style.display = 'none';
     card.classList.remove('fullscreen');
-    const placeholder :HTMLDivElement = document.getElementById('placeholder') as HTMLDivElement;
+    const placeholder: HTMLDivElement = document.getElementById('placeholder') as HTMLDivElement;
     placeholder.parentElement?.insertBefore(card, placeholder);
     placeholder.remove();
-    window.scrollTo(0,scrollPos);
+    window.scrollTo(0, scrollPos);
 }
 const copyRecipe = (ev: Event) => {
     console.log('please implement');
@@ -449,10 +450,10 @@ const printRecipe = (ev: Event) => {
 const pinRecipe = (ev: Event) => {
     const card: HTMLDivElement = (ev.target as HTMLElement).parentElement as HTMLDivElement;
     const placeholder = document.createElement('div');
-    placeholder.setAttribute('id','p' + card.id);
+    placeholder.setAttribute('id', 'p' + card.id);
     card.parentElement?.insertBefore(placeholder, card);
-    let pinnedHeader : HTMLElement | null  = document.getElementById('pinned-header');
-    if(!pinnedHeader) {
+    let pinnedHeader: HTMLElement | null = document.getElementById('pinned-header');
+    if (!pinnedHeader) {
         pinnedHeader = document.createElement("h2");
         pinnedHeader.innerText = 'Pinned';
         pinnedHeader.id = 'pinned-header';
@@ -464,11 +465,11 @@ const pinRecipe = (ev: Event) => {
 }
 const unpinRecipe = (ev: Event) => {
     const card: HTMLDivElement = (ev.target as HTMLElement).parentElement as HTMLDivElement;
-    const placeholder : HTMLElement = document.getElementById('p' + card.id)!;
+    const placeholder: HTMLElement = document.getElementById('p' + card.id)!;
     card.parentElement?.insertBefore(card, placeholder);
     placeholder.remove();
-    let pinnedHeader : HTMLElement  = document.getElementById('pinned-header')!;
-    if(pinnedHeader.tagName === pinnedHeader.nextElementSibling?.tagName) {
+    let pinnedHeader: HTMLElement = document.getElementById('pinned-header')!;
+    if (pinnedHeader.tagName === pinnedHeader.nextElementSibling?.tagName) {
         pinnedHeader.remove();
     }
     (ev.target as HTMLElement).remove();
