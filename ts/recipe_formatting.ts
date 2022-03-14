@@ -148,8 +148,9 @@ const rehomeTheChildren = (recipe: RecipeCard) => {
     while (recipe.card.firstElementChild) {
         recipe.content.appendChild(recipe.card.firstElementChild);
     }
+    recipe.title.element!.classList.add('title');
+    recipe.title.element!.addEventListener('click',showRecipe);
     recipe.card.appendChild(recipe.title.element!);
-
 
     let pinImg = document.createElement('img');
     pinImg.classList.add('pin');
@@ -159,6 +160,8 @@ const rehomeTheChildren = (recipe: RecipeCard) => {
 
     recipe.card.appendChild(recipe.content);
     recipe.content.style.display = 'none';
+    recipe.content.style.position = 'relative';
+    recipe.content.style.paddingBottom = '50px';
 }
 
 const createHeader = (...input: string[]): string => {
@@ -166,7 +169,7 @@ const createHeader = (...input: string[]): string => {
     for (const item of input) {
         fullString += item + "_";
     }
-    return fullString.toUpperCase().replace(/[^A-Z0-9]/, '_').replace(/^_/, '').replace(/_$/, '');
+    return fullString.toUpperCase().replace(/[^A-Z0-9]/g, '_').replace(/^_/, '').replace(/_$/, '');
 }
 
 const generateRecipeButtons = (recipe: RecipeCard) => {
@@ -278,23 +281,20 @@ const searchBackend = (search: HTMLInputElement): void => {
     if (!searchValue) {
         return;
     }
-    const searchTexts: string[] = searchValue.toLowerCase().split(/\s+/);
+    const searchTexts: string[] = searchValue.toLowerCase().split(/\s+/).filter(Boolean);
     const categoryKeys: string[] = Array.from(recipesMap.keys());
     for (const categoryKey of categoryKeys) {
         const categoryMap: Map<string, RecipeCard> = recipesMap.get(categoryKey)!;
         const recipeKeys: string[] = Array.from(categoryMap.keys());
         for (const recipeKey of recipeKeys) {
-            let show: boolean = false;
+            let matches: number = 0;
             const recipe = categoryMap.get(recipeKey)!;
             for (const searchText of searchTexts) {
-                if (!searchText) {
-                    continue;
-                }
                 if (recipe.title.value.toLowerCase().includes(searchText)) {
-                    show = true;
+                    matches++;
                 }
             }
-            if (!show) {
+            if (matches != searchTexts.length) {
                 recipe.card.classList.add('hide');
             }
         }
@@ -316,9 +316,29 @@ const doubleRecipe = (ev: Event) => {
     console.log('please implement');
     console.log(ev);
 }
+const showRecipe = (ev : Event) => {
+    const wrapper : HTMLDivElement = document.getElementById('wrapper') as HTMLDivElement;
+    wrapper.style.display = 'none';
+    const card : HTMLDivElement = (ev.target as HTMLHeadingElement).parentElement! as HTMLDivElement;
+    for(const pin of card.getElementsByClassName('pin')) {
+        (pin as HTMLElement).style.display = 'none';
+    }
+    const contentDiv : HTMLDivElement = card.lastElementChild as HTMLDivElement;
+    contentDiv.style.display = 'block';
+    card.classList.add('fullscreen');
+    document.body.appendChild(card);
+}
 const closeRecipes = (ev: Event) => {
-    console.log('please implement');
-    console.log(ev);
+    const wrapper : HTMLDivElement = document.getElementById('wrapper') as HTMLDivElement;
+    wrapper.style.display = '';
+    const contentDiv : HTMLDivElement = (ev.target as HTMLHeadingElement).parentElement as HTMLDivElement;
+    const card : HTMLDivElement = contentDiv.parentElement as HTMLDivElement;
+    for(const pin of card.getElementsByClassName('pin')) {
+        (pin as HTMLElement).style.display = '';
+    }
+    contentDiv.style.display = 'none';
+    card.classList.remove('fullscreen');
+    wrapper.appendChild(card);
 }
 const copyRecipe = (ev: Event) => {
     console.log('please implement');
