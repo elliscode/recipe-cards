@@ -170,11 +170,7 @@ const rehomeTheChildren = (recipe: RecipeCard) => {
     recipe.title.element!.addEventListener('click', showRecipe);
     recipe.card.appendChild(recipe.title.element!);
 
-    let pinImg = document.createElement('img');
-    pinImg.classList.add('pin');
-    pinImg.setAttribute('src', 'img/pin.png?v=001');
-    pinImg.addEventListener('click', pinRecipe);
-    recipe.card.appendChild(pinImg);
+    addPin(recipe.card);
 
     recipe.card.appendChild(recipe.content);
     recipe.content.style.display = 'none';
@@ -182,6 +178,22 @@ const rehomeTheChildren = (recipe: RecipeCard) => {
     recipe.content.style.paddingBottom = '50px';
 
     recipe.card.setAttribute('servings', recipe.servings.value.toString());
+}
+
+const addPin = (card : HTMLDivElement) => {
+    let pinImg = document.createElement('img');
+    pinImg.classList.add('pin');
+    pinImg.setAttribute('src', 'img/pin.png?v=001');
+    pinImg.addEventListener('click', pinRecipe);
+    card.appendChild(pinImg);
+}
+
+const addUnPin = (card : HTMLDivElement) => {
+    let pinImg = document.createElement('img');
+    pinImg.classList.add('pin');
+    pinImg.setAttribute('src', 'img/pin_blu.png?v=001');
+    pinImg.addEventListener('click', unpinRecipe);
+    card.appendChild(pinImg);
 }
 
 const createHeader = (...input: string[]): string => {
@@ -400,7 +412,7 @@ const showRecipe = (ev: Event) => {
     for (const pin of card.getElementsByClassName('pin')) {
         (pin as HTMLElement).style.display = 'none';
     }
-    const contentDiv: HTMLDivElement = card.lastElementChild as HTMLDivElement;
+    const contentDiv: HTMLDivElement = card.getElementsByTagName('div')[0];
     contentDiv.style.display = 'block';
     card.classList.add('fullscreen');
     const placeholder = document.createElement('div');
@@ -435,8 +447,32 @@ const printRecipe = (ev: Event) => {
     window.print();
 }
 const pinRecipe = (ev: Event) => {
-    console.log('please implement');
-    console.log(ev);
+    const card: HTMLDivElement = (ev.target as HTMLElement).parentElement as HTMLDivElement;
+    const placeholder = document.createElement('div');
+    placeholder.setAttribute('id','p' + card.id);
+    card.parentElement?.insertBefore(placeholder, card);
+    let pinnedHeader : HTMLElement | null  = document.getElementById('pinned-header');
+    if(!pinnedHeader) {
+        pinnedHeader = document.createElement("h2");
+        pinnedHeader.innerText = 'Pinned';
+        pinnedHeader.id = 'pinned-header';
+        card.parentElement?.insertBefore(pinnedHeader, card.parentElement.firstElementChild);
+    }
+    card.parentElement?.insertBefore(card, pinnedHeader.nextElementSibling);
+    (ev.target as HTMLElement).remove();
+    addUnPin(card);
+}
+const unpinRecipe = (ev: Event) => {
+    const card: HTMLDivElement = (ev.target as HTMLElement).parentElement as HTMLDivElement;
+    const placeholder : HTMLElement = document.getElementById('p' + card.id)!;
+    card.parentElement?.insertBefore(card, placeholder);
+    placeholder.remove();
+    let pinnedHeader : HTMLElement  = document.getElementById('pinned-header')!;
+    if(pinnedHeader.tagName === pinnedHeader.nextElementSibling?.tagName) {
+        pinnedHeader.remove();
+    }
+    (ev.target as HTMLElement).remove();
+    addPin(card);
 }
 parseRecipes();
 buildSections();
