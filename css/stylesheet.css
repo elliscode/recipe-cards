@@ -51,6 +51,7 @@
     }
     .servings {
         position:relative;
+        margin-top:21px;
     }
     .servings > input {
         font-size:20px;
@@ -222,13 +223,13 @@
     #wrapper, #info {
         display:none;
     }
-    .fill * {
+    .fullscreen * {
         visibility:visible;
     }
-    .fill img {
+    .fullscreen img {
         visibility:hidden;
     }
-    .fill button {
+    .fullscreen button {
         visibility:hidden;
     }
 }

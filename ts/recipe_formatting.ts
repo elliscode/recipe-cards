@@ -139,17 +139,35 @@ const buildSections = () => {
             recipe.servings.element?.remove();
             recipe.link.element?.remove();
             generateRecipeButtons(recipe);
+            setTheSpans(recipe);
+            modifyRecipe(recipe.card, 1);
             rehomeTheChildren(recipe);
         }
     }
 }
-
+const setTheSpans = (recipe: RecipeCard) => {
+    for (const listElement of recipe.card.getElementsByTagName('li')) {
+        for (const spanElement of listElement.getElementsByTagName('span')) {
+            const span: HTMLSpanElement = spanElement as HTMLSpanElement;
+            const text: string = !span.textContent ? '' : span.textContent;
+            let value: number = 0;
+            if (text.includes('/')) {
+                const parts: string[] = text.split('/');
+                value = parseFloat(parts[0]) / parseFloat(parts[1]);
+            } else {
+                value = parseFloat(text);
+            }
+            span.setAttribute('originalValue', value.toString());
+            span.classList.add('quantity');
+        }
+    }
+}
 const rehomeTheChildren = (recipe: RecipeCard) => {
     while (recipe.card.firstElementChild) {
         recipe.content.appendChild(recipe.card.firstElementChild);
     }
     recipe.title.element!.classList.add('title');
-    recipe.title.element!.addEventListener('click',showRecipe);
+    recipe.title.element!.addEventListener('click', showRecipe);
     recipe.card.appendChild(recipe.title.element!);
 
     let pinImg = document.createElement('img');
@@ -162,6 +180,8 @@ const rehomeTheChildren = (recipe: RecipeCard) => {
     recipe.content.style.display = 'none';
     recipe.content.style.position = 'relative';
     recipe.content.style.paddingBottom = '50px';
+
+    recipe.card.setAttribute('servings', recipe.servings.value.toString());
 }
 
 const createHeader = (...input: string[]): string => {
@@ -300,40 +320,95 @@ const searchBackend = (search: HTMLInputElement): void => {
         }
     }
 }
+const modifyRecipe = (card: HTMLDivElement, multiplier: number) => {
+    for (const quantity of card.getElementsByClassName('quantity')) {
+        const newValue: number = parseFloat(quantity.getAttribute('originalvalue')!) * multiplier;
+        (quantity as HTMLSpanElement).innerText = toFractionIfApplicable(newValue);
+    }
+}
+
+const toFractionIfApplicable = (value: number): string => {
+    if ((1 / 10) - 0.001 < value && value < (1 / 10) + 0.001) { return '\u2152'; }
+    if ((1 / 9) - 0.001 < value && value < (1 / 9) + 0.001) { return '\u2151'; }
+    if ((1 / 8) - 0.001 < value && value < (1 / 8) + 0.001) { return '\u215B'; }
+    if ((1 / 7) - 0.001 < value && value < (1 / 7) + 0.001) { return '\u2150'; }
+    if ((1 / 6) - 0.001 < value && value < (1 / 6) + 0.001) { return '\u2159'; }
+    if ((1 / 5) - 0.001 < value && value < (1 / 5) + 0.001) { return '\u2155'; }
+    if ((1 / 4) - 0.001 < value && value < (1 / 4) + 0.001) { return '\u00BC'; }
+    if ((1 / 3) - 0.001 < value && value < (1 / 3) + 0.001) { return '\u2153'; }
+    if ((1 / 2) - 0.001 < value && value < (1 / 2) + 0.001) { return '\u00BD'; }
+    if ((2 / 5) - 0.001 < value && value < (2 / 5) + 0.001) { return '\u2156'; }
+    if ((2 / 3) - 0.001 < value && value < (2 / 3) + 0.001) { return '\u2154'; }
+    if ((3 / 8) - 0.001 < value && value < (3 / 8) + 0.001) { return '\u215C'; }
+    if ((3 / 5) - 0.001 < value && value < (3 / 5) + 0.001) { return '\u2157'; }
+    if ((3 / 4) - 0.001 < value && value < (3 / 4) + 0.001) { return '\u00BE'; }
+    if ((4 / 5) - 0.001 < value && value < (4 / 5) + 0.001) { return '\u2158'; }
+    if ((5 / 8) - 0.001 < value && value < (5 / 8) + 0.001) { return '\u215D'; }
+    if ((5 / 6) - 0.001 < value && value < (5 / 6) + 0.001) { return '\u215A'; }
+    if ((7 / 8) - 0.001 < value && value < (7 / 8) + 0.001) { return '\u215E'; }
+    return value.toString();
+}
+
 const modifyRecipeByCallback = (ev: Event) => {
-    console.log('please implement');
-    console.log(ev);
+    const input: HTMLInputElement = (ev.target as HTMLInputElement);
+    const card: HTMLDivElement = input.parentElement?.parentElement?.parentElement as HTMLDivElement;
+    let numerator = parseFloat(input.value);
+    const denominator: number = parseFloat(card.getAttribute('servings')!);
+    if (isNaN(numerator)) {
+        numerator = denominator;
+    }
+    modifyRecipe(card, numerator / denominator);
 }
 const resetRecipe = (ev: Event) => {
-    console.log('please implement');
-    console.log(ev);
+    const card: HTMLDivElement = (ev.target as HTMLElement).parentElement?.parentElement?.parentElement as HTMLDivElement;
+    const input: HTMLInputElement = card.getElementsByTagName('input')[0];
+    const denominator: number = parseFloat(card.getAttribute('servings')!);
+    const numerator: number = denominator;
+    modifyRecipe(card, numerator / denominator);
+    input.value = numerator.toString();
 }
 const halveRecipe = (ev: Event) => {
-    console.log('please implement');
-    console.log(ev);
+    const card: HTMLDivElement = (ev.target as HTMLElement).parentElement?.parentElement?.parentElement as HTMLDivElement;
+    const input: HTMLInputElement = card.getElementsByTagName('input')[0];
+    let numerator: number = parseFloat(input.value);
+    const denominator: number = parseFloat(card.getAttribute('servings')!);
+    if (isNaN(numerator)) {
+        numerator = denominator;
+    }
+    numerator = numerator / 2;
+    modifyRecipe(card, numerator / denominator);
+    input.value = numerator.toString();
 }
 const doubleRecipe = (ev: Event) => {
-    console.log('please implement');
-    console.log(ev);
+    const card: HTMLDivElement = (ev.target as HTMLElement).parentElement?.parentElement?.parentElement as HTMLDivElement;
+    const input: HTMLInputElement = card.getElementsByTagName('input')[0];
+    let numerator: number = parseFloat(input.value);
+    const denominator: number = parseFloat(card.getAttribute('servings')!);
+    if (isNaN(numerator)) {
+        numerator = denominator;
+    }
+    numerator = numerator * 2;
+    modifyRecipe(card, numerator / denominator);
+    input.value = numerator.toString();
 }
-const showRecipe = (ev : Event) => {
-    const wrapper : HTMLDivElement = document.getElementById('wrapper') as HTMLDivElement;
+const showRecipe = (ev: Event) => {
+    const wrapper: HTMLDivElement = document.getElementById('wrapper') as HTMLDivElement;
     wrapper.style.display = 'none';
-    const card : HTMLDivElement = (ev.target as HTMLHeadingElement).parentElement! as HTMLDivElement;
-    for(const pin of card.getElementsByClassName('pin')) {
+    const card: HTMLDivElement = (ev.target as HTMLHeadingElement).parentElement! as HTMLDivElement;
+    for (const pin of card.getElementsByClassName('pin')) {
         (pin as HTMLElement).style.display = 'none';
     }
-    const contentDiv : HTMLDivElement = card.lastElementChild as HTMLDivElement;
+    const contentDiv: HTMLDivElement = card.lastElementChild as HTMLDivElement;
     contentDiv.style.display = 'block';
     card.classList.add('fullscreen');
     document.body.appendChild(card);
 }
 const closeRecipes = (ev: Event) => {
-    const wrapper : HTMLDivElement = document.getElementById('wrapper') as HTMLDivElement;
+    const wrapper: HTMLDivElement = document.getElementById('wrapper') as HTMLDivElement;
     wrapper.style.display = '';
-    const contentDiv : HTMLDivElement = (ev.target as HTMLHeadingElement).parentElement as HTMLDivElement;
-    const card : HTMLDivElement = contentDiv.parentElement as HTMLDivElement;
-    for(const pin of card.getElementsByClassName('pin')) {
+    const contentDiv: HTMLDivElement = (ev.target as HTMLHeadingElement).parentElement as HTMLDivElement;
+    const card: HTMLDivElement = contentDiv.parentElement as HTMLDivElement;
+    for (const pin of card.getElementsByClassName('pin')) {
         (pin as HTMLElement).style.display = '';
     }
     contentDiv.style.display = 'none';
@@ -349,8 +424,7 @@ const copyMarkdown = (ev: Event) => {
     console.log(ev);
 }
 const printRecipe = (ev: Event) => {
-    console.log('please implement');
-    console.log(ev);
+    window.print();
 }
 const pinRecipe = (ev: Event) => {
     console.log('please implement');
