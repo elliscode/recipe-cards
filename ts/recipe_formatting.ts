@@ -437,12 +437,73 @@ const closeRecipes = (ev: Event) => {
     window.scrollTo(0, scrollPos);
 }
 const copyRecipe = (ev: Event) => {
-    console.log('please implement');
-    console.log(ev);
+    const card: HTMLDivElement = (ev.target as HTMLElement).parentElement?.parentElement as HTMLDivElement;
+    const text = convertRecipeToMarkdown(card, false);
+    navigator.clipboard.writeText(text);
+    const info: HTMLElement = document.getElementById('info') as HTMLElement;
+    info.style.display = 'inline-block';
+    info.innerText = 'Copied ' + card.getElementsByTagName('h3')[0].textContent + ' to clipboard';
+    startGradualFade(info);
 }
 const copyMarkdown = (ev: Event) => {
-    console.log('please implement');
-    console.log(ev);
+    const card: HTMLDivElement = (ev.target as HTMLElement).parentElement?.parentElement as HTMLDivElement;
+    const text = convertRecipeToMarkdown(card, true);
+    navigator.clipboard.writeText(text);
+    const info: HTMLElement = document.getElementById('info') as HTMLElement;
+    info.style.display = 'inline-block';
+    info.innerText = 'Copied ' + card.getElementsByTagName('h3')[0].textContent + ' to clipboard';
+    startGradualFade(info);
+}
+let copyTimeout: number | undefined = undefined;
+const startGradualFade = function (element: HTMLElement) {
+    element.style.opacity = '1';
+    clearTimeout(copyTimeout);
+    copyTimeout = setTimeout(gradualFade, 1500, element);
+};
+const gradualFade = function (element: HTMLElement) {
+    const newVal = parseFloat(element.style.opacity) - 0.01;
+    if (newVal > 0) {
+        element.style.opacity = newVal.toString();
+        copyTimeout = setTimeout(gradualFade, 10, element);
+    } else {
+        element.style.display = 'none';
+        copyTimeout = undefined;
+    }
+};
+const convertRecipeToMarkdown = (card: HTMLDivElement, markdown: boolean): string => {
+
+    let output = '';
+
+    const titleItem: HTMLHeadingElement = card.getElementsByTagName('h3')[0];
+
+    output += (markdown ? '# ' : '') + titleItem.textContent + '\n' + '\n';
+
+    const contentDiv: HTMLDivElement = card.getElementsByTagName('div')[0];
+
+    for (const child of contentDiv.children) {
+        if (child instanceof HTMLHeadingElement) {
+            if ('h4' === child.tagName.toLowerCase()) {
+                output += (markdown ? '## ' : '');
+            } else if ('h5' === child.tagName.toLowerCase()) {
+                output += (markdown ? '### ' : '');
+            } else if ('h4' === child.tagName.toLowerCase()) {
+                output += (markdown ? '#### ' : '');
+            }
+            output += child.textContent + '\n' + '\n';
+        } else if (child instanceof HTMLUListElement) {
+            const ul: HTMLUListElement = child as HTMLUListElement;
+            for (const listChild of ul.children) {
+                if (listChild instanceof HTMLLIElement) {
+                    output += '- ' + listChild.textContent!.replace(/[\s\r\n]+/g, ' ').trim() + '\n';
+                }
+            }
+            output += '\n';
+        } else if (child instanceof HTMLParagraphElement) {
+            output += child.textContent + '\n' + '\n';
+        }
+    }
+
+    return output.trim();
 }
 const printRecipe = (ev: Event) => {
     window.print();
