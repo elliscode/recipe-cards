@@ -12,4 +12,4 @@ This will clone the https://github.com/elliscode/container-weights-calculator an
 
 [Working demo here](https://ellisrecipes.com)
 
-HTML template for creating your own customized list of recipe cards. Each recipe is written in a simplified version of markdown, and parsed into a easy to read recipe card optimized for mobile use.
+Using the generator/index.html page, you can convert a recipe written in markdown to the required HTML used in a recipe card. If javascript is enable in the browser, on loading the page, the recipes will be grouped by category and alphabetically sorted, as well as a search feature enabled, recipe serving modification enabled, and copy buttons will be added to each card.
