@@ -15,44 +15,8 @@
         padding:18px;
         margin:0;
     }
-    
-    /* This is for fixed scroll port */
-    /*
-    body {
-        background-color:#f9feff;
-        touch-action: none;
-        -webkit-overflow-scrolling: none;
-        overflow: hidden;
-        overscroll-behavior: none;
-        width:100%;
-        height:100%;
-        position:fixed;
-        top:0;
-        left:0;
-        padding:0;
-        margin:0;
-        box-sizing: border-box;
-    }
-    #wrapper {
-        width:100%;
-        height:100%;
-        position:fixed;
-        top:0;
-        left:0;
-        box-sizing: border-box;
-        padding:18px;
-        margin:0;
-        overflow-y:auto;
-    }
-    */
-    #hide {
-        width:100%;
-        height:100%;
-        position:fixed;
-        top:0;
-        left:0;
-        background-color: white;
-        z-index: 6;
+    .hide {
+        display:none;
     }
     h1 {
         margin-top:13px;
@@ -66,13 +30,6 @@
     }
     h3 {
         margin:0px;
-    }
-    .card-content > h3 {
-        margin-bottom:11px;
-    }
-    .card-content > h4 {
-        margin:0px;
-        margin-top:11px;
     }
     .close-recipe {
         position:fixed;
@@ -89,8 +46,12 @@
         touch-action: manipulation;
         user-select: none;
     }
+    .title {
+        cursor:pointer;
+    }
     .servings {
         position:relative;
+        margin-top:21px;
     }
     .servings > input {
         font-size:20px;
@@ -190,13 +151,12 @@
         padding:10px; 
         border: 2px #70c8d8 solid;
         box-sizing:border-box;
-        overflow-y: auto;
-    }
-    .outer {
         position:relative;
         margin:10px 0px;
         border-radius:10px;
-        overflow:hidden;
+    }
+    .fullscreen {
+        margin:0px;
     }
     .higher {
         z-index:4;
@@ -204,12 +164,6 @@
     #bottom-boy {
         width:1px;
         display:block;
-    }
-    .card-content {
-        padding-bottom:50px;
-        position:relative;
-        min-height:100%;
-        box-sizing:border-box;
     }
     li {
         margin-top:7px;
@@ -254,18 +208,21 @@
     .hidden-for-pin {
         display:none;
     }
+    .dont-show-if-no-js {
+        display:none!important;
+    }
 }
 @media print {
     #wrapper, #info {
         display:none;
     }
-    .fill * {
+    .fullscreen * {
         visibility:visible;
     }
-    .fill img {
+    .fullscreen img {
         visibility:hidden;
     }
-    .fill button {
+    .fullscreen button {
         visibility:hidden;
     }
 }

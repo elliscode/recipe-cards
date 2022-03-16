@@ -2,241 +2,2978 @@
 <html>
 
 <head>
-<meta charset="utf-8" />
-<title>Ellis Recipes</title>
-<meta name="description" content="Adaptations of recipes found on the internet" />
-<meta name="author" content="elliscode.com" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<link rel="icon" type="image/png" href="img/favicon.png" />
-<link rel="stylesheet" href="css/stylesheet.css?v=077" />
+    <meta charset="utf-8" />
+    <title>Ellis Recipes</title>
+    <meta name="description" content="Adaptations of recipes found on the internet" />
+    <meta name="author" content="elliscode.com" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="icon" type="image/png" href="img/favicon.png" />
+    <link rel="stylesheet" href="css/stylesheet.css?v=082" />
 </head>
+
 <body id="body">
-<div id="wrapper">
-<h1>Ellis Recipes</h1>
-<div id="icons">
-<a href="serving-calculator/index.html"><img src="img/pie.png" /></a>
-<a href="container-weights-calculator/index.html"><img src="img/scale.png" /></a>
-</div>
-<div id="search-group">
-<input type="text" id="search" placeholder="Search..."/>
-<button id="search-clear">&times;</button>
-</div>
-<div id="recipes">
-<!-- run this regex to find invalid characters [^\x08-\x7f] -->
-<!--
-
-<div class="recipe" category="
-
-" link="
-
-">
-
-
-
-</div>
-
--->
-
-<div class="recipe" category="Example Category" link="https://google.com">
-# Example Recipe
-
-servings 3
-
-## Ingredients
-
-- 1 tbsp sugar
-- 1/2 cup spice
-- 30g everything nice
-
-## Directions
-
-### to create your own recipe
-
-- create a div with class "recipe"
-- set the category
-- optionally include a link to the original
-- save your html file and refresh the page
-
-### features
-
-- automatically fixes capitalization for consistency
-- automatically changes fractions to their corresponding HTML symbols
-- automatically fixes known unit spacing in recipes
-- reads basic markdown, including headers, numbered lists, and bulleted lists
-- includes easy shortcut buttons at the bottom of each card
-- automatically groups recipes by category and sorts by recipe title alphabetically
-- optimized for mobile
-</div>
-
-<div class="recipe" category="Example Category" link="https://google.com">
-# Long recipe
-
-## Ingredients
-
-### Part 1
-
-- Lorem ipsum dolor sit amet, consectetur adipiscing elit
-- Sed varius bibendum nisl ac posuere
-- Duis vehicula ut nisi sit amet congue
-- Mauris aliquet et nisi nec tristique
-- Aenean tempor blandit pretium
-- Morbi sed neque lobortis, lacinia enim nec, auctor tellus
-- Nulla a ex gravida, ullamcorper metus at, tincidunt ex
-- Etiam gravida metus sed pharetra ultricies
-- Quisque placerat luctus lacus in elementum
-- Pellentesque imperdiet lobortis orci, vel cursus augue dapibus a
-- Pellentesque at massa ac mi ullamcorper fringilla
-- Ut turpis enim, efficitur eget elit ac, elementum venenatis arcu
-- Sed pellentesque porta ante, sit amet maximus felis dignissim vel
-- Morbi commodo lorem a odio fringilla porta
-- In eleifend ipsum dolor, vel accumsan risus vulputate at
-- Quisque hendrerit elit cursus ipsum luctus ullamcorper
-- Nullam accumsan posuere imperdiet
-- Quisque lacinia, mi quis egestas efficitur, felis neque cursus ex, nec tristique libero nisl quis est
-- Suspendisse commodo orci nec tortor venenatis, a rhoncus metus efficitur
-- Etiam ultricies mi quis tortor sodales sollicitudin
-- Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas
-- Vestibulum molestie at velit quis vehicula
-- Integer placerat mollis ligula id consectetur
-- Cras eget orci in dui finibus laoreet ut quis leo
-- Quisque nisi velit, rhoncus vel interdum et, feugiat id urna
-- Sed egestas vel arcu in sollicitudin
-- Nunc fermentum metus cursus, iaculis erat eu, gravida risus
-- Nullam pretium bibendum lorem, vitae iaculis purus pellentesque ac
-- Sed tempus lorem et magna dignissim tristique
-- Proin gravida neque sem, ut fermentum dolor suscipit in
-- Vivamus ac nunc tristique nisl volutpat finibus
-- Nunc tellus nisi, varius in urna viverra, porta imperdiet erat
-- Mauris rutrum, est in eleifend blandit, ex felis commodo nibh, quis dignissim arcu elit in arcu
-- Nullam aliquam turpis at lectus iaculis cursus
-- Integer pellentesque, quam id volutpat gravida, nibh odio fermentum diam, eget congue diam elit eu diam
-- Quisque hendrerit, orci in volutpat finibus, quam diam mattis quam, sed venenatis nisl mi sit amet massa
-- Donec est ante, hendrerit sed sem ut, luctus sollicitudin eros
-- Suspendisse risus ipsum, tincidunt et justo at, aliquet hendrerit tortor
-- Nam arcu massa, pretium ut dignissim et, rhoncus vel sapien
-- Nullam varius diam et nunc imperdiet, nec luctus sem facilisis
-- Proin nec semper lacus, nec hendrerit nisl
-- Aenean ante libero, eleifend vitae ornare eu, fermentum et odio
-- Phasellus gravida dapibus tellus sit amet pretium
-- Phasellus scelerisque risus id quam sodales laoreet
-- Nam ornare, dolor sit amet consequat ullamcorper, quam sem faucibus velit, sed aliquet mi orci eu eros
-- Sed dapibus odio nec faucibus convallis
-
-### Part 2
-
-
-- Lorem ipsum dolor sit amet, consectetur adipiscing elit
-- Vivamus rhoncus velit quis sapien molestie feugiat
-- Lorem ipsum dolor sit amet, consectetur adipiscing elit
-- Sed varius bibendum nisl ac posuere
-- Duis vehicula ut nisi sit amet congue
-- Mauris aliquet et nisi nec tristique
-- Aenean tempor blandit pretium
-- Morbi sed neque lobortis, lacinia enim nec, auctor tellus
-- Nulla a ex gravida, ullamcorper metus at, tincidunt ex
-- Etiam gravida metus sed pharetra ultricies
-- Quisque placerat luctus lacus in elementum
-- Pellentesque imperdiet lobortis orci, vel cursus augue dapibus a
-- Pellentesque at massa ac mi ullamcorper fringilla
-- Ut turpis enim, efficitur eget elit ac, elementum venenatis arcu
-- Sed pellentesque porta ante, sit amet maximus felis dignissim vel
-- Morbi commodo lorem a odio fringilla porta
-- In eleifend ipsum dolor, vel accumsan risus vulputate at
-- Quisque hendrerit elit cursus ipsum luctus ullamcorper
-- Nullam accumsan posuere imperdiet
-- Quisque lacinia, mi quis egestas efficitur, felis neque cursus ex, nec tristique libero nisl quis est
-- Suspendisse commodo orci nec tortor venenatis, a rhoncus metus efficitur
-- Etiam ultricies mi quis tortor sodales sollicitudin
-
-## Directions
-
-### Part 1
-
-- Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas
-- Vestibulum molestie at velit quis vehicula
-- Integer placerat mollis ligula id consectetur
-- Cras eget orci in dui finibus laoreet ut quis leo
-- Quisque nisi velit, rhoncus vel interdum et, feugiat id urna
-- Sed egestas vel arcu in sollicitudin
-- Nunc fermentum metus cursus, iaculis erat eu, gravida risus
-- Nullam pretium bibendum lorem, vitae iaculis purus pellentesque ac
-- Sed tempus lorem et magna dignissim tristique
-- Proin gravida neque sem, ut fermentum dolor suscipit in
-- Vivamus ac nunc tristique nisl volutpat finibus
-- Nunc tellus nisi, varius in urna viverra, porta imperdiet erat
-- Mauris rutrum, est in eleifend blandit, ex felis commodo nibh, quis dignissim arcu elit in arcu
-- Nullam aliquam turpis at lectus iaculis cursus
-- Integer pellentesque, quam id volutpat gravida, nibh odio fermentum diam, eget congue diam elit eu diam
-- Quisque hendrerit, orci in volutpat finibus, quam diam mattis quam, sed venenatis nisl mi sit amet massa
-- Donec est ante, hendrerit sed sem ut, luctus sollicitudin eros
-- Suspendisse risus ipsum, tincidunt et justo at, aliquet hendrerit tortor
-- Nam arcu massa, pretium ut dignissim et, rhoncus vel sapien
-- Nullam varius diam et nunc imperdiet, nec luctus sem facilisis
-- Proin nec semper lacus, nec hendrerit nisl
-- Aenean ante libero, eleifend vitae ornare eu, fermentum et odio
-- Phasellus gravida dapibus tellus sit amet pretium
-- Phasellus scelerisque risus id quam sodales laoreet
-- Nam ornare, dolor sit amet consequat ullamcorper, quam sem faucibus velit, sed aliquet mi orci eu eros
-- Sed dapibus odio nec faucibus convallis
-
-### part 2
-
-- Lorem ipsum dolor sit amet, consectetur adipiscing elit
-- Vivamus rhoncus velit quis sapien molestie feugiat
-- Lorem ipsum dolor sit amet, consectetur adipiscing elit
-- Sed varius bibendum nisl ac posuere
-- Duis vehicula ut nisi sit amet congue
-- Mauris aliquet et nisi nec tristique
-- Aenean tempor blandit pretium
-- Morbi sed neque lobortis, lacinia enim nec, auctor tellus
-- Nulla a ex gravida, ullamcorper metus at, tincidunt ex
-- Etiam gravida metus sed pharetra ultricies
-- Quisque placerat luctus lacus in elementum
-- Pellentesque imperdiet lobortis orci, vel cursus augue dapibus a
-- Pellentesque at massa ac mi ullamcorper fringilla
-- Ut turpis enim, efficitur eget elit ac, elementum venenatis arcu
-- Sed pellentesque porta ante, sit amet maximus felis dignissim vel
-- Morbi commodo lorem a odio fringilla porta
-- In eleifend ipsum dolor, vel accumsan risus vulputate at
-- Quisque hendrerit elit cursus ipsum luctus ullamcorper
-- Nullam accumsan posuere imperdiet
-- Quisque lacinia, mi quis egestas efficitur, felis neque cursus ex, nec tristique libero nisl quis est
-- Suspendisse commodo orci nec tortor venenatis, a rhoncus metus efficitur
-- Etiam ultricies mi quis tortor sodales sollicitudin
-- Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas
-- Vestibulum molestie at velit quis vehicula
-- Integer placerat mollis ligula id consectetur
-- Cras eget orci in dui finibus laoreet ut quis leo
-- Quisque nisi velit, rhoncus vel interdum et, feugiat id urna
-- Sed egestas vel arcu in sollicitudin
-- Nunc fermentum metus cursus, iaculis erat eu, gravida risus
-- Nullam pretium bibendum lorem, vitae iaculis purus pellentesque ac
-- Sed tempus lorem et magna dignissim tristique
-- Proin gravida neque sem, ut fermentum dolor suscipit in
-- Vivamus ac nunc tristique nisl volutpat finibus
-- Nunc tellus nisi, varius in urna viverra, porta imperdiet erat
-- Mauris rutrum, est in eleifend blandit, ex felis commodo nibh, quis dignissim arcu elit in arcu
-- Nullam aliquam turpis at lectus iaculis cursus
-- Integer pellentesque, quam id volutpat gravida, nibh odio fermentum diam, eget congue diam elit eu diam
-- Quisque hendrerit, orci in volutpat finibus, quam diam mattis quam, sed venenatis nisl mi sit amet massa
-- Donec est ante, hendrerit sed sem ut, luctus sollicitudin eros
-- Suspendisse risus ipsum, tincidunt et justo at, aliquet hendrerit tortor
-- Nam arcu massa, pretium ut dignissim et, rhoncus vel sapien
-- Nullam varius diam et nunc imperdiet, nec luctus sem facilisis
-- Proin nec semper lacus, nec hendrerit nisl
-- Aenean ante libero, eleifend vitae ornare eu, fermentum et odio
-- Phasellus gravida dapibus tellus sit amet pretium
-- Phasellus scelerisque risus id quam sodales laoreet
-- Nam ornare, dolor sit amet consequat ullamcorper, quam sem faucibus velit, sed aliquet mi orci eu eros
-- Sed dapibus odio nec faucibus convallis
-- Lorem ipsum dolor sit amet, consectetur adipiscing elit
-- Vivamus rhoncus velit quis sapien molestie feugiat
-</div>
-<!--recipe divs-->
-</div>
-</div>
-<div id="hide"></div>
-<div id="info"><p>text copied</p></div>
+    <div id="wrapper">
+        <h1>Ellis Recipes</h1>
+        <div id="icons">
+            <a href="serving-calculator/index.html"><img src="img/pie.png" /></a>
+            <a href="container-weights-calculator/index.html"><img src="img/scale.png" /></a>
+        </div>
+        <div id="search-group" class="dont-show-if-no-js">
+            <input type="text" id="search" placeholder="Search..." />
+            <button id="search-clear">&times;</button>
+        </div>
+        <div id="recipes">
+            <!-- run this regex to find invalid characters [^\x08-\x7f] -->
+            <!-- recipe divs--> 
+<div class="card"> 
+<h3>Bolognese</h3> 
+<p>Category: Dips And Sauces</p> 
+<p>Servings: 4</p> 
+<h4>Ingredients</h4> 
+<ul> 
+<li><span>1</span> medium onion, chopped</li> 
+<li><span>1</span> celery stalk, chopped</li> 
+<li><span>1</span> small carrot, peeled, chopped</li> 
+<li><span>3</span> TBSP. extra-virgin olive oil</li> 
+<li><span>1</span> lb. ground beef chuck (20% fat), patted dry</li> 
+<li>Kosher salt</li> 
+<li><span>3</span> oz. thinly sliced pancetta, finely chopped</li>
+<li><span>1</span> cup dry white wine</li> 
+<li><span>1/3</span> cup tomato paste</li>
+<li><span>1</span> bay leaf</li> 
+<li><span>1</span> Pinch of finely grated nutmeg</li> 
+<li><span>2</span> cups (or more) homemade chicken stock or low-sodium chicken broth</li>
+<li><span>1</span> cup whole milk</li> 
+<li><span>1</span> lb. fresh tagliatelle or pappardelle, or dry rigatoni</li> 
+<li><span>2</span> oz. finely grated Parmesan (about <span>1/2</span> cup), plus more for serving</li> </ul> 
+<h4>Preparation</h4> 
+<ul> 
+<li>Pulse onion, celery, and carrot in a food processor until very finely chopped. Transfer to a small bowl.</li> 
+<li>Heat oil in a Dutch oven or other large pot over medium. Break beef into small clumps (about 1 1/2") and add to pot; season lightly with salt. Cook, stirring occasionally but not breaking meat apart, until beef is lightly browned but not crisp, 6-8 minutes. It may be gray in spots (that's okay!) and still a little pink in the center. Using a slotted spoon, transfer beef to a medium bowl.</li> 
+<li>Wipe out pot. Cook pancetta in pot over medium heat, stirring occasionally, until pancetta has released some of its fat and is crisp, 6-8 minutes. Add onion mixture to pot and cook, stirring occasionally, until vegetables are very soft and beginning to stick to surface, 6-8 minutes. </li> 
+<li>Return beef to pot and pour in wine. Reduce heat to medium-low and cook, smashing down on beef with a wooden spoon, until wine is evaporated, surface of pot is almost dry, and meat is finely ground, 12-15 minutes. (The meat should be reduced to what looks like little bits. It takes a bit of effort, but you can take breaks.) Add tomato paste, bay leaf, and nutmeg and cook, stirring occasionally and still pressing down on meat, until tomato paste is slightly darkened, about 5 minutes.</li> 
+<li>Pour stock and milk into pot; add a pinch of salt. Reduce heat to the lowest setting and cook, uncovered and stirring occasionally, until meat is very, very tender, 2-2 1/2 hours. There shouldn't be any rapid bubbles at this stage. Instead, the sauce should release the occasional small bubble or two. When finished, the sauce should have the texture of and look like a sloppy joe mixture. If the liquid reduces before the meat is completely tender, add an extra <span>1/2</span> cup stock and continue cooking. Discard bay leaf. Taste sauce and adjust seasoning with salt; keep warm.</li> 
+<li>Cook pasta in a large pot of boiling salted water. If using fresh pasta, cook about 3 minutes. If using dry, cook until very al dente, about 2 minutes less than package directions.</li> 
+<li>Using tongs, transfer pasta to pot with sauce. Add <span>1</span> cup pasta cooking liquid and <span>1/2</span> cup Parmesan. Increase heat to medium, bring to a simmer, and cook, tossing constantly, until pasta is al dente and liquid is slightly thickened, about 2 minutes.</li> 
+<li>Transfer pasta to a platter and top with more Parmesan.</li> </ul> 
+<p>Do Ahead: Sauce can be made 4 days ahead. Cover and chill.</p>
+<a href="https://www.bonappetit.com/recipe/bas-best-bolognese">Source material</a> </div> 
+<div class="card"> 
+<h3>Chicken Cacciatore</h3> 
+<p>Category: Meals</p> 
+<p>Servings: 8</p> 
+<h4>Ingredients</h4> 
+<ul> 
+<li><span>3</span> TBSP olive oil, divided</li> 
+<li><span>8</span> bone-in skinless chicken thighs</li> 
+<li>Salt and pepper, to season</li> 
+<li><span>1</span> medium onion, diced</li> 
+<li><span>2</span> TBSP minced garlic, (or <span>6</span> cloves)</li> 
+<li><span>1</span> small yellow bell pepper (capsicum), diced</li> 
+<li><span>1</span> small red bell pepper (capsicum), diced</li> 
+<li><span>1</span> large carrot, peeled and sliced</li> 
+<li><span>10</span> oz (<span>300</span> g) mushrooms, sliced</li> 
+<li><span>1/2</span> cup pitted black olives</li> 
+<li><span>8</span> sprigs thyme</li> 
+<li><span>2</span> TBSP each freshly chopped parsley and basil plus more to garnish</li> 
+<li><span>1</span> tsp dried oregano</li> 
+<li><span>150</span> ml red wine</li> 
+<li><span>28</span> oz (<span>820</span> g) crushed tomatoes</li> 
+<li><span>2</span> TBSP tomato paste</li> 
+<li><span>7</span> oz (<span>200</span> g) Roma tomatoes, halved</li> 
+<li><span>1/2</span> tsp red pepper flakes</li> </ul> 
+<h4>Instructions</h4> 
+<ul> 
+<li>Season chicken with salt and pepper.</li> 
+<li>Heat <span>2</span> TBSP oil in a heavy cast iron skillet. Sear chicken on both sides until golden, about 3-4 minutes each side. Remove from skillet and set aside.</li> 
+<li>Add remaining oil to the pan. Saute the onion until transparent, about 3-4 minutes. Add in garlic and cook until fragrant, about 30 seconds.Add the peppers, carrot, mushrooms and herbs; cook for 5 minutes until vegetables begin to soften.</li> 
+<li>Pour in the wine, scraping up browned bits from the bottom of the skillet. Cook until wine is reduced, about 2 minutes.</li> 
+<li>Add crushed tomatoes, tomato paste, Roma tomatoes and chill flakes. Season with salt and pepper to your tastes. Return chicken pieces to the skillet and continue to cook over stove top OR in the oven following the instructions below.</li> </ul> 
+<h5>FOR STOVE TOP:</h5> 
+<ul> 
+<li>Mix all of the ingredients together; cover with lid, reduce heat to low and allow to simmer (while stirring occasionally) for 40 minutes or until the meat is falling off the bone. Add in the olives, allow to simmer for a further 10 minutes. Garnish with parsley and serve immediately.</li> </ul> 
+<h5>FOR THE OVEN:</h5> 
+<ul> 
+<li>Transfer the covered skillet to a preheated oven at 375F (190C) and cook for 50 minutes. Remove the lid, add in the olives and cook for an additional 20 minutes until the chicken is tender and falling off the bone, and the sauce has reduced.</li> </ul>
+<a href="https://cafedelites.com/chicken-cacciatore/">Source material</a> </div> 
+<div class="card"> 
+<h3>Candied Pecans</h3> 
+<p>Category: Desserts</p> 
+<p>Servings: 2</p> 
+<h4>Ingredients</h4> 
+<ul> 
+<li><span>6</span> TBSP brown sugar</li> 
+<li><span>1.5</span> tsp ground cinnamon</li> 
+<li><span>1/2</span> tsp fine sea salt, see notes</li> 
+<li>Pinch cayenne pepper, optional</li> 
+<li><span>1/2</span> tsp vanilla extract</li> 
+<li><span>1.5</span> TBSP water</li> 
+<li><span>2</span> tsp orange zest, optional</li> 
+<li><span>6</span> oz pecan halves</li> </ul> 
+<h4>DIRECTIONS</h4> 
+<ul> 
+<li>Line a baking sheet with parchment paper or a silicone baking mat.</li> 
+<li>Add brown sugar, cinnamon, salt, cayenne, vanilla, water, and the orange zest (optional) to a medium skillet.</li> 
+<li>Place the skillet over medium heat and cook, stirring often until the brown sugar melts into a bubbling sauce, about 1 minute.</li> 
+<li>Stir in the pecans so that the brown sugar sauce coats them.</li> 
+<li>Cook, stirring the entire time, until the pecans look candied and smell nutty, 2 to 3 minutes. </li> 
+<li>As the nuts heat up in the pan, the sauce will slowly coat them and become shiny. Watch closely as the nuts cook so that they do not burn.</li> 
+<li>Transfer the candied pecans to the prepared baking sheet and spread into one layer.</li> 
+<li>Allow the pecans to cool down, and then break them up before serving.</li> 
+<li>Store cooled candied nuts in an airtight container. They will last at room temperature for one week, in the refrigerator for a few weeks and in the freezer for a month, if not longer.</li> </ul>
+<a href="https://www.inspiredtaste.net/47514/easy-candied-pecans/#itr-recipe-47514">Source material</a> </div> 
+<div class="card"> 
+<h3>Roasted Chicken</h3> 
+<p>Category: Meals</p> 
+<p>Servings: 1</p> 
+<h4>Ingredients</h4> 
+<ul> 
+<li><span>1</span> (<span>3</span> pound) whole chicken, giblets removed</li> 
+<li>salt and black pepper to taste</li> 
+<li><span>1</span> TBSP onion powder, or to taste</li> 
+<li>cup margarine, divided</li> 
+<li><span>1</span> stalk celery, leaves removed</li> </ul> 
+<h4>Directions</h4> 
+<ul> 
+<li>Step 1 Preheat oven to 350 degrees F (175 degrees C).</li> 
+<li>Step 2 Place chicken in a roasting pan, and season generously inside and out with salt and pepper. Sprinkle inside and out with onion powder. Place 3 TBSP margarine in the chicken cavity. Arrange dollops of the remaining margarine around the chicken's exterior. Cut the celery into 3 or 4 pieces, and place in the chicken cavity.</li> 
+<li>Step 3 Bake chickenuncovered in the preheated oven until no longer pink at the bone and the juices run clear, about 1 hour and 15 minutes. An instant-read thermometer inserted into the thickest part of the thigh, near the bone, should read 180 degrees F (82 degrees C). Remove from heat and baste with melted margarine and drippings. Cover with aluminum foil and allow to rest about 30 minutes before serving.</li> </ul>
+<a href="https://www.allrecipes.com/recipe/83557/juicy-roasted-chicken/">Source material</a> </div> 
+<div class="card"> 
+<h3>Spinach Pesto</h3> 
+<p>Category: Dips And Sauces</p> 
+<p>Servings: 2</p> 
+<h4>Ingredients</h4> 
+<ul> 
+<li><span>3</span> cups spinach (can also use basil, arugula or any greens!)</li> 
+<li><span>1</span> clove garlic</li> 
+<li><span>1/3</span> cup pine nuts</li> 
+<li><span>2</span> TBSP grated parmesan cheese</li> 
+<li><span>1/2</span> tsp salt</li> 
+<li>pinch of pepper</li> 
+<li><span>1/2</span> cup olive oil</li> 
+<li><span>1/2</span> lemon</li> </ul> 
+<h4>Instructions</h4> 
+<ul> 
+<li>In the bowl of a food processor or blender add the spinach, garlic, pine nuts, cheese, salt and pepper and pulse until well combined, but not totally smooth. Slowly drizzle in the olive oil while pulsing. Add lemon juice, salt and pepper to taste.</li> </ul>
+<a href="https://www.lifeisbutadish.com/easy-spinach-pesto/">Source material</a> </div> 
+<div class="card"> 
+<h3>Macarons Swiss Method</h3> 
+<p>Category: Desserts</p> 
+<p>Servings: 6</p> 
+<h4>Ingredients</h4> 
+<ul> 
+<li><span>150</span> g white granulated sugar</li> 
+<li><span>6</span> g egg white powder optional, read notes below</li> 
+<li><span>150</span> g egg whites</li> 
+<li><span>157.5</span> g almond flour</li> 
+<li><span>157.5</span> g powdered sugar</li> 
+<li>Food coloring if desired</li> </ul> 
+<h4>Instructions</h4> 
+<h5>Prep The Ingredients And Tools</h5> 
+<ul> 
+<li>Before you start, get all of the ingredients ready. Prepare a large piping pastry bag, fitted with a large round tip, I use a 1/4" diameter tip, or a Wilton 12. Set aside.</li> 
+<li>Line two baking sheets with parchment paper or silicone mat.</li> 
+<li>I use a baking mat with the macaron template already in it.</li> 
+<li>Wipe the tools such as bowls, spatulas, and silicone mats with vinegar if desired, this helps getting rid of any grease particles that might be in the tools.</li> 
+<li>Measure out all of the ingredients.</li> 
+<li>Sift the powdered sugar and almond flour together. Set it aside.</li> 
+<li>Start pre-heating the oven. I pre-heat my large oven to 310F for 60 to 90 minutes, this helps with temperature fluctuations. I pre-heat the countertop oven for 30 to 45 minutes.</li> </ul> 
+<h5>Making The Swiss Meringue</h5> 
+<ul> 
+<li>Place a bowl over a pan with barely simmering water. Add the sugar and egg white powder to the bowl if using. If you're not using egg white powder simply skip it, nothing needs to be changed in the recipe.</li> 
+<li>Whisk the sugar and egg white powder so it doesn't clump up.</li> 
+<li>Add the egg whites to the bowl and whisk until the sugar is completely melted. It will take a couple of minutes. You can test by touching the mixture between your fingers, and if you feel any sugar granules just keep whisking the mixture over the water bath.</li> 
+<li>Make sure the bottom of the bowl isn't touching the simmering water because you don't want the whites to cook.</li> 
+<li>Also, don't overheat the sugar syrup, you are just looking to melt the sugar, no need to bring it to a certain temperature.Transfer the syrup to the bowl of a stand mixer. Before transferring the syrup, you might consider whipping the bottom of the bowl with a towel so the water doesn't fall into the mixer bowl.</li> 
+<li>With the whisk attachment, start whisking mixture on low (speed 2 of the KitchenAid) for about 30 seconds, then gradually start increasing speed to medium. Whisk on medium (speed 4) for one to two minutes, until the mixture is white and starting to become fluffy. Raise the speed to medium or medium-high and whip for a few minutes until stiff peaks are formed. I like to finish whipping the meringue on speed 6 of the KitchenAid.</li> 
+<li>It takes me about 13 to 15 minutes to whip the meringue, but you shouldn't go by time, go by what the meringue is supposed to look like because a lot of things can affect whipping time, such as the quality of the eggs, the weather, how powerful your mixer is, and more.</li> 
+<li>Once the meringue gets glossy and you start seeing streaks formed by the whisk, and the meringue raising in the center of the whisk, it might be time to stop.</li> 
+<li>You don't want to over whip the meringue at this point because that can cause several issues, mainly hollow macarons.</li> 
+<li>Whisk until stiff peaks have formed. When you pull the whip up, the peak should be stiff and shooting straight up, with possibly a slight bend at the top, but not bending to the side.</li> 
+<li>Also when you swirl the whisk around in the bowl to collect the meringue, you should feel some resistance from the meringue. And when you look on the bottom of the whisk the meringue collected should be forming soft but defined waves.</li> </ul> 
+<h5>Macaronage</h5> 
+<ul> 
+<li>Pour the sifted powdered sugar and almond flour into the stiff meringue.</li> 
+<li>Add the food coloring at this point, if using. If you were using powder food coloring, you could add it during the final stages of whipping the meringue.</li> 
+<li>Start folding gently forming a letter J with a spatula.</li> 
+<li>Once the dry ingredients have incorporated with the meringue, you can start squeezing the air out of the batter by pressing it down along the sides of the bowl as you fold.</li> 
+<li>How to know when to stop folding the batter: It's time to stop folding when the batter is glossy and has a thick and flowing consistency. There are several ways to test this.</li> 
+<li>First, pick up some batter with the spatula and try to draw a figure 8 with the batter that is dripping off the spatula. If you can form several 8 figures without the batter breaking up, that's one indication that it might be ready.</li> 
+<li>The batter that's falling back into the bowl should take 10 to 15 seconds to incorporate with the batter that's already in the bowl.</li> 
+<li>There's another test you can do. I call it the tsp test. Grab a tsp of batter and spoon onto the parchment paper or silicon mat. Wait a minute to see how it behaves.</li> 
+<li>If the batter stays stiff, forming a point and doesn't spread out, fold a little bit more, about 3 folds.</li> 
+<li>Test again.</li> 
+<li>Once the batter spreads out a bit and starts to look glossy and smooth on top, on the parchment paper or silicone mat, it's ready.</li> 
+<li>You don't want your batter to be too runny either. So be careful not to over mix. It's always best to under mix and test several times until the proper consistency has been achieved.</li> 
+<li>When you hold the spatula with batter on top of the bowl and the batter falls off the spatula slowly but effortlessly the batter is ready. The batter will keep flowing off the spatula non-stop, but not too quickly.</li> 
+<li>Transfer the batter to the piping bag. I also like to seal the top with a bag tie, so the batter doesn't dry out and it gives you more control while piping because there's no risk of the batter escaping through the top of the piping bag.</li> 
+<li>Place the piping bag directly 90 degrees over the center of each macaron template. Apply gentle pressure and carefully pipe for about 3 to 5 seconds, and then quickly pull the bag up twisting slightly at the top.</li> 
+<li>Once you've piped as many circles as you could, bang the trays against the counter or against the palm of your hand a few times each.</li> 
+<li>Use a toothpick to pop any air bubbles in the surface of the shells.</li> </ul> 
+<h5>Resting Or Not Resting The Shells</h5> 
+<ul> 
+<li>Let the trays sit for a while so the shells will dry out before baking, if you are resting the macarons. I usually leave about 20-40 minutes, depending on how humid the day is. You'll know they're ready when you gently touch the surface of a macaron and it seems dry.</li> 
+<li>To do the no-rest method, you can bake the trays immediately.</li> 
+<li>The no-rest method will depend on your oven and baking sheets you are using. Read the post above for more information.</li> 
+<li>I can do the no-rest method on my small counter top oven, but not on my large oven, because the temperature is too uneven on the large oven.</li> </ul> 
+<h5>Baking</h5> 
+<ul> 
+<li>On my large oven I bake the macarons at 310F, and on the small countertop oven I bake them at 290F. I pre-heat both ovens for quite a bit of time. I pre-heat the large oven for 60 to 90 minutes, and the small oven for 30 minutes or so.</li> 
+<li>Bake one tray at a time.</li> 
+<li>Bake for 5 minutes, rotate the tray. This step is not necessary, I don't rotate the trays on the small oven, but I have to do so on my large oven, otherwise the macarons will be lopsided. Not all bakers have to rotate the tray.</li> 
+<li>I bake each tray for about 15 to 20 minutes.</li> 
+<li>When baked, the macarons will have a deeper color and formed feet. If you try to move a macaron, it shouldn't feel jiggly. If the macaron is still jiggly, keep baking. Also try to touch the top of a macaron and it shouldn't feel soft, if it's still soft, keep baking.</li> 
+<li>Remove from the oven and bake the other tray.</li> 
+<li>Let the macarons cool down before proceeding with the filling.</li> </ul>
+<a href="https://www.piesandtacos.com/swiss-meringue-macaron-recipe/#wprm-recipe-container-19080">Source material</a> </div> 
+<div class="card"> 
+<h3>Buffalo Wings</h3> 
+<p>Category: Meals</p> 
+<p>Servings: 1</p> 
+<h5>Prep</h5> 
+<ul> 
+<li><span>1/4</span> cup cornstarch, as needed</li> 
+<li><span>2</span> lb organic chicken wings</li> 
+<li><span>1</span> gallon peanut oil</li> </ul> 
+<h5>Batter</h5> 
+<ul> 
+<li><span>1/2</span> cup corn starch</li> 
+<li><span>1/4</span> cup all-purpose flour</li> 
+<li><span>1</span> tsp paprika</li> 
+<li><span>1</span> tsp garlic powder</li> 
+<li><span>1</span> tsp cayenne pepper</li> 
+<li><span>2</span> tsp baking powder</li> 
+<li><span>2</span> tsp salt</li> 
+<li><span>1</span> tsp black pepper</li> 
+<li><span>2/3</span> cup water</li> </ul> 
+<h5>Buffalo Sauce</h5> 
+<ul> 
+<li><span>1</span> stick butter</li> 
+<li><span>1</span> cup franks red hot</li> </ul> 
+<h4>Directions</h4> 
+<ul> 
+<li>start by adding the peanut oil to the deep fryer up to the MAX line and preheat to 350F</li> 
+<li>Line two baking sheets with paper towels and wire racks</li> 
+<li>Take each chicken wing and coat it in corn starch</li> 
+<li>Let the wings sit in the fridge for 20 minutes</li> 
+<li>While you're waiting, mix the dry ingredients for the batter, whisk, then add the water and whisk until smooth</li> 
+<li>To make the sauce, melt the butter in the microwave and add the franks red hot, then whisk until smooth</li> 
+<li>Remove the wings from the fridge and coat each wing in batter, placing on wire rack</li> 
+<li>Deep fry in batches, about 8 wings at a time, for 10 minutes</li> 
+<li>Remove from fryer and place on empty wire rack</li> 
+<li>Add the wings to a large bowl, add the sauce, then using a spoon, toss the wings in Buffalo sauce or barbecue sauce</li> </ul>
+<a href="https://tasty.co/recipe/the-best-crispy-buffalo-wings">Source material</a> </div> 
+<div class="card"> 
+<h3>Vegan Chocolate Cupcakes</h3> 
+<p>Category: Desserts</p> 
+<p>Servings: 12</p> 
+<h4>Ingredients</h4> 
+<ul> 
+<li><span>240</span> g plant milk</li> 
+<li><span>1</span> tsp vinegar</li> 
+<li><span>150</span> g sugar</li> 
+<li><span>71</span> g vegetable oil</li> 
+<li><span>1.5</span> tsp vanilla extract</li> 
+<li><span>120</span> g flour</li> 
+<li><span>28</span> g cocoa powder</li> 
+<li><span>3/4</span> tsp baking soda</li> 
+<li><span>1/2</span> tsp baking powder</li> 
+<li><span>1/4</span> tsp salt</li> </ul> 
+<h4>Directions</h4> 
+<ul> 
+<li>Preheat the oven to 350 and prepare a dozen muffin cups - either outfit a muffin pan with paper or foil liners, or use a baking sheet and set out 12 paper liners nested inside foil liners, or else use silicone muffin cups.</li> 
+<li>In a large mixing bowl, stir together the soy or rice milk, vinegar, sugar, vegetable oil and vanilla extract.</li> 
+<li>In another bowl, stir together the flour, cocoa powder, baking soda, baking powder and salt. Sift the dry ingredients into the wet ingredients, pausing two or three times to stir, and keep stirring until all the large lumps are gone.</li> 
+<li>Pour the batter into the cupcake liners until they are about two-thirds full. Bake until a toothpick inserted into the center comes out clean, about 20 minutes. Cool on a wire rack.</li> 
+<li>When cool, frost however you like</li> </ul>
+<a href="https://cooking.nytimes.com/recipes/1012423-vegan-chocolate-cupcakes">Source material</a> </div> 
+<div class="card"> 
+<h3>Vegan Macarons</h3> 
+<p>Category: Desserts</p> 
+<p>Servings: 2</p> 
+<h4>Ingredients</h4> 
+<ul> 
+<li><span>75</span> g aquafaba (water from a chickpea can)</li> 
+<li><span>110</span> g almond flour</li> 
+<li><span>110</span> g powdered sugar</li> 
+<li><span>1/4</span> tsp cream of tartar</li> 
+<li><span>66</span> g granulated sugar</li> </ul> 
+<h4>Directions</h4> 
+<ul> 
+<li>preheat oven to 270F fan</li> 
+<li>whip aquafaba to soft peaks</li> 
+<li>add granulated sugar, cream of tartar, and food dye and whip until past stiff peaks, like really way too thick, overwhipped</li> 
+<li>overwhip the meringue</li> 
+<li>Gather all of the ingredients before starting to make macarons. Measure out all ingredients. Line two baking sheets with silicon mats. And fit a large piping bag with a large round tip, I use a 0.5" diameter. You want everything ready to go when you need it.</li> 
+<li>Sift the almond flour and powdered sugar together. Set aside.</li> 
+<li>Place the aquafaba and cream of tartar in the bowl of a mixer.</li> 
+<li>Start whipping on low speed for about 2 minutes, until it starts to get white and thick.</li> 
+<li>At this point, raise speed to high, start to add granulated sugar, slowly, a bit at a time.</li> 
+<li>Continue to whip until the aquafaba achieves stiff peaks.</li> 
+<li>The whole whipping, from beginning to end, should last about 10 minutes. It can last more or less time depending on what mixer you are using, and what speed.</li> 
+<li>Add the sifted dry ingredients to whipped aquafaba. Start folding with a spatula slowly.</li> 
+<li>Add food coloring at this point, if using any.</li> 
+<li>Fold forming a letter J with the spatula.</li> 
+<li>Fold until the batter is flowing slightly. You don't want the batter to be flowing continuously off the spatula. When it comes to vegan macarons, the folding time is very very brief. You are basically just looking to incorporate the dry ingredients with the meringue. Please watch the video to see what the consistency should look like. If you grab a spatula full of batter and hold it over the bowl, it should still be separating in chunks, and not flowing continuously on a ribbon. Do not get to the ribbons stage! If you get to the ribbon stage, the macaron feet will spread out in the oven.</li> 
+<li>Transfer the batter to the piping bag.</li> 
+<li>Pipe 1.5" circles on a baking sheet lined with silicon mat. I usually use 2 sheets. This will depend on how big you pipe your macarons.</li> 
+<li>Bang the trays against the counter to release air bubbles.</li> 
+<li>Use a toothpick to pop any remaining bubbles.</li> 
+<li>If using sprinkles, make sure to sprinkle them before the macaron shells dry. Sprinkle them on half of the sprinkles, as you will want the other half to be used as the bottom of the macaron sandwich.</li> 
+<li>Let the trays rest for 30-45 minutes until the shells are dry. Test this by touching a macaron gently with your finger. Depending on humidity levels and weather, it might take longer or less time for your macarons to dry.</li> 
+<li>Pre-heat oven to 285F.</li> 
+<li>Bake one tray at a time.</li> 
+<li>Bake for a total of 20 minutes, or until the macarons are easily coming off the silicon mat. </li> 
+<li>Remember to rotate the tray every 5 minutes, to ensure even baking.</li> 
+<li>Baking time might vary depending on your oven.</li> 
+<li>Let macarons cool down before filling.</li> </ul>
+<a href="https://www.piesandtacos.com/vegan-vanilla-macarons-with-sprinkles/#wprm-recipe-container-7195">Source material</a> </div> 
+<div class="card"> 
+<h3>Chana Masala</h3> 
+<p>Category: Meals</p> 
+<p>Servings: 2</p> 
+<h4>Ingredients</h4> 
+<ul> 
+<li><span>1</span> TBSP oil</li> 
+<li><span>1</span> medium white or yellow onion, finely diced</li> 
+<li><span>1</span> TBSP ground cumin</li> 
+<li><span>1/2</span> tsp sea salt</li> 
+<li><span>1/2</span> tsp garlic powder</li> 
+<li><span>2</span> TBSP fresh ginger, minced</li> 
+<li><span>1</span> TBSP ground coriander</li> 
+<li><span>1</span> tsp chili powder</li> 
+<li><span>1</span> tsp ground turmeric</li> 
+<li><span>28</span> oz pureed or finely diced tomatoes</li> 
+<li><span>30</span> oz chickpeas, drained</li> 
+<li><span>1</span> tsp garam masala</li> 
+<li><span>2</span> tsp sugar</li> 
+<li><span>1</span> tsp amchoor powder</li> </ul> 
+<h4>Instructions</h4> 
+<ul> 
+<li>Heat a large pot over medium heat. Once hot, add oil, onion, cumin, and salt</li> 
+<li>Add garlic powder and ginger to the pan with the onions.</li> 
+<li>Next add ground coriander, chili powder, and turmeric and stir to coat.</li> 
+<li>Next add pureed tomatoes and chickpeas</li> 
+<li>Bring to a boil, then reduce to a simmer for 20 minutes</li> 
+<li>Remove from heat and add amchoor powder and garam masala. Stir to mix, then let cool slightly before serving.</li> </ul>
+<a href="https://minimalistbaker.com/easy-chana-masala/">Source material</a> </div> 
+<div class="card"> 
+<h3>Red Beans And Rice</h3> 
+<p>Category: Meals</p> 
+<p>Servings: 2</p> 
+<h4>Ingredients</h4> 
+<ul> 
+<li><span>18</span> g Better Than Bouillon No Chicken</li> 
+<li><span>45</span> g tomato paste</li> 
+<li><span>1</span> tsp ground coriander seeds</li> 
+<li><span>1</span> tsp salt</li> 
+<li><span>1/2</span> tsp garlic powder</li> 
+<li><span>1/2</span> tsp pepper</li> 
+<li><span>28</span> oz water</li> 
+<li><span>400</span> g Basmati rice unrinsed</li> 
+<li><span>1</span> red bell pepper, stemmed, seeded and diced</li> 
+<li><span>1/4</span> cup finely chopped red onion</li> 
+<li><span>15</span> oz pinto beans, drained and rinsed</li> </ul> 
+<h4>Directions</h4> 
+<ul> 
+<li>add everything but rice to a large pot</li> 
+<li>Bring to a boil on a large burner</li> 
+<li>Add rice and cover with lid</li> 
+<li>Reduce To a simmer and cook for 15 minutes</li> 
+<li>Remove from heat and stir with spatula</li> 
+<li>Cover and let sit for 10 minutes</li> </ul>
+<a href="https://www.betterthanbouillon.com/recipes/mexican-inspired-pinto-beans-and-rice/">Source material</a> </div> 
+<div class="card"> 
+<h3>Red Lentil Curry</h3> 
+<p>Category: Meals</p> 
+<p>Servings: 2</p> 
+<h4>INGREDIENTS</h4> 
+<ul> 
+<li><span>2</span> cups water</li> 
+<li><span>16</span> g better than bouillon no chicken</li> 
+<li><span>14</span> oz crushed tomatoes</li> 
+<li><span>13.5</span> oz full-fat coconut milk</li> 
+<li><span>50</span> g peanut butter</li> 
+<li><span>56</span> g roasted peanuts</li> 
+<li><span>1</span> TBSP olive oil</li> 
+<li><span>1</span> TBSP fresh ginger</li> 
+<li><span>1/2</span> tsp garlic powder</li> 
+<li><span>1</span> tsp ground turmeric</li> 
+<li><span>1</span> tsp ground cumin</li> 
+<li><span>1/2</span> tsp ground coriander</li> 
+<li><span>1</span> tsp chili powder</li> 
+<li><span>2</span> tsp curry powder</li> 
+<li><span>1</span> tsp garam masala</li> 
+<li><span>1/2</span> tsp salt</li> 
+<li>Freshly cracked black pepper to taste</li> 
+<li><span>190</span> g red lentils</li> 
+<li><span>1</span> TBSP lemon juice</li> </ul> 
+<h4>Instructions</h4> 
+<ul> 
+<li>Add everything but lentils and lemon to a pot</li> 
+<li>Bring to a boil</li> 
+<li>Rinse and drain lentils</li> 
+<li>Add to boiling pot, bring to boil again, reduce to simmer, and let cook for 30 min</li> 
+<li>Mix in lemon juice</li> 
+<li>Serve over rice</li> </ul>
+<a href="https://rainbowplantlife.com/vegan-red-lentil-curry/#wprm-recipe-container-5540">Source material</a> </div> 
+<div class="card"> 
+<h3>Chocolate Crinkle Cookies</h3> 
+<p>Category: Desserts</p> 
+<p>Servings: 20</p> 
+<h4>Ingredients</h4> 
+<ul> 
+<li><span>240</span> g all purpose flour</li> 
+<li><span>2.5</span> tsp baking powder</li> 
+<li><span>1/2</span> tsp salt</li> 
+<li><span>90</span> g cocoa powder</li> 
+<li><span>400</span> g granulated sugar</li> 
+<li><span>112</span> g canola oil</li> 
+<li><span>273</span> g applesouce</li> 
+<li><span>1</span> tsp vanilla extract</li> </ul> 
+<h5>Sugar Coating</h5> 
+<ul> 
+<li><span>100</span> g granulated sugar</li> 
+<li><span>100</span> g powdered sugar</li> </ul> 
+<h4>Directions</h4> 
+<ul> 
+<li>In a small bowl combine flour, salt, and baking powder. Set aside.</li> 
+<li>In a medium bowl or stand up mixer stir together cocoa powder, sugar, applesauce, oil, extracts, and peppermint candies (if using) until well blended. Add flour mixture and mix until just combined.</li> 
+<li>Wrap the dough in plastic wrap and chill for 2 hours.</li> 
+<li>Preheat the oven to 350 degrees F. Line two baking sheets with parchment paper. Place the granulated and powdered sugars in two separate bowls.</li> 
+<li>Remove chilled dough and roll into balls about one TBSP each. Toss first in the granulated and then second in the powdered sugar, coating fully.</li> 
+<li>Bake for 12-13 minutes (cookies should be slightly underbaked). Remove from oven and allow to cool for 2-3 minutes before transferring onto a wire rack to cool completely.</li> </ul>
+<a href="https://www.mydarlingvegan.com/chocolate-peppermint-crinkle-cookies/#wprm-recipe-container-18104">Source material</a> </div> 
+<div class="card"> 
+<h3>Macarons</h3> 
+<p>Category: Desserts</p> 
+<p>Servings: 4</p> 
+<h4>Ingredients</h4> 
+<ul> 
+<li><span>100</span> g egg whites</li> 
+<li><span>5</span> g egg white powder</li> 
+<li><span>28</span> g g granulated sugar</li> 
+<li><span>125</span> g almond flour</li> 
+<li><span>225</span> g powdered sugar</li> </ul> 
+<h4>Directions</h4> 
+<ul> 
+<li>Preheat oven to 285F, with fan convection</li> 
+<li>Add egg whites to the bowl of a stand mixer</li> 
+<li>in a small bowl, whisk together granulated sugar and dried egg white</li> 
+<li>In a medium bowl, whisk together almond flour and powdered sugar</li> 
+<li>Using the whisk attachment, beat egg whites on full until foamy</li> 
+<li>Add dried egg white and granulated sugar mix</li> 
+<li>beat on full speed until mixture holds medium peaks</li> 
+<li>Add any food dye and beat on full until mixture holds stiff peaks, and rhen past that point till its very very meringued</li> 
+<li>Using a spatula, fold in the powdered sugar and almond flour mix, mix until combined and falls off of spatula in chunks, if its ribbons you mixed too much</li> 
+<li>Put in piping bag</li> 
+<li>Pipe out macarons according to the silpat guideline</li> 
+<li>drop trays on table at least 12 times</li> 
+<li>Let piped macarons sit on the counter for 25 minutes</li> 
+<li>place all sheets in the oven, trying carefully not to let any heat escape</li> 
+<li>Bake for 20 minutes</li> 
+<li>Remove from oven and let cool</li> 
+<li>add filling, then refrigerate for at least 24 hours to properly age the cookies</li> </ul>
+<a href="http://notsohumblepie.blogspot.com/2010/08/macaron-troubleshooting-new-recipe.html?m=1">Source material</a> </div> 
+<div class="card"> 
+<h3>Chocolate Chip Cookies</h3> 
+<p>Category: Desserts</p> 
+<p>Servings: 16</p> 
+<h4>Ingredients</h4> 
+<ul> 
+<li><span>240</span> g ap flour</li> 
+<li><span>1/2</span> tsp baking soda</li> 
+<li><span>1/2</span> tsp salt</li> 
+<li><span>1.5</span> stick butter</li> 
+<li><span>200</span> g brown sugar</li> 
+<li><span>100</span> g white sugar</li> 
+<li><span>1</span> tsp vanilla extract</li> 
+<li><span>1</span> egg</li> 
+<li><span>1</span> egg yolk</li> 
+<li><span>373</span> g semisweet chocolate chips, plus more for tri chipping</li> </ul> 
+<h4>Instructions</h4> 
+<ul> 
+<li>Beat butter in stand mixer until white and fluffy</li> 
+<li>Add brown sugar and white sugar and cream together</li> 
+<li>70 g a piece for 16 cookies</li> 
+<li>Top rack</li> 
+<li>6 per sheet</li> 
+<li>23 min</li> </ul>
+<a href="https://www.allrecipes.com/recipe/25037/best-big-fat-chewy-chocolate-chip-cookie/">Source material</a> </div> 
+<div class="card"> 
+<h3>Vegetarian Moussaka</h3> 
+<p>Category: Meals</p> 
+<p>Servings: 6</p> 
+<h4>Ingredients</h4> 
+<h5>Fried Vegetables</h5> 
+<ul> 
+<li>Oil for deep frying</li> 
+<li><span>1</span> eggplant, sliced</li> 
+<li><span>1</span> zucchini, sliced</li> 
+<li><span>750</span> g potatoes, sliced</li> </ul> 
+<h5>Filling</h5> 
+<ul> 
+<li><span>1</span> white onion, sliced</li> 
+<li><span>1</span> TBSP olive oil</li> 
+<li><span>1/4</span> tsp garlic powder</li> 
+<li><span>1</span> TBSP white vinegar</li> 
+<li><span>14</span> oz fire roasted tomatoes</li> 
+<li><span>1/2</span> 14 oz canned lentils with reserve liquid</li> 
+<li><span>12</span> g better than bouillon NO beef</li> 
+<li><span>1</span> tsp dried oregano</li> 
+<li><span>2</span> tsp dried parsley</li> 
+<li><span>1/2</span> tsp salt</li> 
+<li><span>1</span> cup crumbled feta cheese</li> </ul> 
+<h5>Bechamel</h5> 
+<ul> 
+<li><span>1.5</span> TBSP butter</li> 
+<li><span>2</span> TBSP flour</li> 
+<li><span>1.25</span> cups milk</li> 
+<li>Black pepper</li> 
+<li><span>1</span> pinch nutmeg</li> 
+<li><span>1</span> egg</li> 
+<li><span>1/4</span> cup Parmesan cheese</li> </ul> 
+<h4>Directions</h4> 
+<h5>Day 1</h5> 
+<ul> 
+<li>peel and slice eggplant</li> 
+<li>Salt and let strain for 3 hours</li> 
+<li>Deep fry the potatoes, eggplant, and zucchini</li> 
+<li>Store fried vegetables in the fridge between paper towels</li> </ul> 
+<h5>Day 2</h5> 
+<h6>Filling</h6> 
+<ul> 
+<li>Preheat oven to 375F</li> 
+<li>Saut� onion and garlic powder in olive oil</li> 
+<li>Add vinegar, tomatoes, lentils, 1/2 the reserved lentil liquid, bouillon, oregano, parsley, and salt.</li> 
+<li>Bring to a boil, reduce heat, cover, and cook for 15 minutes</li> 
+<li>Layer 1/3 of the potato, 1/3 of the eggplant, and 1/3 of the zucchini into a 1x baking dish. </li> 
+<li>Pour 1/2 of the tomato mixture over the layers.</li> 
+<li>Make another vegetable layer, pour the remaining tomato mixture over, then finish with the third and final vegetable layer</li> 
+<li>Bake for 30 min</li> </ul> 
+<h6>Bechamel</h6> 
+<ul> 
+<li>while filling is cooking, stir together butter, flour, and milk in a small saucepan over medium heat</li> 
+<li>Whisk constantly until boiling</li> 
+<li>Remove from heat</li> 
+<li>Season with pepper and nutmeg and stir to combine</li> 
+<li>Wait five minutes, then stir in egg</li> 
+<li>Remove filling from oven, pour bechamel over it, then sprinkle with Parmesan</li> 
+<li>Bake for 30 minutes</li> 
+<li>Let sit for 15 minutes and serve</li> </ul>
+<a href="https://www.allrecipes.com/recipe/25311/vegetarian-moussaka/">Source material</a> </div> 
+<div class="card"> 
+<h3>Custard Pie</h3> 
+<p>Category: Desserts</p> 
+<p>Servings: 8</p> 
+<h4>Ingredients</h4> 
+<ul> 
+<li><span>1</span> pie crust, bottom only</li> 
+<li><span>340</span> g milk</li> 
+<li><span>227</span> g cream, heavy, whipping, light, or half-and-half, your choice</li> 
+<li><span>1/4</span> tsp salt</li> 
+<li><span>4</span> large eggs</li> 
+<li><span>131</span> g sugar</li> 
+<li><span>1</span> TBSP vanilla extract</li> 
+<li><span>1/4</span> tsp ground nutmeg</li> </ul> 
+<h4>Directions</h4> 
+<ul> 
+<li>Start by combining the milk, cream, and salt in a medium-sized saucepan or microwave-safe bowl. Heat the mixture until small bubbles form around the edges, and steam starts to wisp from the surface; this is how you "scald" milk, if you've ever seen that technique mentioned.</li> 
+<li>In a separate bowl, whisk together the eggs and sugar. Pour 1/4 of the hot milk/cream over the egg mixture, stirring well. Pour the egg mixture into the remaining hot milk/cream, stirring well. Pour the custard through a sieve, to strain out any possible bits of cooked egg. Stir in the vanilla extract.</li> 
+<li>Pour the hot filling into the baked, cooled crust. Sprinkle the nutmeg evenly over the top. Cover the edges of the pie with a pie shield or strips of aluminum foil to prevent over-browning.</li> 
+<li>Place the pie onto your oven's middle rack and bake it for 35 to 40 minutes, or until the custard is set at the edges but still a bit wobbly in the center. The temperature of the pie at the center should be between 170F and 180F.</li> 
+<li>Remove the pie from the oven, and place it on a rack to cool. When it's completely cool, refrigerate until you're ready to serve.</li> 
+<li>Store any leftovers in the refrigerator for several days.</li> </ul>
+<a href="https://www.kingarthurbaking.com/recipes/custard-pie-recipe">Source material</a> </div> 
+<div class="card"> 
+<h3>Pecan Pie</h3> 
+<p>Category: Desserts</p> 
+<p>Servings: 8</p> 
+<h4>Ingredients</h4> 
+<ul> 
+<li><span>250</span> g pecans</li> 
+<li><span>3</span> large eggs</li> 
+<li><span>340</span> g corn syrup</li> 
+<li><span>1</span> tsp vanilla extract</li> 
+<li><span>1/2</span> cup (<span>100</span> g) packed light or dark brown sugar</li> 
+<li><span>1/4</span> cup (<span>60</span> g) unsalted butter, melted and slightly cooled</li> 
+<li><span>1/2</span> tsp salt</li> 
+<li><span>1/2</span> tsp ground cinnamon</li> </ul> 
+<h4>Directions</h4> 
+<ul> 
+<li>Preheat oven to 425F</li> 
+<li>Roughly chop half of the pecans, then add both the chopped and unchopped pecans to the prepared pie crust</li> 
+<li>Whisk together all other ingredients in a bowl</li> 
+<li>Pour whisked ingredients over the pecans in the pie crust</li> 
+<li>Bake on bottom rack at 425F for 15 minutes, then lower to 350F fan for 45 minutes</li> </ul>
+<a href="https://sallysbakingaddiction.com/my-favorite-pecan-pie-recipe/">Source material</a> </div> 
+<div class="card"> 
+<h3>Sweet Potato Pie</h3> 
+<p>Category: Desserts</p> 
+<p>Servings: 8</p> 
+<h4>Ingredients</h4> 
+<ul> 
+<li><span>1</span> lb sweet potato</li> 
+<li><span>1/2</span> cup butter, softened</li> 
+<li><span>1</span> cup white sugar</li> 
+<li><span>1/2</span> cup milk</li> 
+<li><span>2</span> eggs</li> 
+<li><span>1/2</span> tsp ground nutmeg</li> 
+<li><span>1/2</span> tsp ground cinnamon</li> 
+<li><span>1</span> tsp vanilla extract</li> 
+<li><span>1</span> unbaked pie crust</li> </ul> 
+<h4>Directions</h4> 
+<ul> 
+<li>Boil sweet potato whole in skin for 45 minutes</li> 
+<li>Run cold water over the sweet potato, and remove the skin.</li> 
+<li>Preheat oven to 425F</li> 
+<li>Break apart sweet potato in a bowl.</li> 
+<li>Stir in everything else and mix on medium until smooth</li> 
+<li>Bake at 425F for 15 minutes</li> 
+<li>reduce temperature to 350F for 45 minutes</li> </ul>
+<a href="https://www.allrecipes.com/recipe/12142/sweet-potato-pie-i/">Source material</a> </div> 
+<div class="card"> 
+<h3>Stuffing</h3> 
+<p>Category: Sides</p> 
+<p>Servings: 6</p> 
+<h4>INGREDIENTS</h4> 
+<ul> 
+<li><span>2</span> cups chopped onions</li> 
+<li><span>1.5</span> cups thinly sliced celery</li> 
+<li><span>1</span> cup diced tart apple, peeled and cored</li> 
+<li><span>1/4</span> cup butter</li> 
+<li><span>1</span> TBSP ground sage</li> 
+<li><span>1</span> tsp ground marjoram</li> 
+<li><span>1</span> tsp salt</li> 
+<li><span>1</span> tsp pepper</li> 
+<li><span>1/2</span> tsp savory</li> 
+<li><span>1/2</span> tsp thyme</li> 
+<li><span>12</span> cups lightly toasted bread, cubes</li> 
+<li><span>1/4</span> cup fresh parsley, chopped</li> 
+<li><span>1.5</span> cups chicken stock or <span>1.5</span> cups vegetable stock</li> </ul> 
+<h4>DIRECTIONS</h4> 
+<ul> 
+<li>In a large fry pan saute onions, celery and apple in butter until onion is just translucent. </li> 
+<li>Stir in sage, marjoram, salt, pepper, savory and thyme.</li> 
+<li>Combine vegetable mixture with the bread cubes and parsley.</li> 
+<li>Toss well.</li> 
+<li>Pour stock over mixture, tossing well.</li> 
+<li>Spoon into your crock-pot.</li> 
+<li>Cover and cook on high for one hour.</li> 
+<li>Reduce to low and continue cooking for 2-3 hours, stirring every hour.</li> 
+<li>As stated for Vegetarians use vegetable stock.</li> </ul>
+<a href="https://www.food.com/recipe/crock-pot-stuffing-49609">Source material</a> </div> 
+<div class="card"> 
+<h3>Almond Cake</h3> 
+<p>Category: Desserts</p> 
+<p>Servings: 12</p> 
+<h4>Ingredients</h4> 
+<ul> 
+<li><span>2</span> sticks butter</li> 
+<li><span>400</span> g sugar</li> 
+<li><span>3</span> medium eggs at room temperature</li> 
+<li><span>3</span> medium egg yolks at room temperature</li> 
+<li><span>3</span> TBSP vegetable oil</li> 
+<li><span>1</span> tsp almond extract</li> 
+<li><span>10</span> oz milk</li> 
+<li><span>390</span> g ap flour</li> 
+<li><span>1</span> TBSP baking powder</li> 
+<li><span>1.5</span> tsp baking soda</li> 
+<li><span>1/2</span> tsp salt</li> </ul> 
+<h4>Directions</h4> 
+<ul> 
+<li>Preheat your oven to 325 degrees Fahrenheit and grease and flour two 9-inch round cake pans or three 8-inch round cake pans, lining the bottoms with parchment paper rounds for easy release. </li> 
+<li>In the bowl of your stand mixer whip the butter on medium high speed until very smooth. Add the sugar and mix on high speed until fluffy and creamy. The sugar will start to dissolve into the butter a little bit during this creaming process, so you should be able to feel the grains of sugar getting smaller.</li> 
+<li>Add the eggs and egg yolks one at a time, mixing well after each addition. Scrape down the sides of the bowl regularly at this stage to make sure everything is mixed well.</li> 
+<li>Mix in the oil and almond extract on low speed.</li> 
+<li>Measure the buttermilk into a liquid measuring cup and and set aside.</li> 
+<li>Measure and sift the flour, baking powder, baking soda and salt into a separate bowl and combine with a wire whisk.</li> 
+<li>Add the dry ingredients and the buttermilk alternatively while the mixer is running on low speed. Add 1/3 of the dry ingredients, half the buttermilk, another 1/3 of the dry ingredients, the other half of the milk, and the remaining dry ingredients.</li> 
+<li>Turn the speed of the mixer to medium-low and mix until the batter is smooth.</li> 
+<li>Pour the batter into the prepared cake pans and bake at 325 degrees Fahrenheit for about 29-34 minutes, or until a toothpick inserted into the middle of one of the cakes comes out clean.</li> 
+<li>Cool the cakes in the pans for about 5-7 minutes and then turn them out onto cooling racks to cool completely.</li> 
+<li>Once the cakes are cool, store them wrapped in plastic wrap in the fridge until ready to frost. They should be refrigerated for at least 1 hour before frosting.</li> </ul>
+<a href="https://thebusybaker.ca/best-ever-almond-cream-cake/">Source material</a> </div> 
+<div class="card"> 
+<h3>Pear Pie Filling</h3> 
+<p>Category: Desserts</p> 
+<p>Servings: 8</p> 
+<h4>Ingredients</h4> 
+<ul> 
+<li><span>1/2</span> cup white sugar</li> 
+<li><span>5</span> TBSP all-purpose flour</li> 
+<li><span>1/4</span> tsp salt</li> 
+<li><span>1</span> tsp ground cinnamon</li> 
+<li><span>1</span> tsp lemon zest</li> 
+<li><span>5</span> cups peeled and sliced pears</li> 
+<li><span>1</span> TBSP lemon juice</li> 
+<li><span>1</span> TBSP butter</li> </ul> 
+<h4>Directions</h4> 
+<ul> 
+<li>Preheat oven to 450F</li> 
+<li>Spray pie tin with flour baking spray and line with bottom crust</li> 
+<li>Combine sugar, flour, salt, cinnamon, and lemon zest in a large bowl.</li> 
+<li>Toss pears in lemon juice, then toss in sugar mixture</li> 
+<li>Place pear mix in bottom crust and dot with butter</li> 
+<li>Lattice top crust</li> 
+<li>Bake for 15 minutes on 450</li> 
+<li>Reduce temperature to 350 and bake for 45 minutes</li> </ul>
+<a href="https://www.allrecipes.com/recipe/12275/fresh-pear-pie/">Source material</a> </div> 
+<div class="card"> 
+<h3>Vanilla Cake</h3> 
+<p>Category: Desserts</p> 
+<p>Servings: 12</p> 
+<h4>Ingredients</h4> 
+<ul> 
+<li><span>300</span> g plain / all purpose flour</li> 
+<li><span>2.5</span> tsp baking powder</li> 
+<li><span>1/4</span> tsp salt</li> 
+<li><span>4</span> large eggs</li> 
+<li><span>300</span> g caster / superfine sugar</li> 
+<li><span>115</span> g / <span>1/2</span> cup unsalted butter</li> 
+<li><span>250</span> g milk</li> 
+<li><span>3</span> tsp vanilla extract</li> 
+<li><span>3</span> tsp canola oil</li> </ul> 
+<h4>Directions</h4> 
+<h5>Preparation</h5> 
+<ul> 
+<li>Preheat oven to 180C/350F for 20 minutes before starting the batter. Place shelf in the middle of the oven.</li> 
+<li>Grease 8" cake pans with butter, then line with parchment / baking paper. Best to use cake pan without loose base, if you can.</li> </ul> 
+<h5>Combine Dry Ingredients</h5> 
+<ul> 
+<li>Whisk flour, baking powder and salt in a large bowl. Set aside.</li> </ul> 
+<h5>Beat Eggs Until Aerated</h5> 
+<ul> 
+<li>Beat eggs for 30 seconds on speed 6 of a Stand Mixer fitted with a whisk attachment, or hand beater.</li> 
+<li>With the beater still going, pour the sugar in over 45 seconds.</li> 
+<li>Then beat for 7 minutes on speed 8, or until tripled in volume and white.</li> </ul> 
+<h5>Finish Cake Batter</h5> 
+<ul> 
+<li>Heat Milk-Butter: While egg is beating, place butter and milk in a heatproof jug and microwave 2 minutes on high to melt butter. Do not let milk bubble and boil. Don't do this ahead and let the milk cool.</li> 
+<li>Gently add flour: When the egg is whipped, scatter 1/3 flour across surface, then beat on Speed 1 for 5 seconds. Add half remaining flour, then mix on Speed 1 for 5 sec. Add remaining flour, then mix on Speed 1 for 5 - 10 sec until the flour is just mixed in. Once you can't see flour, stop straight away.</li> 
+<li>Lighten hot milk with some Egg Batter: Pour hot milk, vanilla and oil into the now empty flour bowl. Add about 1.5 cups of the Egg Batter into the Milk-Butter. Use a whisk to mix until smooth - you can be vigorous here. Will look foamy.</li> 
+<li>Slowly add milk: Turn beater back on Speed 1 then pour the Milk mixture into the Egg Batter over 15 seconds, then turn beater off.</li> 
+<li>Scrape and final mix: Scrape down sides and base of bowl. Beat on Speed 1 for 10 seconds - batter should now be smooth and pourable.</li> </ul> 
+<h5>Bake</h5> 
+<ul> 
+<li>Pour batter into pans.</li> 
+<li>Knock out bubbles: Bang each cake pan on the counter 3 times to knock out big bubbles</li> 
+<li>Bake 30 minutes or until golden and toothpick inserted into centre comes out clean.</li> </ul> 
+<h5>Cool And Frost</h5> 
+<ul> 
+<li>Remove from oven. Cool in cake pans for 15 minutes, then gently turn out onto cooling racks. If using as layer cakes, cool upside down - slight dome will flatten perfectly. Level cake = neat layers.</li> 
+<li>Frost with frosting of choice, or cream and fresh berries or jam. See list of ideas in post! </li> </ul>
+<a href="https://www.recipetineats.com/my-very-best-vanilla-cake/">Source material</a> </div> 
+<div class="card"> 
+<h3>Turkey</h3> 
+<p>Category: Meals</p> 
+<p>Servings: 1</p> 
+<h4>Ingredients</h4> 
+<ul> 
+<li><span>1</span> turkey, 12-16 pound</li> 
+<li><span>1</span> carrot, chunked</li> 
+<li><span>1</span> stalk celery, chunked</li> 
+<li><span>1</span> onion, quartered</li> 
+<li><span>1</span> green apple, quartered</li> 
+<li><span>1/4</span> cup melted butter</li> 
+<li>salt &amp; pepper to taste</li> 
+<li><span>1/2</span> cup water</li> </ul> 
+<h4>Instructions</h4> 
+<ul> 
+<li>Heat oven to 500 degrees.</li> 
+<li>Remove the turkey neck and bag of giblets. Cut off any plastic ties that may be holding the legs together. Remove the pop up thermometer, if there is one.</li> 
+<li>Place all your vegetables in the turkey cavity.</li> 
+<li>Carefully, separate the skin from the turkey and rub half the butter under the skin.</li> 
+<li>Rub the outside of the turkey with the remaining butter.</li> 
+<li>Season to taste with salt and pepper.</li> 
+<li>Place turkey breast side DOWN in a roasting pan.</li> 
+<li>Put water in pan around the bird but not over it.</li> 
+<li>Cook turkey at 500 degrees for 30 minutes, turn oven down to 350 and cook for 1.5 more hours. </li> 
+<li>After the turkey has cooked for about 2 hours, remove from oven, carefully flip over so the turkey is now breast side UP. Insert a remote safe oven thermometer in the thigh, without touching the bone and continue cooking until the meat thermometer reads 165 degrees.</li> 
+<li>Remove turkey from oven, cover loosely with foil and let rest for 30 minutes before serving. </li> 
+<li>Carve &amp; Enjoy!</li> </ul>
+<a href="https://simplifylivelove.com/best-way-to-cook-a-turkey/">Source material</a> </div> 
+<div class="card"> 
+<h3>Mashed Potatoes</h3> 
+<p>Category: Sides</p> 
+<p>Servings: 8</p> 
+<h4>Ingredients</h4> 
+<ul> 
+<li><span>5</span> lbs Yukon Gold potatoes, peeled and cut lengthwise into quarters</li> 
+<li><span>2</span> tsp salt</li> 
+<li><span>200</span> g heavy cream</li> 
+<li><span>100</span> g butter</li> 
+<li><span>60</span> g milk</li> </ul> 
+<h4>Directions</h4> 
+<h5>Cook The Potatoes</h5> 
+<ul> 
+<li>Place the peeled and cut potatoes into a medium saucepan.</li> 
+<li>Add cold water to the pan until the potatoes are covered by at least an inch. Add a half tsp of salt to the water.</li> 
+<li>Turn the heat to high and bring the water to a boil. Reduce the heat to low to maintain a simmer, and cover.</li> 
+<li>Cook for 15 to 20 minutes, or until you can easily poke through the potatoes with a fork.</li> </ul> 
+<h5>Drain And Mash The Potatoes:</h5> 
+<ul> 
+<li>When the potatoes are done, drain the water and place the steaming hot potatoes into a large bowl. Pour the heated cream and melted butter over the potatoes.</li> 
+<li>Mash the potatoes with a potato masher. Then use a strong wooden spoon to beat further.</li> 
+<li>Add milk and beat until the mashed potatoes are smooth. Don't over-beat the potatoes or the mashed potatoes will end up gluey.</li> 
+<li>Add salt and pepper to taste.</li> </ul>
+<a href="https://www.simplyrecipes.com/recipes/perfect_mashed_potatoes/">Source material</a> </div> 
+<div class="card"> 
+<h3>Sweet Potato Cassrrole</h3> 
+<p>Category: Sides</p> 
+<p>Servings: 8</p> 
+<h4>Ingredients</h4> 
+<h5>Sweet Potatoes:</h5> 
+<ul> 
+<li><span>2.5</span> pounds sweet potatoes, peeled and cubed</li> 
+<li>salt</li> 
+<li><span>2</span> TBSP butter</li> 
+<li><span>2</span> large eggs</li> 
+<li><span>1/4</span> cup maple syrup</li> 
+<li><span>1/4</span> cup buttermilk</li> 
+<li><span>1/3</span> cup milk</li> 
+<li><span>1/2</span> tsp vanilla extract</li> 
+<li><span>1/2</span> tsp salt</li> 
+<li><span>1</span> pinch ground allspice</li> 
+<li><span>1</span> pinch cayenne pepper</li> </ul> 
+<h5>Pistachio Crust:</h5> 
+<ul> 
+<li><span>1/2</span> cup chopped roasted, salted pistachios</li> 
+<li><span>1/2</span> cup light brown sugar</li> 
+<li><span>1/3</span> cup all-purpose flour</li> 
+<li><span>1/4</span> cup butter, melted</li> </ul> 
+<h4>Directions</h4> 
+<ul> 
+<li>Preheat oven to 350 degrees F. Grease a 2 1/2-quart baking dish with butter.</li> 
+<li>Step 2 Place sweet potato cubes into a large pot, cover with water, and add a large pinch of salt. Bring to a boil and cook until a knife is easily inserted into a sweet potato cube, about 10 minutes. Drain well. Return to the pot and mash 2 TBSP butter into sweet potatoes.</li> 
+<li>Step 3 Whisk eggs, maple syrup, buttermilk, milk, vanilla extract, cayenne pepper, allspice, and <span>1/2</span> tsp salt together in a large bowl until smooth. Gradually mash sweet potatoes into egg mixture, starting with <span>2</span> TBSP of sweet potato mixture, until all sweet potatoes are incorporated. Transfer sweet potatoes into prepared baking dish.</li> 
+<li>Step 4 Mix pistachios, brown sugar, flour, and <span>1/4</span> cup melted butter together until completely mixed. Crumble topping evenly over top of sweet potatoes. Use the back of a fork to gently press pistachio mixture down onto sweet potatoes.</li> 
+<li>Step 5 Bake in the preheated oven until topping is browned and casserole is set, 25 to 30 minutes. If desired, place under oven's broiler for 5 minutes to give topping a little more brown color. Let rest to cool slightly before serving, about 10 minutes.</li> </ul>
+<a href="https://www.allrecipes.com/recipe/234805/chef-johns-sweet-potato-casserole/">Source material</a> </div> 
+<div class="card"> 
+<h3>Lactation Cookies</h3> 
+<p>Category: Desserts</p> 
+<p>Servings: 16</p> 
+<h4>INGREDIENTS</h4> 
+<ul> 
+<li><span>240</span> g old-fashioned rolled oats</li> 
+<li><span>180</span> g all-purpose flour</li> 
+<li><span>75</span> g brewers yeast</li> 
+<li><span>30</span> g ground flaxseed</li> 
+<li><span>1/2</span> tsp baking powder</li> 
+<li><span>1/2</span> tsp baking soda</li> 
+<li><span>1/2</span> tsp ground cinnamon</li> 
+<li><span>1/4</span> tsp salt</li> 
+<li><span>16</span> TBSP unsalted butter</li> 
+<li><span>300</span> g cane sugar</li> 
+<li><span>1</span> large egg + <span>1</span> large egg yolk</li> 
+<li><span>2</span> tsp vanilla extract</li> 
+<li><span>360</span> g semi sweet chocolate chips</li> </ul> 
+<h4>INSTRUCTIONS?</h4> 
+<ul> 
+<li>Preheat the oven the 350 degrees F.</li> 
+<li>Beat butter in mixer on high speed until light and fluffy, then beat in sugar, then egg and yolk, then vanilla extract</li> 
+<li>Beat on high until whipped smooth</li> 
+<li>In a large bowl, whisk together the oats, flour, yeast, flaxseed, baking powder, soda, cinnamon and salt.</li> 
+<li>Gradually add in the dry ingredients, beating on low speed until just combined and mixed. Stir in the chocolate chips with a spatula until they are evenly dispersed.</li> 
+<li>Make the cookies 85 g for 16 cookies</li> 
+<li>Bake 18 min</li> 
+<li>Scoop the dough into 1-inch rounds and place on a baking sheet about 2 inches apart. Bake for 16 minutes, or until the bottoms are just golden. Let cool completely before storing in a sealed container.</li> </ul>
+<a href="https://www.howsweeteats.com/2015/02/lactation-cookies/">Source material</a> </div> 
+<div class="card"> 
+<h3>Peach Pie Filling</h3> 
+<p>Category: Desserts</p> 
+<p>Servings: 8</p> 
+<h4>Ingredients</h4> 
+<ul> 
+<li><span>1</span> cup granulated sugar</li> 
+<li><span>1</span> cup water</li> 
+<li><span>1/4</span> cup cornstarch</li> 
+<li><span>1</span> TBSP lemon juice</li> 
+<li><span>1/2</span> tsp vanilla extract</li> 
+<li><span>4</span> cups chopped peeled peaches, roughly <span>4</span>-<span>5</span> large peaches</li> </ul> 
+<h4>Instructions</h4> 
+<ul> 
+<li>In a large saucepan, whisk together sugar, water, cornstarch, and lemon juice. Bring to a boil over medium heat, stirring often. Cook until thickened, about 2-3 minutes.</li> 
+<li>Remove from the heat and stir in vanilla and peaches. Cool to room temperature then use as desired or refrigerate for up to 2 weeks. Recipe is not suitable for canning due to the cornstarch.</li> 
+<li>The filling will separate when refrigerated. Reheat everything back up in a saucepan until smooth again.</li> </ul>
+<a href="https://www.chocolatemoosey.com/2013/08/06/homemade-peach-pie-filling/">Source material</a> </div> 
+<div class="card"> 
+<h3>Baked Tofu For Stir Fry</h3> 
+<p>Category: Meals</p> 
+<p>Servings: 2</p> 
+<h4>Ingredients</h4> 
+<ul> 
+<li><span>1</span> block tofu, cubed</li> 
+<li><span>7</span> g canola oil</li> 
+<li><span>24</span> g corn starch</li> </ul> 
+<h4>Directions</h4> 
+<ul> 
+<li>preheat oven to 400F</li> 
+<li>remove tofu from packaging and pat dry and cube tofu</li> 
+<li>toss tofu in oil</li> 
+<li>toss tofu in corn starch</li> 
+<li>spray a sheet of tin foil with cooking spray and place on pizza peel</li> 
+<li>spread tofu evenly on tin foil</li> 
+<li>slide tin foil directly on pizza stone</li> 
+<li>bake for 20 min</li> </ul> </div> 
+<div class="card"> 
+<h3>Snickerdoodle Cookies</h3> 
+<p>Category: Desserts</p> 
+<p>Servings: 16</p> 
+<h4>Ingredients</h4> 
+<h5>Dough</h5> 
+<ul> 
+<li><span>1/2</span> cup butter, softened</li> 
+<li><span>200</span> g white sugar</li> 
+<li><span>1</span> large egg, room temperature</li> 
+<li><span>1/2</span> tsp vanilla extract</li> 
+<li><span>180</span> g all-purpose flour</li> 
+<li><span>1/4</span> tsp baking soda</li> 
+<li><span>1/4</span> tsp cream of tartar</li> </ul> 
+<h5>Cinnamon Sugar Coating</h5> 
+<ul> 
+<li><span>1</span> tsp ground cinnamon</li> 
+<li><span>25</span> g sugar</li> </ul> 
+<h4>Directions</h4> 
+<ul> 
+<li>preheat oven to 375F</li> 
+<li>Beat butter in stand mixer on high speed until light and fluffy</li> 
+<li>Add white sugar and mix on high speed until combined</li> 
+<li>Add egg and vanilla extract and beat on lowest speed</li> 
+<li>In another bowl, whisk together flour, baking soda and cream of tartar; gradually beat into creamed mixture.</li> 
+<li>In a small bowl, mix cinnamon and remaining sugar. Shape dough into 1-in. balls; roll in cinnamon sugar.</li> 
+<li>Place 8 cookies per sheet on parchment lined baking sheet.</li> 
+<li>Bake on top rack one sheet at s time until light brown, 11 minutes 30 seconds. Remove from pans to wire racks to cool.</li> </ul>
+<a href="https://www.tasteofhome.com/recipes/snickerdoodles/">Source material</a> </div> 
+<div class="card"> 
+<h3>Chinese Takeout Brown Sauce</h3> 
+<p>Category: Dips And Sauces</p> 
+<p>Servings: 4</p> 
+<h4>Ingredients</h4> 
+<ul> 
+<li><span>3/4</span> cup water</li> 
+<li><span>1</span> TBSP cornstarch</li> 
+<li><span>6</span> g better than bouillon no beef</li> 
+<li><span>40</span> g vegetarian oyster sauce</li> 
+<li><span>20</span> g soy sauce</li> 
+<li><span>2</span> g sugar</li> </ul> 
+<h4>Directions</h4> 
+<ul> 
+<li>Whisk together all ingredients in a small bowl</li> 
+<li>Heat in wok until thickened</li> </ul>
+<a href="https://www.thespruceeats.com/chinese-brown-sauce-4065294">Source material</a> </div> 
+<div class="card"> 
+<h3>Pumpkin Spice Coffee</h3> 
+<p>Category: Drinks</p> 
+<p>Servings: 1</p> 
+<h4>Ingredients</h4> 
+<ul> 
+<li><span>15</span> g coffee</li> 
+<li><span>1/2</span> tsp pumpkin pie spice</li> </ul> 
+<h4>Directions</h4> 
+<ul> 
+<li>Add coffee and pumpkin pie spice to a coffee filter</li> 
+<li>Pour over <span>8</span> oz of 200F water</li> </ul>
+<a href="https://www.mccormick.com/recipes/beverages-cocktails/pumpkin-pie-spiced-coffee">Source material</a> </div> 
+<div class="card"> 
+<h3>Peanut Sauce</h3> 
+<p>Category: Dips And Sauces</p> 
+<p>Servings: 2</p> 
+<h4>Ingredients</h4> 
+<ul> 
+<li><span>4</span> oz water</li> 
+<li><span>4</span> g corn starch</li> 
+<li><span>6</span> g better than bouillon no beef</li> 
+<li><span>35</span> g soy sauce</li> 
+<li><span>2</span> g sesame oil</li> 
+<li><span>2</span> g sriracha</li> 
+<li><span>9</span> g rice wine vinegar</li> 
+<li><span>33</span> g peanut Butter</li> 
+<li><span>13</span> g brown sugar</li> 
+<li><span>1/8</span> tsp ground ginger</li> </ul> 
+<h4>Directions</h4> 
+<ul> 
+<li>mix all ingredients together in a wok over medium heat until sauce is uniform and thick</li> </ul> </div> 
+<div class="card"> 
+<h3>Teryaki Sauce</h3> 
+<p>Category: Dips And Sauces</p> 
+<p>Servings: 2</p> 
+<h4>Ingredients</h4> 
+<ul> 
+<li><span>4</span> oz water</li> 
+<li><span>1</span> TBSP cornstarch</li> 
+<li><span>6</span> g better than bouillon no chicken</li> 
+<li><span>30</span> g packed brown sugar</li> 
+<li><span>35</span> g soy sauce</li> 
+<li><span>10</span> g honey honey</li> 
+<li><span>1/8</span> tsp garlic powder</li> 
+<li><span>1/4</span> tsp ground ginger</li> </ul> 
+<h4>Directions</h4> 
+<ul> 
+<li>Whisk together all ingredients in a small bowl</li> 
+<li>Heat in wok until thickened</li> </ul>
+<a href="https://www.tasteandtellblog.com/teriyaki-chicken/">Source material</a> </div> 
+<div class="card"> 
+<h3>Tortellini En Brodo</h3> 
+<p>Category: Soups</p> 
+<p>Servings: 2</p> 
+<h4>Ingredients</h4> 
+<ul> 
+<li><span>1</span> tsp butter</li> 
+<li><span>1</span> stalks of celery, chopped</li> 
+<li><span>1/2</span> small onion, chopped</li> 
+<li><span>1</span> carrot, peeled &amp; chopped</li> 
+<li><span>2</span> cups water</li> 
+<li><span>12</span> g btb chickenl</li> 
+<li><span>1</span> small Parmigiano Reggiano Rind, optional</li> 
+<li><span>381</span> g cheese tortellini</li> 
+<li><span>1/4</span> tsp fresh ground pepper</li> 
+<li><span>1/4</span> tsp ground nutmeg</li> 
+<li><span>1/4</span> tsp salt</li> 
+<li><span>1/8</span> tsp garlic powder</li> 
+<li><span>50</span> g baby spinach</li> </ul> 
+<h4>Directions</h4> 
+<ul> 
+<li>Heat butter in saucepan over low heat</li> 
+<li>saute onion, carrot, celery, and spinach on low for about 10 mins</li> 
+<li>Add the rest of the ingredients besides the tortellini and bring to a boil</li> 
+<li>Add the tortellini and keep over low heat for 4 mins</li> </ul>
+<a href="https://www.skinnytaste.com/spinach-tortellini-en-brodo/">Source material</a> </div> 
+<div class="card"> 
+<h3>Lentil BBQ Sandwich</h3> 
+<p>Category: Meals</p> 
+<p>Servings: 4</p> 
+<h4>Ingredients</h4> 
+<h5>Seasonings / Carrots</h5> 
+<ul> 
+<li><span>2</span> TBSP oil</li> 
+<li><span>1/2</span> medium onion</li> 
+<li><span>15</span> oz can lentils, rinsed and drained</li> 
+<li><span>1.5</span> cups packed finely shredded/grated carrots</li> 
+<li><span>2</span> TBSP sugar</li> 
+<li><span>1.5</span> tsp ground paprika</li> 
+<li><span>1</span> tsp garlic powder</li> 
+<li><span>1/2</span> tsp salt</li> 
+<li>black pepper</li> 
+<li><span>3/4</span> cup BBQ sauce</li> </ul> 
+<h4>Directions</h4> 
+<ul> 
+<li>Heat a large skillet over medium heat. Once hot, add oil and onion and season with a pinch each salt and pepper. Stir to combine, and saute for 4-5 minutes, stirring frequently, or until the onions are tender and slightly browned.</li> 
+<li>Next add lentils, carrots, coconut sugar, paprika, garlic powder, salt, pepper, and BBQ sauce. Stir to combine.</li> 
+<li>Continue cooking the mixture over medium-low heat until completely warmed through and thick, stirring occasionally - about 5-10 minutes.</li> 
+<li>Scoop half of the mixture into a food processor and mix/pulse to mash some of the lentils and carrots together.</li> </ul>
+<a href="https://minimalistbaker.com/best-vegan-pulled-pork-sandwich/">Source material</a> </div> 
+<div class="card"> 
+<h3>Cannoli Filling</h3> 
+<p>Category: Desserts</p> 
+<p>Servings: 16</p> 
+<h4>Ingredients</h4> 
+<ul> 
+<li><span>32</span> oz. whole milk ricotta, strained</li> 
+<li><span>180</span> g powdered sugar</li> 
+<li><span>126</span> g mini chocolate chips</li> 
+<li><span>1/4</span> tsp ground cinnamon</li> 
+<li>Chopped unsalted pistachios, optional</li> </ul> 
+<h4>Directions</h4> 
+<ul> 
+<li>In a mixing bowl fold and stir together strained ricotta, powdered sugar, chocolate chips, and cinnamon. Transfer into a piping bag fitted with a large round tip. Pipe filling into cooled cannoli shells.</li> </ul>
+<a href="https://www.cookingclassy.com/cannoli/">Source material</a> </div> 
+<div class="card"> 
+<h3>Risotto</h3> 
+<p>Category: Sides</p> 
+<p>Servings: 4</p> 
+<h4>Ingredients</h4> 
+<ul> 
+<li><span>6</span> cups low-sodium chicken broth</li> 
+<li><span>2</span> tsp olive oil</li> 
+<li><span>1</span> medium onion, chopped</li> 
+<li><span>1.5</span> cups Arborio rice</li> 
+<li><span>1/2</span> cup dry white wine</li> 
+<li><span>3/4</span> tsp salt</li> 
+<li>Freshly ground black pepper</li> 
+<li><span>3</span> lightly packed cups baby spinach leaves</li> 
+<li><span>1</span> cup frozen peas</li> 
+<li><span>1/2</span> pound asparagus, steamed and cut into 3/4-inch pieces</li> 
+<li><span>1/4</span> cup freshly grated Parmesan</li> </ul> 
+<h4>Directions</h4> 
+<ul> 
+<li>Bring the broth to a simmer in a medium saucepan. Heat the oil in a heavy saucepan over moderately low heat and cook the onion, stirring occasionally, until soft, 3 to 5 minutes. Add the rice and cook, stirring constantly, 1 minute. Add wine and simmer, stirring constantly, until absorbed, about 1 minute. Add <span>3/4</span> cup of the hot broth, the salt and a few grinds of fresh pepper and simmer, stirring constantly, until broth is absorbed. Continue simmering and adding hot broth, about <span>3/4</span> cup at a time, stirring constantly and allowing the broth to be absorbed before adding more, until rice is almost tender and creamy-looking, about 18 minutes.</li> 
+<li>Add the spinach and peas and cook until the spinach is wilted. Add the asparagus and cook just until the vegetables are hot. Stir in the Parmesan and more broth if the risotto seems too thick. Serve in soup plates.</li> </ul>
+<a href="https://www.foodnetwork.com/recipes/ellie-krieger/garden-risotto-recipe-1957621">Source material</a> </div> 
+<div class="card"> 
+<h3>Eggplant Parmesan</h3> 
+<p>Category: Meals</p> 
+<p>Servings: 6</p> 
+<h4>Ingredients</h4> 
+<ul> 
+<li><span>2</span> eggplant, peeled and cut into 1/2-inch slices</li> 
+<li><span>1</span> TBSP salt, or as needed</li> 
+<li><span>1</span> cup Italian-style bread crumbs</li> 
+<li><span>1/4</span> cup grated Parmesan cheese</li> 
+<li><span>2</span> eggs, beaten</li> 
+<li><span>28</span> oz jar pasta sauce</li> 
+<li><span>1/4</span> cup grated Parmesan cheese</li> 
+<li><span>2</span> oz shredded mozzarella cheese</li> 
+<li><span>1/2</span> tsp dried basil</li> </ul> 
+<h4>Directions</h4> 
+<ul> 
+<li>Place eggplant slices in a colander; sprinkle both sides of each slice with salt. Allow to sit for at least 3 hours. Wipe excess moisture from eggplant slices with paper towels.</li> 
+<li>Preheat oven to 350F convection.</li> 
+<li>like two baking sheets in foil and put cooling racks on them on top of the foil</li> 
+<li>Mix bread crumbs and <span>1/4</span> cup Parmesan cheese together in a bowl.</li> 
+<li>Dip eggplant slices in beaten egg; coat with bread crumb mixture. Arrange coated eggplant slices in a single layer on the prepared baking sheet.</li> 
+<li>Bake in the preheated oven until lightly browned and crisp, about 30 minutes</li> 
+<li>Cover the bottom of a x3-inch casserole dish with a layer of spaghetti sauce; top with a layer of eggplant slices. Sprinkle with about <span>1</span> TBSP of the remaining Parmesan cheese and 1/3 the mozzarella cheese. Repeat layers with remaining ingredients, ending with a cheese layer. Sprinkle with basil.</li> 
+<li>Bake in the preheated oven until cheese is bubbling and golden brown, about 35 minutes.</li> </ul>
+<a href="https://www.allrecipes.com/recipe/229369/baked-eggplant-parmesan/">Source material</a> </div> 
+<div class="card"> 
+<h3>Focaccia</h3> 
+<p>Category: Sides</p> 
+<p>Servings: 2</p> 
+<h4>INGREDIENTS</h4> 
+<ul> 
+<li><span>472</span> g all-purpose flour</li> 
+<li><span>39</span> g vital wheat gluten</li> 
+<li><span>8</span> g instant yeast</li> 
+<li><span>10</span> g kosher salt</li> 
+<li><span>455</span> g 110F water</li> 
+<li>olive oil</li> </ul> 
+<h4>INSTRUCTIONS</h4> 
+<ul> 
+<li>combine flour, gluten, and yeast in a large bowl and whisk to combine</li> 
+<li>add water and mix with rubber spatula until dough ball forms</li> 
+<li>coat in a small amount of olive oil, then cover and refrigerate overnight</li> 
+<li>the next day, grease two pie pans with Butter</li> 
+<li>pour a TBSP of olive oil in the center of each pan</li> 
+<li>Using two forks, deflate the dough by releasing it from the sides of the bowl and pulling it toward the center. Rotate the bowl in quarter turns as you deflate, turning the mass into a rough ball. Use the forks to split the dough into two equal pieces. Place one piece into one of the prepared pans. Roll the dough ball in the oil to coat it all over, forming a rough ball. Repeat with the remaining piece. Let the dough balls rest for 3 to 4 hours depending on the temperature of your kitchen.</li> 
+<li>preheat oven to 425F</li> 
+<li>Pour another TBSP of oil over each round of dough. Rub your hands lightly in the oil to coat, then, using all of your fingers, press straight down to create deep dimples. If necessary, gently stretch the dough as you dimple to allow the dough to fill the pan. Sprinkle with flaky sea salt all over.</li> 
+<li>Transfer the pans to the oven and bake for 25 to 30 minutes, until the underside is golden and crisp. Remove the pans from the oven and transfer the focaccia to cooling racks. Let it cool for 10 minutes before cutting and serving; let it cool completely if you are halving it with the intention of making a sandwich.</li> </ul>
+<a href="https://alexandracooks.com/2018/03/02/overnight-refrigerator-focaccia-best-focaccia/">Source material</a> </div> 
+<div class="card"> 
+<h3>Peanut Butter Noodles</h3> 
+<p>Category: Meals</p> 
+<p>Servings: 2</p> 
+<h4>Ingredients</h4> 
+<ul> 
+<li><span>6.6</span> oz lo mein noodles</li> 
+<li><span>35</span> g soy sauce</li> 
+<li><span>2</span> g sesame oil</li> 
+<li><span>2</span> g sriracha</li> 
+<li><span>9</span> g rice wine vinegar</li> 
+<li><span>33</span> g peanut Butter</li> 
+<li><span>13</span> g brown sugar</li> 
+<li><span>1/8</span> tsp ground ginger</li> </ul> 
+<h4>Directions</h4> 
+<ul> 
+<li>bring a large pot of unsalted water to a boil</li> 
+<li>cook the noodles for four minutes</li> 
+<li>mix all ingredients together in a wok over medium heat until saice is uniform and thick</li> </ul> </div> 
+<div class="card"> 
+<h3>Cherry Pie Filling</h3> 
+<p>Category: Desserts</p> 
+<p>Servings: 8</p> 
+<h4>Ingredients</h4> 
+<ul> 
+<li><span>5</span> to 6 cups fresh pitted cherries, about <span>2.5</span> to <span>3</span> pounds</li> 
+<li><span>1/2</span> cup water</li> 
+<li><span>2</span> TBSP freshly squeezed lemon juice</li> 
+<li><span>2/3</span> cup granulated sugar</li> 
+<li><span>4</span> TBSP cornstarch</li> 
+<li><span>1/4</span> tsp almond extract, optional</li> </ul> 
+<h4>Instructions</h4> 
+<ul> 
+<li>In a saucepan over medium heat, combine cherries, water, lemon juice, sugar and cornstarch.</li> 
+<li>Bring to a boil; reduce heat to low and cook, stirring frequently, for about 10 minutes.</li> 
+<li>If using, stir in almond extract. Cool slightly before using as a topping.</li> </ul> 
+<h4>Notes</h4> 
+<ul> 
+<li>If using sour cherries, you will need to adjust the amount of sugar. I'd recommend starting about cup and working your way up if more sweetness is needed.</li> 
+<li>Refrigerate leftover fresh cherry pie filling in a sealed container for up to 3 days.</li> 
+<li>This recipe freezes beautifully.</li> </ul>
+<a href="https://www.mybakingaddiction.com/homemade-cherry-pie-filling-recipe/">Source material</a> </div> 
+<div class="card"> 
+<h3>Ermine Frosting</h3> 
+<p>Category: Desserts</p> 
+<p>Servings: 2</p> 
+<h4>Ingredients</h4> 
+<ul> 
+<li><span>37.5</span> g all purpose flour</li> 
+<li><span>200</span> g white sugar</li> 
+<li><span>240</span> g cup milk</li> 
+<li><span>1.5</span> tsp vanilla extract</li> 
+<li><span>2</span> sticks unsalted butter</li> </ul> 
+<h5>Chocolate Frosting Option:</h5> 
+<ul> 
+<li><span>1/4</span> cup cocoa powder, unsweetened</li> </ul> 
+<h5>Cinnamon Frosting Option</h5> 
+<ul> 
+<li><span>1</span> tsp ground cinnamon</li> </ul> 
+<h5>Candy Cane Frosting Option</h5> 
+<ul> 
+<li><span>2</span> candy canes, melted in with milk</li> </ul> 
+<h5>Lemon Frosting Option</h5> 
+<ul> 
+<li><span>2</span> TBSP lemon juice</li> 
+<li><span>2</span> tsp lemon zest</li> 
+<li><span>2</span> TBSP meringue powder</li> </ul> 
+<h5>Peanut Butter Frosting Option</h5> 
+<ul> 
+<li><span>1.5</span> sticks unsalted Butter</li> 
+<li><span>67</span> g smooth peanut butter</li> </ul> 
+<h5>Oreo Frosting Option</h5> 
+<ul> 
+<li><span>6</span> oreos blended in with milk</li> 
+<li><span>6</span> oreos crushed and added to frosting after mixing</li> </ul> 
+<h5>Prosecco Frosting Option</h5> 
+<ul> 
+<li><span>320</span> g prosecco, reduced on low heat</li> 
+<li><span>30</span> g prosecco after reduction</li> </ul> 
+<h5>Peach Frosting Option</h5> 
+<ul> 
+<li><span>200</span> g frozen peaches, thawed and blended with milk</li> 
+<li><span>240</span> g should be total weight after you simmer the milk and fruit mixture</li> </ul> 
+<h5>Candied Pecan Option</h5> 
+<ul> 
+<li>replace white sugar with brown sugar</li> 
+<li><span>1</span> recipe of candied pecans, blitzed in food processor</li> </ul> 
+<h4>Instructions</h4> 
+<h5>Thickening Roux:</h5> 
+<ul> 
+<li>Place flour and sugar in a large saucepan over medium heat. Cook, stirring constantly, for 30 seconds.</li> 
+<li>While whisking constantly, slowly pour the milk in.</li> 
+<li>As the milk gets hotter, it will start to thicken - stir constantly so the base doesn't catch. </li> 
+<li>Cook until the mixture thickens in a thick, dolloping custard - see video for texture. TIP: Thicker texture = thicker frosting texture but won't make the frosting dense, it's still fluffy and spreadable but it just makes it "sturdier" with sharper edges when piped.</li> 
+<li>Remove from heat and scrape into a bowl. Cover with cling wrap, pressing down onto the surface to prevent a skin from forming.</li> 
+<li>Cool completely. You can leave in fridge overnight but take it out 1 hour prior to using.</li> </ul> 
+<h5>Making The Fluffy Frosting:</h5> 
+<ul> 
+<li>Place butter in a bowl and use either a handheld beater or stand mixer to beat for 3 minutes until it's smooth and changes from yellow to very pale yellow, almost white.</li> 
+<li>Now start whipping in the Thickening Roux. On speed 5, start adding the thick roux one heaped TBSP at a time. Take about 1 minute to add it all.</li> 
+<li>Once all added, add vanilla and salt, then whip for 2 to 3 minutes until you can see that it is still enough to hold peaks. Then it's ready to use!</li> </ul> 
+<h5>Chocolate Flavoured Option:</h5> 
+<ul> 
+<li>Beat in the cocoa powder at the end, just until mixed through.</li> </ul>
+<a href="https://www.recipetineats.com/fluffy-vanilla-frosting/">Source material</a> </div> 
+<div class="card"> 
+<h3>Espresso Filling</h3> 
+<p>Category: Desserts</p> 
+<p>Servings: 2</p> 
+<h4>Ingredients</h4> 
+<ul> 
+<li><span>2</span> TBSP instant espresso powder</li> 
+<li><span>1.5</span> tsp hot water</li> 
+<li><span>1.5</span> cups mascarpone cheese</li> 
+<li><span>1</span> cup confectioners' sugar, sifted</li> 
+<li><span>3/4</span> cup heavy whipping cream</li> 
+<li><span>1.5</span> tsp vanilla extract</li> </ul> 
+<h4>Directions</h4> 
+<ul> 
+<li>In a small bowl, mix espresso powder and water until smooth; cool. In a large bowl, beat the Mascarpone cheese, confectioners' sugar, cream, vanilla and espresso mixture on medium speed until creamy and slightly thickened. Spread between cake layers.</li> </ul>
+<a href="https://www.tasteofhome.com/recipes/espresso-filling/">Source material</a> </div> 
+<div class="card"> 
+<h3>Chocolate Cupcakes</h3> 
+<p>Category: Desserts</p> 
+<p>Servings: 14</p> 
+<h4>Ingredients</h4> 
+<ul> 
+<li><span>94</span> g all-purpose flour</li> 
+<li><span>45</span> g unsweetened natural cocoa powder</li> 
+<li><span>3/4</span> tsp baking powder</li> 
+<li><span>1/2</span> tsp baking soda</li> 
+<li><span>1/4</span> tsp salt</li> 
+<li><span>2</span> large eggs, at room temperature*</li> 
+<li><span>100</span> g granulated sugar</li> 
+<li><span>100</span> g packed light brown sugar</li> 
+<li><span>1/3</span> cup vegetable or canola oil</li> 
+<li><span>2</span> tsp pure vanilla extract</li> 
+<li><span>1/2</span> cup buttermilk, at room temperature*</li> </ul> 
+<h4>Directions</h4> 
+<ul> 
+<li>Preheat the oven to 350F. Line a 12-cup muffin pan with cupcake liners. Line a second pan with 2 liners - this recipe makes about <span>14</span> cupcakes. Set aside.</li> 
+<li>Cupcakes: Whisk the flour, cocoa powder, baking powder, baking soda, and salt together in a large bowl until thoroughly combined. Set aside. In a medium bowl, whisk the eggs, granulated sugar, brown sugar, oil, and vanilla together until combined. Pour half of the wet ingredients into the dry ingredients. Then half of the buttermilk. Gently whisk for a few seconds. Repeat with the remaining wet ingredients and buttermilk. Stir until *just* combined; do not overmix. The batter will be thin.</li> 
+<li>Pour or spoon the batter into the liners. Fillonly halfway to avoid spilling over the sides or sinking.</li> 
+<li>Bake for 18-21 minutes, or until a toothpick inserted in the center comes out clean. Allow to cool completely before frosting. I usually let them cool in the pan.</li> 
+<li>Frost cooled cupcakes however you'd like. I used chocolate buttercream and Wilton 1M piping tip for these pictured cupcakes. Top with sprinkles, if desired. Store leftovers in the refrigerator for up to 5 days.</li> </ul>
+<a href="https://sallysbakingaddiction.com/super-moist-chocolate-cupcakes/">Source material</a> </div> 
+<div class="card"> 
+<h3>Pasta Salad</h3> 
+<p>Category: Sides</p> 
+<p>Servings: 8</p> 
+<h4>Ingredients</h4> 
+<h5>Salad</h5> 
+<ul> 
+<li><span>16</span> oz fussili pasta</li> 
+<li><span>2</span> cup halved cherry tomatoes</li> 
+<li><span>15</span> oz can chickpeas, drained and rinsed</li> 
+<li><span>2</span> cups arugula</li> 
+<li><span>1</span> cup cucumbers, sliced into thin half moons</li> 
+<li><span>1</span> cup crumbled feta cheese</li> 
+<li>fresh basil leaves, chopped</li> 
+<li><span>30</span> g toasted pine nuts</li> </ul> 
+<h5>Dressing</h5> 
+<ul> 
+<li><span>1/4</span> cup extra-virgin olive oil, more for drizzling</li> 
+<li><span>3</span> TBSP lemon juice</li> 
+<li><span>1</span> tsp Dijon mustard</li> 
+<li><span>2</span> tsp dried parsley</li> 
+<li><span>1</span> tsp dried mint</li> 
+<li><span>1/4</span> tsp dried oregano</li> 
+<li><span>1/4</span> tsp dried marjoram</li> 
+<li><span>1/4</span> tsp red pepper flakes</li> 
+<li><span>3/4</span> tsp salt</li> </ul> 
+<h4>Instructions</h4> 
+<ul> 
+<li>Bring a large pot of water to a boil</li> 
+<li>add a handful of salt</li> 
+<li>Prepare the pasta according to the package directions, or until slightly past al dente.</li> 
+<li>In a small bowl, whisk together the dressing ingredients</li> 
+<li>Drain the pasta, toss it with a little olive oil and let it cool to room temp</li> 
+<li>Transfer to a large bowl with the salad ingredients</li> 
+<li>Pour the dressing and toss to coat</li> </ul>
+<a href="https://www.loveandlemons.com/pasta-salad/">Source material</a> </div> 
+<div class="card"> 
+<h3>Tsoureki</h3> 
+<p>Category: Sides</p> 
+<p>Servings: 2</p> 
+<h4>Ingredients</h4> 
+<h5>For The Dough</h5> 
+<ul> 
+<li><span>24</span> g dry yeast</li> 
+<li><span>110</span> g lukewarm water</li> 
+<li><span>3</span> g ground mastic</li> 
+<li><span>10</span> g ground mahleb</li> 
+<li><span>135</span> g butter, from cow's milk,</li> 
+<li><span>230</span> g sugar</li> 
+<li><span>150</span> g milk, at room temperature</li> 
+<li><span>4</span> medium eggs, at room temperature</li> 
+<li><span>870</span> g strong white flour</li> 
+<li>zest of <span>1</span> orange</li> </ul> 
+<h5>To Garnish</h5> 
+<ul> 
+<li><span>1</span> egg and <span>1</span> TBSP water</li> 
+<li>almond slivers</li> </ul> 
+<h5>For The Syrup</h5> 
+<ul> 
+<li><span>150</span> g sugar</li> 
+<li><span>150</span> g water</li> </ul> 
+<h4>Instructions</h4> 
+<ul> 
+<li>To prepare this tsoureki recipe, add in a bowl the lukewarm water, a pinch of sugar and yeast and stir. Wrap well with plastic wrap and set aside for about 6-7 minutes, until the yeast rises and starts bubbling. Be careful not do add hot water, as it will kill the yeast, nor cold, as it will take forever for the Greek Easter bread to rise. The water should be at the same temperature as your finger, so check it out sticking one finger in; you should feel no difference in temperature.</li> 
+<li>Use a pestle or a blender to ground the masticha and mahlepi, along with a pinch of sugar and set aside. These aromatic spices will give Greek Easter bread its distinctive taste and amazing smell. But be careful not to add any more mastic than this tsoureki recipe calls for, as it will leave a slightly bitter taste to your Greek Easter bread.</li> 
+<li>In a saucepan add the butter, sugar and milk. Place over very low heat and stir the mixture, until the butter has melted and the sugar has dissolved. The key is to melt the butter at very low heat, so that the temperature doesn't 'kill' the yeast.*Remove the pan from the stove and check the temperature. The mixture should be lukewarm - the same temperature as your finger. If it is warmer, leave to cool down for a few minutes and check again.</li> 
+<li>Pour the butter mixture in a large bowl and whisk in the eggs. Add the yeast mixture and whisk to combine.</li> 
+<li>In the mixer's bowl add the flour, the ground mastic and mahlepi, orange zest and the butter-egg-yeast mixture from step 4. Using the dough hook mix at first at low speed, until the ingredients start to combine and then mix at medium-high speed for about 15 minutes, until the dough doesn't stick on the sides of the bowl. At this point the dough should be really soft, like seen in the picture and a little sticky..</li> 
+<li>Cover the dough with plastic wrap and place in a warm environment, until at least it doubles in size. If the environment is cold, preheat the oven at 30C/85F, turn it off and place the bowl inside.</li> 
+<li>Gently deflate the tsoureki dough with your hands and cut in <span>6</span> equal portions. Take one piece of the dough and roll it a little with your hands. Hold with your hands from the edges and shake to stretch the dough into a rope. This technique will help the Greek Easter bread form the characteristic stringy texture, as seen in the picture.</li> 
+<li>Take three of the strands and form the Greek Easter bread into a braid and transfer on a large baking tray layered with parchment paper. Repeat the same procedure for however many strands you have remaining. Let the Greek Easter bread rise for about 1 more hour at room temperature or in the oven, until it puffs up and almost*doubles in size, like in the pictures.</li> 
+<li>In a small bowl add the egg and <span>1</span> TBSP water and whisk with a fork. Brush the top of each Greek Easter bread with the egg, being careful not to deflate it, garnish with almond slivers and bake in preheated oven at 150C / 310F fan for about 30-40 minutes, until nicely browned and fluffy. If its getting too brown too quickly cover with some parchment paper and continue baking.</li> 
+<li>Although the traditional tsoureki recipe doesn't call for syrup, garnishing Greek Easter bread with just a little syrup, always gives a little something! So it's up to you to decide! Prepare the syrup for the Greek Easter bread just right before you turn the tsoureki out of the oven. In a small pot add the sugar and water and bring to the boil. As soon as the sugar dissolves, remove the pot from the stove and ladle the hot syrup over the hot tsoureki.</li> 
+<li>Let the Greek Easter bread cool down and wrap well with plastic wrap, so that it doesn't become hard and dry. Store for up to a 5-6 days at room temperature or up to a couple of months in the freezer.</li> </ul>
+<a href="https://www.mygreekdish.com/recipe/tsoureki-recipe-traditional-greek-easter-bread/">Source material</a> </div> 
+<div class="card"> 
+<h3>Ant Poison</h3> 
+<p>Category: Household</p> 
+<p>Servings: 30</p> 
+<h4>INGREDIENTS</h4> 
+<ul> 
+<li><span>200</span> g sugar</li> 
+<li><span>33</span> g of Borax</li> 
+<li><span>24</span> oz warm water</li> </ul> 
+<h4>INSTRUCTIONS</h4> 
+<ul> 
+<li>Mix sugar and Borax with water until it dissolves.</li> 
+<li>Soak cotton ball with solution then place cotton ball on wax paper. Place the wax paper with the soaked cotton ball near ants.</li> 
+<li>This makes a ton of ant poison, cut the recipe to 1/4 and you will still have plenty!</li> </ul>
+<a href="https://www.thisgrandmaisfun.com/poison-ants-diy/">Source material</a> </div> 
+<div class="card"> 
+<h3>Apple Pie</h3> 
+<p>Category: Desserts</p> 
+<p>Servings: 8</p> 
+<h4>Ingredients</h4> 
+<ul> 
+<li>Top and bottom pie crust</li> 
+<li><span>1/2</span> cup unsalted butter</li> 
+<li><span>3</span> TBSP all-purpose flour</li> 
+<li><span>1/2</span> cup water</li> 
+<li><span>1/2</span> cup white sugar</li> 
+<li><span>1/2</span> cup packed brown sugar</li> 
+<li><span>3</span> granny Smith apples - peeled, cored and sliced</li> </ul> 
+<h4>Directions</h4> 
+<ul> 
+<li>Preheat oven to 425F. Melt the butter in a saucepan. Stir in flour to form a paste. Add water, white sugar and brown sugar, and bring to a boil. Reduce temperature and let simmer.</li> 
+<li>Place the bottom crust in your pan. Fill with apples, mounded slightly. Cover with a lattice work crust. Gently pour the sugar and butter liquid over the crust. Pour slowly so that it does not run off.</li> 
+<li>Bake 15 minutes in the preheated oven. Reduce the temperature to 350F. Continue baking for 35 to 45 minutes, until apples are soft.</li> </ul>
+<a href="https://www.allrecipes.com/recipe/12682/apple-pie-by-grandma-ople/">Source material</a> </div> 
+<div class="card"> 
+<h3>Pizza Dough By Kenji</h3> 
+<p>Category: Meals</p> 
+<p>Servings: 3</p> 
+<h4>Ingredients</h4> 
+<ul> 
+<li><span>582</span> g AP flour</li> 
+<li><span>48</span> g vital wheat gluten</li> 
+<li><span>15</span> g granulated sugar</li> 
+<li><span>10</span> g salt</li> 
+<li><span>10</span> g instant yeast</li> 
+<li><span>32</span> g olive oil</li> 
+<li><span>420</span> g water at 100F</li> </ul> 
+<h4>Directions</h4> 
+<ul> 
+<li>place dry ingredients in large bowl and whisk together</li> 
+<li>Add wet ingredients and mix with spatula until dough forms</li> 
+<li>Knead dough on a floured workspace for about a minute</li> 
+<li>Divide into four even dough balls and let prove in the fridge between 1 and 5 days</li> </ul>
+<a href="https://www.seriouseats.com/recipes/2012/07/basic-new-york-style-pizza-dough.html">Source material</a> </div> 
+<div class="card"> 
+<h3>Lemon Chickpea Orzo Soup</h3> 
+<p>Category: Soups</p> 
+<p>Servings: 4</p> 
+<h4>Ingredients</h4> 
+<ul> 
+<li><span>1</span> TBSP olive oil</li> 
+<li><span>1/2</span> onion, diced</li> 
+<li><span>3</span> carrots, peeled and diced</li> 
+<li><span>48</span> oz water</li> 
+<li><span>48</span> g better than bouillon no chicken</li> 
+<li><span>1</span> cup whole wheat orzo</li> 
+<li><span>2</span> cans chickpeas, drained</li> 
+<li><span>1/3</span> cup tahini</li> 
+<li>juice of <span>1</span> lemon</li> 
+<li><span>1</span> cup fresh spinach, chopped</li> 
+<li><span>1/2</span> tsp dill</li> 
+<li><span>1/2</span> tsp salt</li> 
+<li>fresh cracked pepper</li> </ul> 
+<h4>INSTRUCTIONS</h4> 
+<ul> 
+<li>Heat oil or water over medium heat, add onion and carrot, saute for about 5 - 7 minutes, add the garlic and saute for 1 minute more.</li> 
+<li>Add the broth or water, bring to a boil, add the orzo and chickpeas, reduce heat to medium-low and cook at a gentle boil for 8- 9 minutes, orzo should be tender.</li> 
+<li>Remove from heat, add tahini and lemon juice, stir well. Add the baby kale or spinach, give a good stir, greens will soften and wilt within a few minutes. Add as much dill as you like, and season well with salt &amp; pepper. Soup will thicken upon standing, add more liquids as needed. </li> 
+<li>Serve in individual bowl with your favorite crusty artisan bread for soaking up the wonderful juices.</li> </ul>
+<a href="https://simple-veganista.com/lemon-chickpea-orzo-soup/">Source material</a> </div> 
+<div class="card"> 
+<h3>Carrot Cake</h3> 
+<p>Category: Desserts</p> 
+<p>Servings: 12</p> 
+<h4>Ingredients</h4> 
+<h5>Carrot Cake</h5> 
+<ul> 
+<li><span>312</span> g all-purpose flour</li> 
+<li><span>2</span> tsp baking powder</li> 
+<li><span>1</span> tsp baking soda</li> 
+<li><span>1/2</span> tsp salt</li> 
+<li><span>1.5</span> tsp ground cinnamon</li> 
+<li><span>1</span> tsp ground ginger</li> 
+<li><span>1/4</span> tsp ground nutmeg</li> 
+<li><span>1/4</span> tsp ground cloves</li> 
+<li><span>300</span> g dark brown sugar</li> 
+<li><span>100</span> g granulated sugar</li> 
+<li><span>215</span> g canola oil</li> 
+<li><span>4</span> large eggs, room temperature</li> 
+<li><span>260</span> g applesauce, unsweetened, room temperature</li> 
+<li><span>1</span> tsp pure vanilla extract</li> 
+<li><span>260</span> g carrots, finely shredded</li> 
+<li><span>228</span> g pecan halves</li> </ul> 
+<h5>Brown Butter Cream Cheese Frosting</h5> 
+<ul> 
+<li><span>16</span> oz cream cheese, room temperature</li> 
+<li><span>1</span> stick unsalted butter, browned on the stove</li> 
+<li><span>568</span> g powdered sugar, unsifted</li> 
+<li><span>1</span> TBSP heavy cream or milk</li> 
+<li><span>1.5</span> tsp pure vanilla extract</li> 
+<li>pinch of salt</li> </ul> 
+<h4>Instructions</h4> 
+<ul> 
+<li>Preheat oven to 350F. Place pecans on a parchment-lined baking sheet in a single layer. Bake for 7 minutes, then chop with a pastry cutter. set aside</li> 
+<li>Shred whole carrots using a box grater or food processor using the smaller, finer holes. Make sure to shred at home because pre-shredded carrots are generally dried out, and we need the moisture of the freshly shredded carrots for the cake.</li> 
+<li>Preheat the oven to 350F. Grease <span>3</span> 9" round cake pans and line with parchment paper. I like to cut circles of parchment to fit snug at the bottom. Grease again over the parchment and on the sides.</li> 
+<li>In a large bowl, whisk together all-purpose flour, baking powder, baking soda, salt, cinnamon, ginger, nutmeg, and cloves.</li> 
+<li>In a separate bowl, whisk together the melted coconut oil, brown sugar, granulated sugar, eggs, apple sauce, and vanilla.</li> 
+<li>Pour wet ingredients into dry ingredients and stir until just combined, avoiding overmixing. Fold in shredded carrots and half the pecans until evenly combined. Pour cake batter into the <span>3</span> baking pans, ensuring they weigh approximately the same.</li> 
+<li>Bake the cakes for 25-30 minutes until a toothpick comes out clean. If the toothpick comes out wet, continue baking until cooked thoroughly, but be careful of overbaking. When done, invert the cakes out of their pans onto a cooling rack. Peel off the parchment paper to allow steam to escape faster. Cool the cakes completely before frosting.</li> 
+<li>Melt unsalted butter in a saucepan over medium heat until the butter gets a tint of brown, not too dark, about 10 minutes. It will smell nutty and delicious! Pour into a heat-safe bowl, and cover at room temp to solidify.</li> 
+<li>Using a hand mixer or stand mixer with paddle attachment, beat together the solidified brown butter and cream cheese until smooth but not whipped. Add powdered sugar, vanilla, milk, and salt. Beat on low speed until the powdered sugar is incorporated, then increase speed to medium-high until creamy but not whipped, ~1-2 minutes. Add more powdered sugar if frosting is too thin, more milk if too thick, or another pinch of salt if too sweet. Frosting should be smooth but not runny.</li> 
+<li>Using a long serrated knife, level off the tops of the cakes to create a flat surface. Add a spoonful of frosting to the center of your cake stand or serving plate to keep the cake in place. Place the first layer on the stand and add an even layer of frosting on top. Spread to cover the entire top surface. Repeat with the second and third layer. Spread remaining frosting over the sides of the cake. Decorate the cake with the rest of the toasted pecans. Refrigerate cake for at least 15-20 minutes to set before cutting. Store in a fridge to enjoy for up to 5 days. Don't leave it out overnight since the frosting has cream cheese in it.</li> </ul>
+<a href="https://murmursofricotta.com/carrot-cake/">Source material</a> </div> 
+<div class="card"> 
+<h3>Ice Cream Cake</h3> 
+<p>Category: Desserts</p> 
+<p>Servings: 12</p> 
+<h4>Ingredients</h4> 
+<h5>CHOCOLATE COOKIE CRUNCHIES</h5> 
+<ul> 
+<li><span>100</span> g Oreo crumbs</li> 
+<li><span>1.5</span> TBSP butter, melted</li> </ul> 
+<h5>Ice Cream Layers</h5> 
+<ul> 
+<li><span>1.5</span> quart container vanilla ice cream</li> 
+<li><span>1.5</span> quart container chocolate ice cream</li> </ul> 
+<h5>Chocolate Fudge</h5> 
+<ul> 
+<li><span>6</span> oz | <span>1</span> cup semi sweet chocolate chips</li> 
+<li><span>60</span> g light corn syrup</li> 
+<li><span>1/2</span> tsp vanilla extract</li> 
+<li><span>120</span> ml heavy whipping cream</li> </ul> 
+<h5>Whipped Cream</h5> 
+<ul> 
+<li><span>480</span> g heavy whipping cream, cold</li> 
+<li><span>115</span> g powdered sugar</li> 
+<li><span>1/2</span> tsp vanilla extract</li> 
+<li>Sprinkles</li> </ul> 
+<h4>Instructions</h4> 
+<ul> 
+<li>leave ice cream out on counter for 30 min</li> 
+<li>line two removable bottom cake pans with plastic wrap</li> 
+<li>add each ice cream carton to its own lined cake pan, smooth and level, and freeze</li> 
+<li>Preheat oven to 350F</li> 
+<li>Line a cookie sheet with parchment paper</li> 
+<li>chop oreos in a food processor</li> 
+<li>Combine the Oreo crumbs and melted butter and stir until well combined.</li> 
+<li>Spread the crumbs evenly onto the prepared cookie sheet.</li> 
+<li>Bake for 8-10 minutes, then allow to cool</li> 
+<li>To make the fudge layer, add the chocolate chips, corn syrup and vanilla extract to a medium sized bowl.</li> 
+<li>Heat the heavy whipping cream just until it begins to boil, then pour it over the chocolate chips. Allow to sit for 2-3 minutes, the whisk until smooth.</li> 
+<li>Remove the both ice cream layer ms from the freezer</li> 
+<li>pour the chocolate fudge over the bottom layer of ice cream and spread evenly</li> 
+<li>add the oreos to the fudge layer</li> 
+<li>remove the top layer from the pan and place upsude down onto the cookie layer</li> 
+<li>wrap with plastic wrap and freeze overnight</li> 
+<li>Use the clear wrap to lift the frozen cake out of the pan, then place it on a cardboard cake circle or a serving plate. Set it back in the freezer.</li> 
+<li>To make the whipped cream, add the heavy whipping cream, powdered sugar and vanilla extract to a large mixer bowl. Whip on high speed until stiff peaks form.</li> 
+<li>Frost the cake with the whipped cream and decorate as desired. I used Ateco tip 844 for piping the borders.</li> 
+<li>Freeze the cake until ready to serve. Cake is best when stored well covered and eaten within 4-5 days.</li> </ul>
+<a href="https://www.lifeloveandsugar.com/copycat-dairy-queen-ice-cream-cake/print/37231/">Source material</a> </div> 
+<div class="card"> 
+<h3>Vodka Sauce</h3> 
+<p>Category: Dips And Sauces</p> 
+<p>Servings: 6</p> 
+<h4>Ingredients</h4> 
+<ul> 
+<li><span>3</span> TBSP. butter</li> 
+<li><span>1</span> shallot minced or 1/2 white onion chopped</li> 
+<li><span>1/2</span> cup tomato paste</li> 
+<li><span>1/4</span> tsp. crushed red pepper flakes</li> 
+<li><span>2</span> TBSP. vodka</li> 
+<li><span>1/2</span> cup heavy cream or <span>5</span> oz evaporated milk</li> 
+<li><span>45</span> g freshly grated Parmesan</li> 
+<li><span>1/4</span> cup pasta water</li> </ul> 
+<h4>Directions</h4> 
+<ul> 
+<li>In a large skillet over medium heat, melt butter. Add shallot and garlic and cook, stirring frequently, until softened, 4 to 5 minutes.</li> 
+<li>Add tomato paste and red pepper flakes and cook, stirring frequently, until paste has coated shallots and garlic and is beginning to darken, 5 minutes.</li> 
+<li>Add vodka to pot and stir to incorporate, scraping up any browned bits from the bottom of the pot. Turn off heat.</li> 
+<li>Bring a large pot of salted water to a boil and cook pasta until al dente. Reserve <span>2</span> cups of pasta water before draining.</li> 
+<li>Return sauce to medium heat and add 1/4 cup of pasta water and heavy cream, stirring to combine. Add half the Parmesan and stir until melted. Turn off heat and stir in cooked pasta. Fold in remaining Parmesan, adding more pasta water if the sauce is looking dry. Season with salt if needed. Serve topped with more Parmesan and torn basil leaves.</li> </ul>
+<a href="https://www.delish.com/cooking/recipe-ideas/a26556220/penne-alla-vodka-recipe/">Source material</a> </div> 
+<div class="card"> 
+<h3>Roasted Broccoli</h3> 
+<p>Category: Sides</p> 
+<p>Servings: 2</p> 
+<h4>Ingredients</h4> 
+<ul> 
+<li><span>8</span> oz broccoli</li> 
+<li><span>2</span> TBSP butter</li> 
+<li>Salt and freshly ground black pepper</li> </ul> 
+<h4>Directions</h4> 
+<ul> 
+<li>Preheat the oven to 425F</li> 
+<li>Line a large, rimmed baking sheet for easy clean-up, if desired.</li> 
+<li>Melt butter and toss over broccoli</li> 
+<li>Season with salt and pepper and spread evenly on baking sheet</li> 
+<li>Bake for 13 min</li> </ul>
+<a href="https://cookieandkate.com/perfect-roasted-broccoli-recipe/">Source material</a> </div> 
+<div class="card"> 
+<h3>White Bean Dip</h3> 
+<p>Category: Dips And Sauces</p> 
+<p>Servings: 2</p> 
+<h4>Ingredients</h4> 
+<ul> 
+<li><span>15</span> oz can cannellini beans, drained and rinsed</li> 
+<li><span>2</span> TBSP extra-virgin olive oil</li> 
+<li><span>2</span> TBSP fresh lemon juice</li> 
+<li><span>1/2</span> tsp lemon zest</li> 
+<li><span>1/2</span> tsp sea salt</li> 
+<li>freshly ground black pepper</li> 
+<li><span>1/4</span> tsp dried basil leaves</li> 
+<li><span>1/4</span> tsp rosemary leaves</li> </ul> 
+<h4>Directions</h4> 
+<ul> 
+<li>add everything to a food processor</li> 
+<li>blend until smooth</li> </ul>
+<a href="https://www.loveandlemons.com/white-bean-dip/">Source material</a> </div> 
+<div class="card"> 
+<h3>Peanut Soup</h3> 
+<p>Category: Soups</p> 
+<p>Servings: 4</p> 
+<h4>Ingredients</h4> 
+<ul> 
+<li><span>1</span> red onion, chopped</li> 
+<li><span>1</span> TBSP butter</li> 
+<li><span>100</span> g celery, chopped</li> 
+<li><span>100</span> g carrots, chopped</li> 
+<li><span>1</span> TBSP minced ginger</li> 
+<li><span>24</span> oz water</li> 
+<li><span>24</span> g better than bouillon no beef</li> 
+<li><span>15</span> oz can chickpeas, drained</li> 
+<li><span>66</span> g peanuts</li> 
+<li><span>50</span> g peanut butter</li> 
+<li><span>50</span> g tomato paste</li> 
+<li><span>35</span> g soy sauce</li> </ul> 
+<h4>Directions</h4> 
+<ul> 
+<li>saute onion in butter, add celery and carrots and ginger</li> 
+<li>Add everything else to the pot and bring to a boil</li> 
+<li>Reduce heat to low and simmer for 15 mins</li> </ul>
+<a href="https://cookieandkate.com/west-african-peanut-soup/">Source material</a> </div> 
+<div class="card"> 
+<h3>Baked Tofu</h3> 
+<p>Category: Meals</p> 
+<p>Servings: 2</p> 
+<h4>Ingredients</h4> 
+<ul> 
+<li><span>1</span> block extra firm tofu, pressed and cubed</li> 
+<li><span>2</span> TBSP soy sauce</li> 
+<li><span>1.5</span> TBSP nutritional yeast</li> 
+<li><span>1</span> TBSP corn starch</li> </ul> 
+<h4>Directions</h4> 
+<ul> 
+<li>preheat oven to 380F convection</li> 
+<li>toss tofu in soy sauce</li> 
+<li>coat tofu in nutritional yeast, then corn starch</li> 
+<li>line a baking sheet with foil and spray with cooking spray</li> 
+<li>spread tofu evenly on baking sheet and bake for 20 mins</li> </ul>
+<a href="https://okonomikitchen.com/quick-and-easy-crispy-air-fried-tofu/">Source material</a> </div> 
+<div class="card"> 
+<h3>Butter Potato Curry</h3> 
+<p>Category: Meals</p> 
+<p>Servings: 4</p> 
+<h4>Ingredients</h4> 
+<ul> 
+<li><span>14</span> oz canned lentils</li> 
+<li><span>5</span> TBSP butter</li> 
+<li><span>2</span> cups potatoes, diced</li> 
+<li><span>1</span> TBSP chopped ginger</li> 
+<li><span>15</span> oz can tomato sauce</li> 
+<li><span>15</span> oz can coconut milk</li> 
+<li><span>1</span> tsp better than bouillon vegetable</li> 
+<li>Juice of <span>1</span> lemon</li> 
+<li><span>2</span> tsp garam masala</li> 
+<li><span>1/2</span> tsp cinnamon</li> 
+<li><span>1/4</span> tsp ground cloves</li> 
+<li><span>1/4</span> tsp cardamom</li> 
+<li><span>1/2</span> tsp paprika</li> 
+<li><span>1/4</span> tsp turmeric</li> 
+<li><span>1/4</span> tsp red pepper flakes</li> 
+<li><span>1</span> tsp minced dried onions</li> 
+<li><span>1</span> tsp honey</li> 
+<li><span>1/2</span> tsp salt</li> </ul> 
+<h4>Directions</h4> 
+<ul> 
+<li>in large pot, saute potatoes in <span>1</span> TBSP butter for about 5 minutes, until they start to brown and get tender</li> 
+<li>add the cooked lentils and everything else and bring to a boil, then reduce heat to a simmer </li> 
+<li>simmer for 20 minutes, then remove from heat and let sit for 10 mins</li> </ul>
+<a href="https://www.rabbitandwolves.com/vegan-butter-lentils-potatoes/">Source material</a> </div> 
+<div class="card"> 
+<h3>Buttered Couscous</h3> 
+<p>Category: Meals</p> 
+<p>Servings: 2</p> 
+<h4>Ingredients</h4> 
+<ul> 
+<li><span>8</span> oz water</li> 
+<li><span>1</span> TBSP butter</li> 
+<li><span>1/2</span> tsp salt</li> 
+<li><span>186</span> g couscous</li> </ul> 
+<h4>Directions</h4> 
+<ul> 
+<li>bring water, butter, and 1/2 tsp salt to a boil</li> 
+<li>add couscous and stir, remove from heat, then cover and wait 5 mins</li> 
+<li>fluff couscous and serve</li> </ul> </div> 
+<div class="card"> 
+<h3>Chickpea Nuggets</h3> 
+<p>Category: Meals</p> 
+<p>Servings: 12</p> 
+<h4>Ingredients</h4> 
+<ul> 
+<li><span>1/2</span> cup oats</li> 
+<li><span>1</span> can chickpeas, saving liquid</li> 
+<li><span>1/4</span> tsp salt</li> 
+<li><span>1/4</span> tsp garlic powder</li> 
+<li><span>1</span> tsp minced onions</li> 
+<li><span>3</span> tsp bouillon NO chicken</li> </ul> 
+<h4>Directions</h4> 
+<ul> 
+<li>preheat oven to 375F convection</li> 
+<li>spray a piece of tin foil with cooking spray</li> 
+<li>chop oats into oat flour in food processor</li> 
+<li>drain chickpeas saving <span>1/4</span> cup aquafaba</li> 
+<li>chop chickpeas, minced onions, garlic powder, no chicken bouillon, aquafaba, and oat flour in food processor</li> 
+<li>portion into <span>12</span> balls, coat with breadcrumbs</li> 
+<li>slide onto pizza steel and bake for 16 min, flipping halfway through</li> </ul>
+<a href="https://www.thekitchn.com/recipe-chickpea-nuggets-235880">Source material</a> </div> 
+<div class="card"> 
+<h3>Chili</h3> 
+<p>Category: Meals</p> 
+<p>Servings: 4</p> 
+<h4>Ingredients</h4> 
+<ul> 
+<li><span>2</span> TBSP olive oil</li> 
+<li><span>1</span> medium red onion, chopped</li> 
+<li><span>1</span> large red bell pepper, chopped</li> 
+<li><span>2</span> medium carrots, chopped</li> 
+<li><span>2</span> ribs celery, chopped</li> 
+<li><span>1/2</span> tsp salt</li> 
+<li><span>2</span> TBSP chili powder</li> 
+<li><span>2</span> tsp ground cumin</li> 
+<li><span>1.5</span> tsp smoked paprika</li> 
+<li><span>1</span> tsp dried oregano</li> 
+<li><span>1/2</span> tsp garlic powder</li> 
+<li><span>28</span> oz fire roasted diced tomatoes</li> 
+<li><span>30</span> oz black beans, rinsed and drained</li> 
+<li><span>15</span> oz pinto beans, rinsed and drained</li> 
+<li><span>2</span> cups water</li> 
+<li><span>16</span> g better than bouillon no beef</li> 
+<li><span>1</span> bay leaf</li> 
+<li><span>1</span> tsp lime juice, to taste</li> </ul> 
+<h4>Directions</h4> 
+<ul> 
+<li>in a large pot, heat olive oil over medium low heat. Add onions, bell pepper, carrots, and celery, and cook until vegetables start to become tender, about 5 min</li> 
+<li>add everything else except the lime juice and bring to a boil</li> 
+<li>reduce to a simmer and simmer for 30 min</li> 
+<li>remove bay leaf, remove from heat, and immersion blend 1/4 of the chili</li> 
+<li>add lime juice and let cool before serving</li> </ul>
+<a href="https://cookieandkate.com/vegetarian-chili-recipe/">Source material</a> </div> 
+<div class="card"> 
+<h3>Fried Rice</h3> 
+<p>Category: Meals</p> 
+<p>Servings: 3</p> 
+<h4>Ingredients</h4> 
+<ul> 
+<li><span>1</span> tsp butter</li> 
+<li><span>3</span> eggs</li> 
+<li><span>2</span> tsp butter</li> 
+<li><span>100</span> g frozen peas</li> 
+<li><span>100</span> g frozen carrots</li> 
+<li><span>100</span> g frozen corn</li> 
+<li><span>1/3</span> bunch green onions</li> 
+<li><span>1</span> TBSP ginger</li> 
+<li><span>360</span> g white rice cooked</li> 
+<li><span>70</span> g soy sauce</li> </ul> 
+<h4>Directions</h4> 
+<ul> 
+<li>cook eggs in <span>1</span> tsp butter</li> 
+<li>chop eggs with Teflon spatula</li> 
+<li>remove eggs from pan and set aside</li> 
+<li>cook vegetables in <span>2</span> tsp butter until starting to brown</li> 
+<li>add rice and soy sauce and cook until not wet</li> 
+<li>add eggs back in and toss to distribute</li> </ul>
+<a href="https://www.gimmesomeoven.com/fried-rice-recipe/">Source material</a> </div> 
+<div class="card"> 
+<h3>Lemon Couscous</h3> 
+<p>Category: Meals</p> 
+<p>Servings: 2</p> 
+<h4>Ingredients</h4> 
+<ul> 
+<li><span>8</span> oz water</li> 
+<li><span>8</span> g better than bouillon NO chicken</li> 
+<li><span>2</span> TBSP lemon juice</li> 
+<li><span>1</span> TBSP butter</li> 
+<li><span>1/4</span> tsp salt</li> 
+<li><span>4</span> oz jar diced pimento peppers</li> 
+<li><span>30</span> g pine nuts</li> 
+<li><span>2</span> tsp dried parsley</li> 
+<li><span>186</span> g couscous</li> </ul> 
+<h4>Directions</h4> 
+<ul> 
+<li>add everything but couscous to a small pot</li> 
+<li>bring to a boil</li> 
+<li>add couscous and stir</li> 
+<li>remove from heat, cover and wait five minutes</li> 
+<li>fluff and serve</li> </ul>
+<a href="https://www.allrecipes.com/recipe/242232/lemon-couscous/">Source material</a> </div> 
+<div class="card"> 
+<h3>Lentil Sloppy Joes</h3> 
+<p>Category: Meals</p> 
+<p>Servings: 4</p> 
+<h4>Ingredients</h4> 
+<ul> 
+<li><span>1</span> onion, chopped</li> 
+<li><span>1</span> TBSP butter</li> 
+<li><span>1</span> bell pepper, chopped</li> 
+<li><span>16</span> oz water</li> 
+<li><span>226</span> g dry lentils, rinsed</li> 
+<li><span>18</span> g better than bouillon no beef</li> 
+<li><span>15</span> oz can tomato sauce</li> 
+<li><span>1</span> TBSP granulated sugar</li> 
+<li><span>2</span> TBSP vegan Worcestershire sauce</li> 
+<li><span>2</span> TBSP chili powder</li> 
+<li><span>1</span> tsp cumin</li> 
+<li><span>1</span> tsp salt</li> 
+<li>Black pepper</li> </ul> 
+<h4>Directions</h4> 
+<ul> 
+<li>Saute onion and bell pepper in butter over medium heat</li> 
+<li>Add everything else to the pot and bring to a boil</li> 
+<li>Reduce heat to a simmer and cook for 40 min</li> </ul>
+<a href="https://minimalistbaker.com/vegan-sloppy-joes/">Source material</a> </div> 
+<div class="card"> 
+<h3>Mexican Cauliflower</h3> 
+<p>Category: Meals</p> 
+<p>Servings: 2</p> 
+<h4>Ingredients</h4> 
+<ul> 
+<li><span>2</span> tsp chili powder</li> 
+<li><span>1</span> tsp cumin</li> 
+<li><span>1</span> tsp dried minced onions</li> 
+<li><span>1</span> tsp salt</li> 
+<li><span>1</span> TBSP lime juice</li> 
+<li><span>1</span> TBSP olive oil</li> 
+<li><span>1</span> TBSP water</li> 
+<li><span>15</span> oz can chickpeas, rinsed and drained</li> 
+<li><span>1/2</span> head cauliflower, chopped</li> </ul> 
+<h4>Directions</h4> 
+<ul> 
+<li>preheat oven to 400F convection</li> 
+<li>line a baking sheet with tin foil</li> 
+<li>combine all ingredients except for cauli flour and chickpeas in a large bowl, and whisk together </li> 
+<li>add cauliflower and chickpeas and toss to coat</li> 
+<li>pour out onto baking sheet into an even layer and bake for 30 minutes</li> </ul>
+<a href="https://www.twopeasandtheirpod.com/roasted-cauliflower-and-chickpea-tacos/">Source material</a> </div> 
+<div class="card"> 
+<h3>Mexican Quinoa</h3> 
+<p>Category: Meals</p> 
+<p>Servings: 4</p> 
+<h4>Ingredients</h4> 
+<ul> 
+<li><span>1</span> TBSP olive oil</li> 
+<li><span>1/2</span> red onion, chopped</li> 
+<li><span>1</span> cup quinoa</li> 
+<li><span>8</span> oz water</li> 
+<li><span>8</span> g better than bouillon no beef</li> 
+<li><span>15</span> oz can black beans</li> 
+<li><span>15</span> oz can fire roasted tomatoes</li> 
+<li><span>170</span> g frozen corn</li> 
+<li><span>1</span> tsp chili powder</li> 
+<li><span>1/2</span> tsp salt</li> 
+<li><span>1/2</span> tsp cumin</li> 
+<li><span>1.5</span> tsp lime</li> </ul> 
+<h4>Directions</h4> 
+<ul> 
+<li>in a large saucepan, saute onion in olive oil over medium heat</li> 
+<li>add everything else to the pot and bring to a boil</li> 
+<li>reduce to a simmer, simmer uncovered for 20 minutes</li> 
+<li>remove from heat, stir in lime juice and let sit for 10 minutes</li> </ul>
+<a href="https://damndelicious.net/2014/04/09/one-pan-mexican-quinoa/">Source material</a> </div> 
+<div class="card"> 
+<h3>Mexican Sweet Potatoes</h3> 
+<p>Category: Meals</p> 
+<p>Servings: 4</p> 
+<h4>Ingredients</h4> 
+<ul> 
+<li><span>300</span> g sweet potatoes, peeled and chopped</li> 
+<li><span>227</span> g frozen corn</li> 
+<li><span>15</span> oz can black beans, rinsed and drained</li> 
+<li><span>1</span> red onion, chopped</li> 
+<li><span>1</span> red bell pepper, chopped</li> 
+<li><span>3</span> TBSP olive oil</li> 
+<li><span>1</span> TBSP onion flakes</li> 
+<li><span>1</span> TBSP chili powder</li> 
+<li><span>1</span> TBSP Mexican seasoning blend</li> 
+<li><span>1</span> tsp cumin</li> 
+<li><span>1</span> tsp salt</li> </ul> 
+<h4>Directions</h4> 
+<ul> 
+<li>preheat oven to 425F</li> 
+<li>combine all vegetables, oil, and spices in a big bowl and toss to coat</li> 
+<li>put on foil lined baking sheet</li> 
+<li>cook for 45 minutes</li> </ul>
+<a href="https://sweetpeasandsaffron.com/mix-match-meal-prep-burrito-bowls/">Source material</a> </div> 
+<div class="card"> 
+<h3>Pastina</h3> 
+<p>Category: Meals</p> 
+<p>Servings: 1</p> 
+<h4>Ingredients</h4> 
+<ul> 
+<li>water</li> 
+<li>salt</li> 
+<li><span>56</span> g pastina</li> 
+<li><span>7</span> g butter</li> </ul> 
+<h4>Directions</h4> 
+<ul> 
+<li>bring water to a boil</li> 
+<li>add salt to water, add pastina to boiling salted water and cook for 4 minutes</li> 
+<li>drain water using a fine mesh strainer</li> 
+<li>put pastina in bowl and add butter</li> </ul> </div> 
+<div class="card"> 
+<h3>Pizza</h3> 
+<p>Category: Meals</p> 
+<p>Servings: 8</p> 
+<h4>Ingredients</h4> 
+<ul> 
+<li><span>1/3</span> batch pizza dough</li> 
+<li><span>250</span> g pizza sauce</li> 
+<li><span>45</span> g mozzarella</li> </ul> 
+<h4>Directions</h4> 
+<ul> 
+<li>preheat oven to 500F convection</li> 
+<li>sprinkle cornmeal on pizza peel evenly</li> 
+<li>once oven preheats, hand stretch dough to a circle</li> 
+<li>place dough on cornmeal covered pizza peel</li> 
+<li>add sauce</li> 
+<li>add cheese</li> 
+<li>slide pizza onto pizza steel and bake for 9 min</li> 
+<li>switch oven to broil, switch pizza to top rack, and broil for 1.5 min</li> </ul> </div> 
+<div class="card"> 
+<h3>Saffron Couscous</h3> 
+<p>Category: Meals</p> 
+<p>Servings: 4</p> 
+<h4>Ingredients</h4> 
+<ul> 
+<li><span>1</span> onion</li> 
+<li><span>1</span> TBSP butter</li> 
+<li><span>1</span> red bell pepper</li> 
+<li><span>6</span> oz water</li> 
+<li><span>1</span> TBSP better than bouillon NO chicken</li> 
+<li><span>1</span> cup frozen peas</li> 
+<li><span>15</span> oz can chickpeas, drained</li> 
+<li><span>1</span> pack Goya sazon con azafron</li> 
+<li><span>1/2</span> tsp salt</li> 
+<li><span>186</span> g instant couscous</li> </ul> 
+<h4>Directions</h4> 
+<ul> 
+<li>saute onion in butter</li> 
+<li>add everything but couscous to a pot</li> 
+<li>bring to a boil</li> 
+<li>add couscous</li> 
+<li>remove from heat and let sit for 5 min</li> 
+<li>fluff and serve</li> </ul>
+<a href="https://www.errenskitchen.com/moroccan-spiced-vegetable-couscous/">Source material</a> </div> 
+<div class="card"> 
+<h3>Seasoned Couscous</h3> 
+<p>Category: Meals</p> 
+<p>Servings: 2</p> 
+<h4>Ingredients</h4> 
+<ul> 
+<li><span>12</span> oz water</li> 
+<li><span>1</span> TBSP dried parsley</li> 
+<li><span>2</span> tsp better than bouillon no beef</li> 
+<li><span>1/2</span> tsp dried minced onion</li> 
+<li><span>1/2</span> tsp dried basil</li> 
+<li><span>1/2</span> tsp salt</li> 
+<li><span>1</span> bay leaf</li> 
+<li><span>186</span> g couscous</li> </ul> 
+<h4>Directions</h4> 
+<ul> 
+<li>combine everything except the couscous in a small pot</li> 
+<li>bring to a boil</li> 
+<li>add couscous</li> 
+<li>remove from heat and cover</li> 
+<li>leave covered for 5 mins</li> </ul> </div> 
+<div class="card"> 
+<h3>Spanakopita</h3> 
+<p>Category: Meals</p> 
+<p>Servings: 6</p> 
+<h4>Ingredients</h4> 
+<ul> 
+<li><span>1</span> tsp olive oil</li> 
+<li><span>1/2</span> cup diced onion</li> 
+<li><span>6</span> oz fresh spinach, chopped</li> 
+<li><span>4</span> oz crumbled feta</li> 
+<li><span>1/2</span> cup cottage cheese</li> 
+<li><span>1/8</span> tsp nutmeg</li> 
+<li><span>1/4</span> tsp salt</li> 
+<li><span>1/2</span> tsp dried oregano</li> 
+<li><span>1/4</span> tsp dried basil</li> 
+<li><span>1/4</span> tsp dried dill</li> 
+<li><span>1</span> pack phyllo dough</li> 
+<li><span>1/4</span> cup melted butter</li> </ul> 
+<h4>Directions</h4> 
+<ul> 
+<li>preheat oven to 400F with pizza steel on center rack</li> 
+<li>heat olive oil over medium heat and cook onions, then add spinach and cook</li> 
+<li>let mixture cool. combine feta cheese, cottage cheese, and spices in a bowl</li> 
+<li>add spinach and onion mixture to bowl</li> 
+<li>place parchment paper on pizza peel</li> 
+<li>place two sheets of phyllo on the parchment and butter liberally, then place two more sheets 45 degrees offset and butter again, until you run out of sheets</li> 
+<li>place filling in center and press down into a flat disc</li> 
+<li>fold edges of phyllo over and butter</li> 
+<li>slide parchment paper onto pizza steel and bake for 25 minutes</li> 
+<li>remove from oven and let cool for 15 minutes</li> </ul>
+<a href="https://www.lemonsforlulu.com/spanakopita-quick-and-easy/">Source material</a> </div> 
+<div class="card"> 
+<h3>Squash Curry</h3> 
+<p>Category: Meals</p> 
+<p>Servings: 4</p> 
+<h4>Ingredients</h4> 
+<ul> 
+<li><span>1</span> onion, chopped</li> 
+<li><span>1</span> TBSP olive oil</li> 
+<li><span>12</span> oz frozen butternut squash</li> 
+<li><span>15</span> oz can garbanzo beans, drained</li> 
+<li><span>15</span> oz can coconut milk</li> 
+<li><span>226</span> g frozen peas</li> 
+<li><span>15</span> oz can fire roasted tomatoes</li> 
+<li><span>1</span> TBSP better than bouillon vegetable</li> 
+<li><span>3</span> TBSP curry powder</li> 
+<li><span>1/4</span> tsp salt</li> </ul> 
+<h4>Directions</h4> 
+<ul> 
+<li>saute onion in olive oil in a pot</li> 
+<li>add everything else to the pot</li> 
+<li>bring to a boil, then lower to a simmer</li> 
+<li>simmer for 30 mins</li> 
+<li>serve with rice</li> </ul>
+<a href="https://360yourlife.com/store/shop/thankful-30-the-crock-pot-edition-2/">Source material</a> </div> 
+<div class="card"> 
+<h3>Stir Fry Udon</h3> 
+<p>Category: Meals</p> 
+<p>Servings: 2</p> 
+<h4>Ingredients</h4> 
+<ul> 
+<li><span>14</span> oz instant udon</li> 
+<li><span>1</span> tsp oil</li> 
+<li><span>1/2</span> onion</li> 
+<li><span>1</span> bell pepper</li> 
+<li><span>1</span> TBSP fresh ginger</li> 
+<li><span>71</span> g soy sauce</li> 
+<li><span>20</span> g hoisin sauce</li> </ul> 
+<h4>Directions</h4> 
+<ul> 
+<li>bring a large pot of unsalted water to a boil</li> 
+<li>add instant udon to the water and cook for 4 min</li> 
+<li>strain noodles</li> 
+<li>add oil to wok and heat over medium heat</li> 
+<li>saute onion, then add bell pepper and ginger</li> 
+<li>add noodles, soy sauce, hoisin sauce</li> 
+<li>toss to cost and cook for 2 min</li> </ul>
+<a href="https://simpleveganblog.com/vegan-stir-fried-udon-noodles/">Source material</a> </div> 
+<div class="card"> 
+<h3>Stovetop Mac And Cheese</h3> 
+<p>Category: Meals</p> 
+<p>Servings: 4</p> 
+<h4>Ingredients</h4> 
+<ul> 
+<li><span>1/2</span> lb pasta</li> 
+<li><span>4</span> TBSP butter</li> 
+<li><span>2</span> eggs</li> 
+<li><span>6</span> oz evaporated milk</li> 
+<li><span>1/2</span> tsp hot sauce</li> 
+<li><span>1/2</span> tsp salt</li> 
+<li>Fresh ground pepper</li> 
+<li><span>8</span> oz sharp cheddar</li> </ul> 
+<h4>Directions</h4> 
+<ul> 
+<li>in a large pasta pot, bring <span>6</span> quarts of water to a boil</li> 
+<li>heavily salt the water and cook pasta for 6 min</li> 
+<li>drain pasta and set aside</li> 
+<li>over low heat, add butter to the pasta pot and melt, toss cooked pasta in butter</li> 
+<li>add everything else to the pot and stir until cheese is melted</li> </ul>
+<a href="https://www.foodnetwork.com/recipes/alton-brown/stovetop-mac-n-cheese-recipe-1939465">Source material</a> </div> 
+<div class="card"> 
+<h3>Tuscan Beans</h3> 
+<p>Category: Meals</p> 
+<p>Servings: 2</p> 
+<h4>Ingredients</h4> 
+<ul> 
+<li><span>1</span> TBSP olive oil</li> 
+<li><span>1/2</span> onion, diced</li> 
+<li><span>15</span> oz cannellini beans, drained</li> 
+<li><span>1.5</span> oz sun dried tomatoes</li> 
+<li><span>1/2</span> 15 oz can artichoke</li> 
+<li><span>3</span> oz spinach</li> 
+<li><span>1/2</span> tsp dry basil</li> 
+<li><span>1/2</span> tsp salt</li> 
+<li><span>1/2</span> lemon's juice</li> 
+<li>Black Pepper</li> </ul> 
+<h4>Directions</h4> 
+<ul> 
+<li>heat oil in a nonstick pan over medium heat</li> 
+<li>add chopped onion and saute until browned</li> 
+<li>add everything else and switch to medium-high heat</li> 
+<li>saute and stir until mostly all of the excess liquid has evaporated and all ingredients are heated all the way through</li> </ul>
+<a href="https://www.nourish-and-fete.com/tuscan-white-bean-skillet/">Source material</a> </div> 
+<div class="card"> 
+<h3>Baked Beans</h3> 
+<p>Category: Sides</p> 
+<p>Servings: 8</p> 
+<h4>Ingredients</h4> 
+<ul> 
+<li><span>3</span> cups canned navy beans</li> 
+<li><span>1/2</span> cup molasses</li> 
+<li><span>1</span> cup water</li> 
+<li><span>8</span> g better than bouillon no beef</li> 
+<li><span>1</span> yellow onion, diced</li> 
+<li><span>1</span> cup tomato paste</li> 
+<li><span>1</span> TBSP soy sauce</li> 
+<li><span>1</span> tsp ground mustard</li> 
+<li><span>1/2</span> tsp salt</li> 
+<li>Black pepper</li> </ul> 
+<h4>Directions</h4> 
+<ul> 
+<li>Preheat the oven to 350F</li> 
+<li>Stir all ingredients together in a large casserole dish</li> 
+<li>Bake covered for one hour</li> 
+<li>Bake uncovered for an additional 15 minutes</li> </ul>
+<a href="https://www.thespruceeats.com/vegetarian-boston-baked-beans-with-molasses-3377176">Source material</a> </div> 
+<div class="card"> 
+<h3>Breakfast Potatoes</h3> 
+<p>Category: Sides</p> 
+<p>Servings: 2</p> 
+<h4>Ingredients</h4> 
+<ul> 
+<li><span>1.5</span> lbs potatoes, diced</li> 
+<li><span>2</span> TBSP butter</li> 
+<li><span>1</span> TBSP minced dried onions</li> 
+<li><span>1</span> tsp dried rosemary</li> 
+<li><span>1</span> tsp dried thyme</li> 
+<li><span>1/2</span> tsp garlic powder</li> 
+<li><span>1/2</span> tsp salt</li> </ul> 
+<h4>Directions</h4> 
+<ul> 
+<li>Bring a large pot of salted water to a boil</li> 
+<li>peel and quarter the potatoes and boil until tender, about 10 minutes</li> 
+<li>Optionally, refrigerate the potatoes for use the next day</li> 
+<li>Chop the potatoes into cubes</li> 
+<li>Melt butter in a large skillet over medium heat</li> 
+<li>Saute potatoes and spices over medium heat until crunchy</li> </ul>
+<a href="https://littlespicejar.com/easy-skillet-breakfast-potatoes/">Source material</a> </div> 
+<div class="card"> 
+<h3>Buttermilk Biscuits</h3> 
+<p>Category: Sides</p> 
+<p>Servings: 16</p> 
+<h4>Ingredients</h4> 
+<ul> 
+<li><span>312</span> g AP flour</li> 
+<li><span>2</span> TBSP baking powder</li> 
+<li><span>1</span> tsp salt</li> 
+<li><span>1</span> stick butter, cubed</li> 
+<li><span>1</span> cup buttermilk</li> 
+<li><span>2</span> tsp honey</li> </ul> 
+<h4>Directions</h4> 
+<ul> 
+<li>preheat oven to 425F w/ pizza steel</li> 
+<li>line pizza peel with parchment paper</li> 
+<li>place flour, baking powder, and salt in big bowl and mix</li> 
+<li>add butter and cut with pastry cutter</li> 
+<li>add buttermilk and honey and mix until dough forms</li> 
+<li>place dough on floured counter</li> 
+<li>smush with hands and fold a bunch of times- roll to 1/2 height of biscuit cutter and cut about <span>10</span> biscuits, re forming and folding dough each time you run out of area</li> 
+<li>arrange biscuits in honeycomb formation on parchment paper, touching the edges together</li> 
+<li>smush the last bit of dough into the cutter to form last biscuit</li> 
+<li>brush tops with buttermilk</li> 
+<li>bake for 15 mins directly on pizza steel</li> </ul>
+<a href="https://sallysbakingaddiction.com/flaky-buttermilk-biscuits/">Source material</a> </div> 
+<div class="card"> 
+<h3>Five Seed Bread</h3> 
+<p>Category: Sides</p> 
+<p>Servings: 4</p> 
+<h4>Ingredients</h4> 
+<ul> 
+<li><span>15</span> g sunflower seeds</li> 
+<li><span>15</span> g pumpkin seeds</li> 
+<li><span>15</span> g flax seeds</li> 
+<li><span>15</span> g sesame seeds</li> 
+<li><span>125</span> g millet</li> 
+<li><span>2.25</span> tsp active dry yeast</li> 
+<li><span>2.25</span> tsp salt</li> 
+<li><span>400</span> g water 100F-110F</li> 
+<li><span>500</span> g flour</li> 
+<li><span>2</span> TBSP gluten</li> </ul> 
+<h4>Directions</h4> 
+<ul> 
+<li>toast seeds in a skillet on medium low heat, turning down the heat if they start to smoke, don't burn them</li> 
+<li>add roasted seeds and water to a large bowl</li> 
+<li>wait until the water and seed mixture cools back down to the 100F-110F range</li> 
+<li>add yeast and salt to the seed and water mixture and whisk together</li> 
+<li>add flour and gluten and mix with a spatula until uniform</li> 
+<li>let bowl sit on counter covered with damp paper towels for 2 hours</li> 
+<li>divide into portions and form rounds</li> 
+<li>coat each round in olive oil</li> 
+<li>for storage, put each round in a Tupperware in the freezer</li> 
+<li>to bake, place dough round on parchment paper on the counter</li> 
+<li>let prove until doubled in size</li> 
+<li>preheat oven and dutch oven to 450F</li> 
+<li>place parchment paper and dough in preheated dutch oven and bake for 40 mins covered</li> 
+<li>remove lid and bake for 10 mins uncovered</li> 
+<li>let cool for 15 mins before serving</li> </ul> </div> 
+<div class="card"> 
+<h3>Lemon Orzo</h3> 
+<p>Category: Sides</p> 
+<p>Servings: 2</p> 
+<h4>Ingredients</h4> 
+<ul> 
+<li><span>2</span> cup water</li> 
+<li><span>1</span> tsp salt</li> 
+<li><span>2</span> TBSP olive oil</li> 
+<li><span>1</span> cup orzo</li> 
+<li><span>1</span> tsp dried mint</li> 
+<li><span>1/2</span> tsp paprika</li> 
+<li><span>1</span> lemons zest</li> 
+<li><span>2</span> chopped green onions</li> 
+<li><span>1</span> lemons juice</li> </ul> 
+<h4>Directions</h4> 
+<ul> 
+<li>in a small saucepan, bring water to a boil and add salt and oil</li> 
+<li>add everything else to the saucepan and decide to a simmer</li> 
+<li>simmer for 15 minutes</li> 
+<li>remove from heat and stir in green onions and lemon juice</li> </ul>
+<a href="https://www.foodnetwork.com/recipes/food-network-kitchen/lemon-orzo-recipe-2106041">Source material</a> </div> 
+<div class="card"> 
+<h3>Potato Salad</h3> 
+<p>Category: Sides</p> 
+<p>Servings: 4</p> 
+<h4>Ingredients</h4> 
+<ul> 
+<li><span>2</span> lbs Yukon gold potatoes, peeled and quartered</li> 
+<li><span>6</span> hard boiled eggs</li> 
+<li><span>3</span> TBSP white wine vinegar</li> 
+<li><span>2</span> stalks celery, chopped</li> 
+<li><span>15</span> g spicy brown mustard</li> 
+<li><span>2</span> stalks green onion, sliced</li> 
+<li><span>150</span> g miracle whip</li> 
+<li><span>1/2</span> TBSP celery seed</li> 
+<li><span>1/2</span> tsp salt</li> </ul> 
+<h4>Directions</h4> 
+<ul> 
+<li>add water to pasta pot and bring to boil</li> 
+<li>heavily salt the water</li> 
+<li>peel and dice potatoes</li> 
+<li>boil over over high heat 15 min</li> 
+<li>drain potatoes</li> 
+<li>add everything to big bowl</li> 
+<li>mix with gloves</li> </ul>
+<a href="https://www.foodiecrush.com/how-to-make-the-best-potato-salad/">Source material</a> </div> 
+<div class="card"> 
+<h3>Spinach Rice</h3> 
+<p>Category: Sides</p> 
+<p>Servings: 3</p> 
+<h4>Ingredients</h4> 
+<ul> 
+<li><span>1</span> TBSP olive oil</li> 
+<li><span>1/2</span> onion chopped</li> 
+<li><span>1/8</span> tsp garlic powder</li> 
+<li><span>6</span> oz fresh spinach chopped</li> 
+<li><span>1</span> lemon zest</li> 
+<li><span>4</span> tsp dried dill</li> 
+<li><span>1/4</span> tsp cumin (not greek)</li> 
+<li><span>18</span> oz water</li> 
+<li><span>16</span> g better than bouillon no chicken</li> 
+<li><span>1/2</span> tsp salt</li> 
+<li>Fresh ground black pepper</li> 
+<li><span>310</span> g basmati rice</li> 
+<li>Juice from <span>1</span> lemon</li> </ul> 
+<h4>Directions</h4> 
+<ul> 
+<li>saute the onions in the oil, add spinach and sauteed the spinach until cooked down</li> 
+<li>add everything else but the rice and lemon juice and bring to a boil</li> 
+<li>add the rice, then lower to a simmer and cover for 15 mins</li> 
+<li>turn off heat and let sit for 10 min</li> 
+<li>stir in lemon juice and serve</li> </ul>
+<a href="https://www.afamilyfeast.com/greek-rice-spanakorizo/">Source material</a> </div> 
+<div class="card"> 
+<h3>Three Bean Salad</h3> 
+<p>Category: Sides</p> 
+<p>Servings: 6</p> 
+<h4>Ingredients</h4> 
+<ul> 
+<li><span>15</span> oz can cannellini beans, rinsed and drained</li> 
+<li><span>15</span> oz can kidney beans, rinsed and drained</li> 
+<li><span>15</span> oz can chickpeas, rinsed and drained</li> 
+<li><span>1/2</span> red onion, finely chopped</li> 
+<li><span>2</span> celery stalks, chopped</li> 
+<li><span>1</span> TBSP parsley</li> 
+<li><span>1/4</span> tsp Rosemary</li> 
+<li><span>1/3</span> cup apple cider vinegar</li> 
+<li><span>1/4</span> cup granulated sugar</li> 
+<li><span>3</span> TBSP olive oil</li> 
+<li><span>1.5</span> tsp salt</li> 
+<li><span>1/4</span> tsp black peoper</li> </ul> 
+<h4>Directions</h4> 
+<ul> 
+<li>in a large bowl, mix the beans, onion, and celery</li> 
+<li>in a small bowl, mix all the other ingredients and whisk together until combined</li> 
+<li>pour dressing from small bowl into large bowl and toss to coat</li> 
+<li>chill salad in fridge for a few hours to let flavors combine, toss before serving</li> </ul>
+<a href="https://www.simplyrecipes.com/recipes/three_bean_salad/">Source material</a> </div> 
+<div class="card"> 
+<h3>White Rice</h3> 
+<p>Category: Sides</p> 
+<p>Servings: 2</p> 
+<h4>Ingredients</h4> 
+<ul> 
+<li><span>16</span> oz water</li> 
+<li>bay leaf</li> 
+<li><span>310</span> g white rice</li> </ul> 
+<h4>Directions</h4> 
+<ul> 
+<li>add rice to mesh strainer and thoroughly rinse</li> 
+<li>add water and bay leaf to saucepan, bring to boil</li> 
+<li>add rice, cover</li> 
+<li>reduce heat to low</li> 
+<li>simmer for 15 min</li> 
+<li>remove from heat and let sit covered 10 min</li> </ul> </div> 
+<div class="card"> 
+<h3>Yellow Rice</h3> 
+<p>Category: Sides</p> 
+<p>Servings: 2</p> 
+<h4>Ingredients</h4> 
+<ul> 
+<li><span>18</span> oz water</li> 
+<li><span>1.41</span> oz Goya Sazon con azafron</li> 
+<li><span>12</span> g better than bouillon no chicken</li> 
+<li><span>1</span> cup peas</li> 
+<li><span>310</span> g white rice</li> </ul> 
+<h4>Directions</h4> 
+<ul> 
+<li>add rice to mesh strainer and thoroughly rinse</li> 
+<li>add everything but rice to saucepan</li> 
+<li>bring to boil</li> 
+<li>add rice and cover, reduce heat to low</li> 
+<li>simmer for 15 min</li> 
+<li>remove from heat and let sit covered 10 min</li> </ul> </div> 
+<div class="card"> 
+<h3>Hummus</h3> 
+<p>Category: Dips And Sauces</p> 
+<p>Servings: 4</p> 
+<h4>Ingredients</h4> 
+<h5>For The Chickpeas</h5> 
+<ul> 
+<li><span>1</span> can chickpeas</li> 
+<li><span>1.5</span> tsp baking soda</li> 
+<li>water</li> </ul> 
+<h5>For The Hummus</h5> 
+<ul> 
+<li><span>2</span> oz water</li> 
+<li><span>1/4</span> tsp garlic powder</li> 
+<li><span>1/2</span> tsp salt</li> 
+<li><span>1/8</span> tsp cumin</li> 
+<li><span>2</span> TBSP lemon juice</li> 
+<li><span>53</span> g olive oil</li> 
+<li><span>90</span> g tahini</li> 
+<li>cooked chickpeas, rinsed and drained</li> </ul> 
+<h4>Directions</h4> 
+<h5>For The Chickpeas</h5> 
+<ul> 
+<li>drain chickpeas and add to saucepan with water and baking soda</li> 
+<li>bring to boil, then drain in a colander and rinse</li> </ul> 
+<h5>For The Hummus</h5> 
+<ul> 
+<li>add everything else besides the cooked chickpeas to a food processor and blend for 1 min</li> 
+<li>add chickpeas to food processor and blend until smooth</li> </ul>
+<a href="https://www.gimmesomeoven.com/classic-hummus/">Source material</a> </div> 
+<div class="card"> 
+<h3>Jerky</h3> 
+<p>Category: Snacks</p> 
+<p>Servings: 4</p> 
+<h4>Ingredients</h4> 
+<ul> 
+<li><span>18</span> g soy sauce</li> 
+<li><span>18</span> g molasses</li> 
+<li><span>21</span> g vegan Worcestershire sauce</li> 
+<li><span>1</span> TBSP minced onions</li> 
+<li><span>1</span> TBSP dehydrated green onions</li> 
+<li><span>1</span> tsp salt</li> 
+<li><span>8</span> g better than bouillon no beef</li> 
+<li><span>55</span> g canola oil</li> 
+<li><span>8</span> oz boiling water</li> 
+<li><span>160</span> g soy curls</li> 
+<li><span>72</span> g bbq sauce</li> </ul> 
+<h4>Directions</h4> 
+<ul> 
+<li>preheat oven to 225F convection</li> 
+<li>line baking sheet with tin foil and place cooling rack on top</li> 
+<li>combine everything but soy curls and bbq sauce in a large bowl and mix with a spatula until all of the water is absorbed</li> 
+<li>bake for 1 hour</li> 
+<li>remove from oven and toss curls in bbq sauce</li> 
+<li>bake for an additional 10 minutes</li> </ul>
+<a href="https://thehiddenveggies.com/vegan-jerky-easy-gluten-free/">Source material</a> </div> 
+<div class="card"> 
+<h3>Popcorn</h3> 
+<p>Category: Snacks</p> 
+<p>Servings: 2</p> 
+<h4>Ingredients</h4> 
+<ul> 
+<li><span>2</span> TBSP canola oil</li> 
+<li><span>110</span> g popcorn</li> 
+<li><span>1/2</span> tsp salt</li> </ul> 
+<h4>Directions</h4> 
+<ul> 
+<li>add oil to big pot and add 2 popcorn kernels, heat over medium heat and cover</li> 
+<li>when the two kernels pop, remove the popped kernels and remove the pot from the heat</li> 
+<li>add the rest of the kernels and cover and let sit off the heat for 1 min</li> 
+<li>switch heat to high</li> 
+<li>put pot back on high heat until time between pops is 2 seconds</li> 
+<li>add salt to pot and shake to coat</li> 
+<li>pour into bowl and serve</li> </ul>
+<a href="https://www.thepioneerwoman.com/food-cooking/recipes/a94264/how-to-make-stovetop-popcorn/">Source material</a> </div> 
+<div class="card"> 
+<h3>Avgolemono</h3> 
+<p>Category: Soups</p> 
+<p>Servings: 4</p> 
+<h4>Ingredients</h4> 
+<h5>For The Rice</h5> 
+<ul> 
+<li><span>310</span> g white rice</li> 
+<li><span>16</span> oz water</li> 
+<li><span>1</span> bay leaf</li> </ul> 
+<h5>For The Broth</h5> 
+<ul> 
+<li><span>48</span> oz water</li> 
+<li><span>48</span> g better than bouillon NO chicken</li> 
+<li><span>3</span> egg yolks</li> 
+<li><span>1</span> lemon's juice</li> </ul> 
+<h4>Directions</h4> 
+<h5>For The Rice</h5> 
+<ul> 
+<li>boil the water in a small saucepan and add the bay leaf</li> 
+<li>add the rice and cover, reduce heat and let cook for 15 minutes</li> </ul> 
+<h5>For The Broth</h5> 
+<ul> 
+<li>combine water and bouillon in a large pot over medium low heat</li> 
+<li>in a small bowl, whisk together lemon juice and egg yolks</li> 
+<li>when broth is steaming and reaches 165F, remove broth from heat</li> 
+<li>ladle a scoop of broth into the lemon egg yolk mixture to temper it, then pour into the broth pot</li> 
+<li>divide into four portions, add rice to each portion</li> </ul> </div> 
+<div class="card"> 
+<h3>Chickpea Chowder</h3> 
+<p>Category: Soups</p> 
+<p>Servings: 4</p> 
+<h4>Ingredients</h4> 
+<ul> 
+<li><span>1</span> TBSP butter</li> 
+<li><span>1</span> onion</li> 
+<li><span>100</span> g celery</li> 
+<li><span>100</span> g carrots</li> 
+<li><span>1</span> green bell pepper, diced</li> 
+<li><span>1.5</span> lbs Yukon gold potato peeled &amp; diced</li> 
+<li><span>40</span> g better than bouillon vegetable</li> 
+<li><span>40</span> oz water</li> 
+<li><span>15</span> oz can fire roasted tomatoes</li> 
+<li><span>33</span> g tomato paste</li> 
+<li><span>14</span> oz can chickpeas</li> 
+<li><span>1</span> tsp dried thyme</li> 
+<li><span>1/2</span> tsp dried oregano</li> 
+<li><span>1</span> bay leaf</li> 
+<li><span>38</span> g white miso paste</li> </ul> 
+<h4>Directions</h4> 
+<ul> 
+<li>saute mirepoix in butter</li> 
+<li>add everything else but the miso paste and bring to a boil</li> 
+<li>reduce heat to a high simmer for 25 minutes</li> 
+<li>mix miso paste with a ladle of broth until smooth, then add to the soup</li> 
+<li>let cool for 5 minutes and serve</li> </ul>
+<a href="https://www.connoisseurusveg.com/manhattan-chickpea-chowder/">Source material</a> </div> 
+<div class="card"> 
+<h3>Chickpea Noodle Soup</h3> 
+<p>Category: Soups</p> 
+<p>Servings: 4</p> 
+<h4>Ingredients</h4> 
+<ul> 
+<li><span>1</span> TBSP butter</li> 
+<li><span>1</span> onion chopped</li> 
+<li><span>100</span> g carrots chopped</li> 
+<li><span>100</span> g celery chopped</li> 
+<li><span>1/2</span> tsp salt</li> 
+<li><span>1/4</span> tsp curry powder</li> 
+<li><span>1</span> bay leaf</li> 
+<li><span>2</span> tsp dried parsley</li> 
+<li><span>6</span> cups water</li> 
+<li><span>48</span> g better than bouillon no chicken</li> 
+<li><span>1</span> can chickpeas, drained</li> 
+<li>ground pepper</li> 
+<li><span>8</span> oz egg noodles</li> </ul> 
+<h4>Directions</h4> 
+<ul> 
+<li>heat the oil in a large pot over medium heat</li> 
+<li>add onions and saute for two mins until sweaty, then add celery and carrots and saute for another minute or two</li> 
+<li>add the curry powder and cook for 30 seconds</li> 
+<li>add everything else except for the egg noodles</li> 
+<li>bring to a boil, then add egg noodles, and simmer for 10 minutes</li> </ul>
+<a href="https://cookieandkate.com/chickpea-noodle-soup-recipe/">Source material</a> </div> 
+<div class="card"> 
+<h3>Lentil Soup</h3> 
+<p>Category: Soups</p> 
+<p>Servings: 4</p> 
+<h4>Ingredients</h4> 
+<ul> 
+<li><span>1/4</span> cup olive oil</li> 
+<li><span>1</span> diced onion</li> 
+<li><span>2</span> chopped carrots</li> 
+<li><span>2</span> tsp cumin</li> 
+<li><span>1</span> tsp curry powder</li> 
+<li><span>1/2</span> tsp dried thyme</li> 
+<li><span>2</span> 14 oz cans fire roasted tomatoes</li> 
+<li><span>180</span> g green lentils</li> 
+<li><span>24</span> g NO beef bouillon</li> 
+<li><span>32</span> oz water</li> 
+<li><span>1</span> tsp salt</li> 
+<li>Black pepper</li> 
+<li><span>35</span> g chopped spinach (added later)</li> 
+<li><span>2</span> TBSP lemon juice (added last)</li> </ul> 
+<h4>Directions</h4> 
+<ul> 
+<li>heat olive oil over medium high heat</li> 
+<li>saute onions and carrots in oil</li> 
+<li>add spices and saute</li> 
+<li>add tomatoes, lentils, bouillon, water, salt, and pepper and bring to a boil</li> 
+<li>reduce heat and simmer for 40 mins</li> 
+<li>immersion blend a quarter of the soup</li> 
+<li>add spinach and cook for 5 mins</li> 
+<li>add lemon juice and divide into bowls</li> 
+<li>wait 10 mins to cool and eat</li> </ul>
+<a href="https://cookieandkate.com/best-lentil-soup-recipe/">Source material</a> </div> 
+<div class="card"> 
+<h3>Potato Soup</h3> 
+<p>Category: Soups</p> 
+<p>Servings: 4</p> 
+<h4>Ingredients</h4> 
+<ul> 
+<li><span>1</span> TBSP butter</li> 
+<li><span>1</span> white onion</li> 
+<li><span>100</span> g, peeled and chopped</li> 
+<li><span>1200</span> g potatoes, peeled and quartered</li> 
+<li><span>32</span> g better than bouillon vegetable</li> 
+<li><span>32</span> oz water</li> 
+<li><span>14</span> oz can coconut milk</li> 
+<li><span>1/2</span> tsp dried rosemary</li> 
+<li><span>1/2</span> tsp dried thyme</li> 
+<li><span>1</span> tsp salt</li> 
+<li>Black Pepper</li> </ul> 
+<h4>Directions</h4> 
+<ul> 
+<li>saute onions in butter</li> 
+<li>add everything else to pot and bring to a boil</li> 
+<li>reduce to a simmer and simmer for 30 mins</li> 
+<li>blend with immersion blender</li> </ul>
+<a href="https://lovingitvegan.com/creamy-vegan-potato-soup/">Source material</a> </div> 
+<div class="card"> 
+<h3>White Bean Soup</h3> 
+<p>Category: Soups</p> 
+<p>Servings: 4</p> 
+<h4>Ingredients</h4> 
+<ul> 
+<li><span>1</span> TBSP butter</li> 
+<li><span>1</span> onion, chopped</li> 
+<li><span>100</span> g chopped carrots</li> 
+<li><span>100</span> g chopped celery</li> 
+<li><span>4</span> oz chopped fresh spinach</li> 
+<li><span>32</span> oz water</li> 
+<li><span>32</span> g better than bouillon vegetable</li> 
+<li><span>340</span> g frozen butternut squash</li> 
+<li><span>15</span> oz can white beans, drained</li> 
+<li><span>3</span> TBSP tomato paste</li> 
+<li><span>1/4</span> tsp dried thyme</li> 
+<li><span>1/2</span> tsp salt</li> </ul> 
+<h4>Directions</h4> 
+<ul> 
+<li>in a large pot, saute onion in butter</li> 
+<li>add celery, carrots, and spinach and saute until spinach is cooked down</li> 
+<li>add everything elss to the pot</li> 
+<li>bring to a boil</li> 
+<li>reduce heat to a simmer, then simmer for 10 mins</li> </ul> </div> 
+<div class="card"> 
+<h3>Balsamic Vinaigrette</h3> 
+<p>Category: Dips And Sauces</p> 
+<p>Servings: 2</p> 
+<h4>Ingredients</h4> 
+<ul> 
+<li><span>45</span> g olive oil</li> 
+<li><span>18</span> g balsamic vinegar</li> 
+<li><span>11</span> g honey</li> 
+<li><span>4</span> g mustard</li> 
+<li><span>1/8</span> tsp salt</li> 
+<li><span>1/8</span> tsp ground pepper</li> </ul> 
+<h4>Directions</h4> 
+<ul> 
+<li>combine all ingredients in bowl</li> 
+<li>whisk to emulsify</li> </ul>
+<a href="https://barefeetinthekitchen.com/best-balsamic-vinaigrette/">Source material</a> </div> 
+<div class="card"> 
+<h3>Bang Bang Yogurt Sauce</h3> 
+<p>Category: Dips And Sauces</p> 
+<p>Servings: 2</p> 
+<h4>Ingredients</h4> 
+<ul> 
+<li><span>1</span> cup full fat Greek yogurt</li> 
+<li><span>5</span> g sriracha</li> 
+<li><span>1</span> tsp white wine vinegar</li> 
+<li><span>1/4</span> tsp salt</li> </ul> 
+<h4>Directions</h4> 
+<ul> 
+<li>add everything to a cup and mix</li> </ul> </div> 
+<div class="card"> 
+<h3>Carrot Ginger Dressing</h3> 
+<p>Category: Dips And Sauces</p> 
+<p>Servings: 2</p> 
+<h4>Ingredients</h4> 
+<ul> 
+<li><span>98</span> g rice wine vinegar</li> 
+<li><span>69</span> g evoo</li> 
+<li><span>200</span> g carrot</li> 
+<li><span>2</span> TBSP chopped ginger</li> 
+<li><span>2</span> TBSP lime juice</li> 
+<li><span>4</span> tsp honey</li> 
+<li><span>1.5</span> tsp sesame oil</li> 
+<li><span>1/4</span> tsp salt</li> </ul> 
+<h4>Directions</h4> 
+<ul> 
+<li>combine all ingredients in a blender</li> </ul>
+<a href="https://cookieandkate.com/carrot-ginger-dressing-recipe/">Source material</a> </div> 
+<div class="card"> 
+<h3>Gravy</h3> 
+<p>Category: Dips And Sauces</p> 
+<p>Servings: 8</p> 
+<h4>Ingredients</h4> 
+<ul> 
+<li><span>4</span> TBSP butter</li> 
+<li><span>1</span> onion, diced</li> 
+<li><span>1/4</span> cup flour</li> 
+<li><span>18</span> oz water</li> 
+<li><span>18</span> g better than bouillon no chicken</li> 
+<li><span>2</span> TBSP soy sauce</li> 
+<li><span>1</span> TBSP vegan Worcestershire</li> 
+<li><span>1</span> tsp poultry seasoning</li> 
+<li><span>1/4</span> tsp salt</li> </ul> 
+<h4>Directions</h4> 
+<ul> 
+<li>in a medium saucepan, melt butter over medium heat and saute onion</li> 
+<li>add flour and toss to coat, forming a thick paste</li> 
+<li>add all other ingredients and bring to a boil</li> 
+<li>reduce heat to a simmer and simmer for 20 min</li> 
+<li>remove from heat and blend with immersion blender until smooth</li> </ul>
+<a href="https://www.connoisseurusveg.com/vegan-gravy/">Source material</a> </div> 
+<div class="card"> 
+<h3>Kung Pao Sauce</h3> 
+<p>Category: Dips And Sauces</p> 
+<p>Servings: 2</p> 
+<h4>Ingredients</h4> 
+<ul> 
+<li><span>2</span> oz cold water</li> 
+<li><span>1</span> TBSP corn starch</li> 
+<li><span>6</span> g better than bouillon NO chicken</li> 
+<li><span>35</span> g soy sauce</li> 
+<li><span>37</span> g rice wine vinegar</li> 
+<li><span>13</span> g hoisin sauce</li> 
+<li><span>1/4</span> tsp balsamic vinegar</li> 
+<li><span>8</span> g brown sugar</li> </ul> 
+<h4>Directions</h4> 
+<ul> 
+<li>add water and corn starch to a bowl and whisk together</li> 
+<li>add everything else to the bowl and whisk together</li> 
+<li>pour into wok over medium heat and cook until thickened</li> 
+<li>add tofu to wok and toss to coat</li> </ul> </div> 
+<div class="card"> 
+<h3>Tzatziki</h3> 
+<p>Category: Dips And Sauces</p> 
+<p>Servings: 4</p> 
+<h4>Ingredients</h4> 
+<ul> 
+<li><span>2</span> cups grated cucumber, about <span>1</span> whole cucumber (optional)</li> 
+<li><span>1.5</span> cups Greek yogurt</li> 
+<li><span>2</span> TBSP extra virgin olive oil</li> 
+<li><span>1</span> tsp dried mint</li> 
+<li><span>1</span> tsp dried dill</li> 
+<li><span>1</span> TBSP lemon juice</li> 
+<li><span>1/2</span> tsp salt</li> </ul> 
+<h4>Directions</h4> 
+<ul> 
+<li>if using cucumber, grate the cucumber, and squeeze by hand to remove most of the liquid, add squeezed cucumber to a bowl</li> 
+<li>mix everything else in the bowl and let sit for 5 min</li> 
+<li>mix again and serve</li> </ul>
+<a href="https://cookieandkate.com/how-to-make-tzatziki/">Source material</a> </div> 
+<div class="card"> 
+<h3>Ginger Tea</h3> 
+<p>Category: Drinks</p> 
+<p>Servings: 2</p> 
+<h4>Ingredients</h4> 
+<ul> 
+<li><span>2</span> cups water</li> 
+<li><span>1</span> TBSP frozen ginger</li> 
+<li><span>1/4</span> tsp dried mint</li> 
+<li><span>1</span> TBSP honey</li> 
+<li><span>1</span> tsp lemon juice</li> </ul> 
+<h4>Directions</h4> 
+<ul> 
+<li>in a small saucepan, bring the water to a boil over medium-high heat</li> 
+<li>add the ginger and mint and reduce to low, simmer for 5 mins</li> 
+<li>strain the tea into a large mug</li> 
+<li>add honey and lemon juice</li> </ul>
+<a href="https://www.jessicagavin.com/ginger-root-tea-lemon-mint/">Source material</a> </div> 
+<div class="card"> 
+<h3>Oatmeal Smoothie</h3> 
+<p>Category: Drinks</p> 
+<p>Servings: 1</p> 
+<h4>Ingredients</h4> 
+<ul> 
+<li><span>1/4</span> cup oats</li> 
+<li><span>1</span> banana</li> 
+<li><span>1/2</span> cup plant milk</li> 
+<li><span>1</span> TBSP peanut butter</li> 
+<li><span>1</span> tsp maple syrup</li> 
+<li><span>1/2</span> tsp vanilla extract</li> 
+<li><span>1/8</span> tsp salt</li> </ul> 
+<h4>Directions</h4> 
+<ul> 
+<li>Combine all ingredients in a blender</li> </ul>
+<a href="https://www.wellplated.com/oatmeal-smoothie-recipe/">Source material</a> </div> 
+<div class="card"> 
+<h3>Orange Rooibos Tea</h3> 
+<p>Category: Drinks</p> 
+<p>Servings: 4</p> 
+<h4>Ingredients</h4> 
+<ul> 
+<li><span>4</span> cups water</li> 
+<li><span>4</span> tsp dried rosemary</li> 
+<li><span>2</span> tsp rooibos tea</li> 
+<li><span>7/8</span> cup orange juice</li> 
+<li><span>2</span> tsp honey</li> </ul> 
+<h4>Directions</h4> 
+<ul> 
+<li>in a saucepan, bring water to a boil</li> 
+<li>add the rooibos tea and rosemary</li> 
+<li>remove from heat and let sit for 5 minutes</li> 
+<li>pass through a strainer and add orange juice and honey</li> </ul>
+<a href="https://eatsmarter.com/recipes/orange-rooibos-iced-tea">Source material</a> </div> 
+<div class="card"> 
+<h3>Baklava</h3> 
+<p>Category: Desserts</p> 
+<p>Servings: 12</p> 
+<h4>Ingredients</h4> 
+<ul> 
+<li><span>8</span> oz chopped walnuts</li> 
+<li><span>8</span> oz chopped almonds</li> 
+<li><span>2</span> tsp ground cinnamon</li> 
+<li><span>2</span> tsp ground cloves</li> 
+<li><span>1</span> stick butter</li> 
+<li><span>1</span> pack phyllo dough defrosted</li> 
+<li><span>600</span> g sugar</li> 
+<li><span>400</span> g water</li> 
+<li><span>80</span> g honey</li> 
+<li><span>1</span> cinnamon stick</li> </ul> 
+<h4>Directions</h4> 
+<ul> 
+<li>preheat oven to 300F convection</li> 
+<li>mix the walnuts, almonds, cinnamon, and cloves</li> 
+<li>melt the butter</li> 
+<li>butter a 9x13 baking dish and lay down four phyllo sheets</li> 
+<li>put a layer of the nut mixture, then two more sheets of phyllo, butter the sheets</li> 
+<li>lay down more of the nut mixture and sheets until you have no more nut mixture left, finishing with four sheets of phyllo</li> 
+<li>place the baking dish in the fridge for 15 minutes before cutting</li> 
+<li>cut the phyllo lengthwise, then at a 45 degree angle width wise</li> 
+<li>bake for 2 hours</li> 
+<li>in a small pot, mix sugar, water, and cinnamon stick and bring to a boil</li> 
+<li>boil syrup for 2 minutes, then remove from heat</li> 
+<li>let syrup cool and add honey</li> 
+<li>pour the syrup over the baklava</li> 
+<li>let cool completely before serving</li> </ul>
+<a href="https://www.mygreekdish.com/recipe/baklava-greek-walnut-pistachio-cake/">Source material</a> </div> 
+<div class="card"> 
+<h3>Banana Bread</h3> 
+<p>Category: Desserts</p> 
+<p>Servings: 12</p> 
+<h4>Ingredients</h4> 
+<ul> 
+<li><span>1</span> stick butter</li> 
+<li><span>3</span> ripe bananas</li> 
+<li><span>2</span> large eggs</li> 
+<li><span>1</span> tsp vanilla extract</li> 
+<li><span>240</span> g cups all purpose flour</li> 
+<li><span>200</span> g granulated sugar</li> 
+<li><span>1</span> tsp baking soda</li> 
+<li><span>1/2</span> tsp salt</li> 
+<li><span>1/2</span> tsp cinnamon</li> 
+<li><span>112</span> g chocolate chips</li> </ul> 
+<h4>Directions</h4> 
+<ul> 
+<li>preheat oven to 350 degrees</li> 
+<li>Spray a loaf pan with flour baking spray</li> 
+<li>Melt the butter and add to a large bowl</li> 
+<li>Add bananas to the butter and mash with a fork</li> 
+<li>Add the vanilla extract and egg to the bowl and stir with the same form</li> 
+<li>Add the dry ingredients to a separate bowl and whisk together</li> 
+<li>Combine the wet and dry ingredients with a spatula until just combined</li> 
+<li>Add the chocolate chips</li> 
+<li>Pour into the loaf pan and bake for 50 minutes</li> </ul>
+<a href="https://thesaltymarshmallow.com/best-banana-bread-recipe/">Source material</a> </div> 
+<div class="card"> 
+<h3>Brownies</h3> 
+<p>Category: Desserts</p> 
+<p>Servings: 8</p> 
+<h4>Ingredients</h4> 
+<ul> 
+<li><span>300</span> g granulated sugar</li> 
+<li><span>90</span> g flour</li> 
+<li><span>50</span> g cocoa powder</li> 
+<li><span>62</span> g powdered sugar</li> 
+<li><span>3/4</span> tsp salt</li> 
+<li><span>1/2</span> tsp instant esperesso powder</li> 
+<li><span>112</span> g canola oil</li> 
+<li><span>2</span> large eggs</li> 
+<li><span>2</span> TBSP milk</li> 
+<li><span>1/2</span> tsp vanilla extract</li> 
+<li><span>112</span> g semi sweet chocolate chips</li> </ul> 
+<h4>Directions</h4> 
+<ul> 
+<li>preheat oven to 325F convection</li> 
+<li>spray a cast iron skillet or dutch oven with flour baking spray</li> 
+<li>line skillet or dutch oven with parchment and spray parchment with baking spray</li> 
+<li>in the bowl of a stand mixer, whisk together the dry ingredients by hand</li> 
+<li>add the wet ingredients and combine by hand, then mix on low speed for two minutes, then add the chocolate chips and fold them into the batter</li> 
+<li>pour into the parchment lined baking dish and bake for 50 minutes</li> 
+<li>remove from oven and let cool for 2 hours before removing from skillet or dutch oven</li> </ul> </div> 
+<div class="card"> 
+<h3>Chocolate Bundt Cake</h3> 
+<p>Category: Desserts</p> 
+<p>Servings: 12</p> 
+<h4>Ingredients</h4> 
+<ul> 
+<li><span>400</span> g sugar</li> 
+<li><span>210</span> g flour</li> 
+<li><span>75</span> g cocoa powder</li> 
+<li><span>2</span> tsp baking soda</li> 
+<li><span>1</span> tsp baking powder</li> 
+<li><span>1</span> tsp salt</li> 
+<li><span>2</span> large eggs, room temperature</li> 
+<li><span>1</span> cup coffee</li> 
+<li><span>1</span> cup milk</li> 
+<li><span>112</span> g canola oil</li> 
+<li><span>1</span> tsp vanilla extract</li> </ul> 
+<h4>Directions</h4> 
+<ul> 
+<li>preheat oven to 350F</li> 
+<li>spray the large Bundt pan with flour baking spray</li> 
+<li>combine the dry ingredients in the mixer bowl</li> 
+<li>add the wet ingredients to the mixer bowl and mix on medium-low speed for 2 min</li> 
+<li>bake for 50 minutes</li> 
+<li>remove from oven and let cool in pan</li> 
+<li>turn pan upside down onto cooling rack to remove cake and let cool completely</li> </ul>
+<a href="https://www.tasteofhome.com/recipes/contest-winning-moist-chocolate-cake/">Source material</a> </div> 
+<div class="card"> 
+<h3>Churro Bundt Cake</h3> 
+<p>Category: Desserts</p> 
+<p>Servings: 12</p> 
+<h4>Ingredients</h4> 
+<ul> 
+<li><span>50</span> g granulated sugar</li> 
+<li><span>1</span> tsp ground cinnamon</li> 
+<li><span>2</span> sticks unsalted butter, room temp</li> 
+<li><span>350</span> g granulated sugar</li> 
+<li><span>1</span> tsp vanilla extract</li> 
+<li><span>4</span> large eggs, room temp</li> 
+<li><span>2</span> egg yolks, room temp</li> 
+<li><span>4</span> oz cream cheese, room temp</li> 
+<li><span>3/4</span> cup milk</li> 
+<li><span>330</span> g flour</li> 
+<li><span>1</span> TBSP baking powder</li> 
+<li><span>1</span> tsp ground cinnamon</li> 
+<li><span>1</span> tsp salt</li> </ul> 
+<h4>Directions</h4> 
+<ul> 
+<li>preheat oven to 350F</li> 
+<li>spray Bundt pan with flour baking spray</li> 
+<li>in a small bowl, Combine <span>50</span> g of sugar and <span>1</span> tsp cinnamon</li> 
+<li>in an electric mixer, mix butter, <span>350</span> g granulated sugar, and vanilla on medium high speed until even, about 5 minutes</li> 
+<li>reduce mixer to medium low speed and add the eggs one at a time, then the yolks one at a time </li> 
+<li>add the cream cheese and milk and beat until combined</li> 
+<li>in a separate large bowl, combine the flour, baking powder, ground cinnamon, and salt and whisk together</li> 
+<li>add dry ingredients to mixer and mix manually with a spatula to avoid them from puffing up, then beat until combined</li> 
+<li>sprinkle the cinnamon sugar onto the greased pan evenly</li> 
+<li>pour the batter into the pan</li> 
+<li>bake for 55 minutes</li> 
+<li>remove from oven and let cool for 10 minutes, then turn upside down onto a cooling rack and let completely cool</li> </ul>
+<a href="https://www.foodnetwork.com/recipes/food-network-kitchen/churro-cake-with-spiced-chocolate-sauce-5671816">Source material</a> </div> 
+<div class="card"> 
+<h3>Peanut Butter Cookies</h3> 
+<p>Category: Desserts</p> 
+<p>Servings: 20</p> 
+<h4>Ingredients</h4> 
+<ul> 
+<li><span>264</span> g peanut butter</li> 
+<li><span>1</span> stick butter</li> 
+<li><span>100</span> g white sugar</li> 
+<li><span>100</span> g brown sugar</li> 
+<li><span>1</span> egg</li> 
+<li><span>3</span> TBSP milk</li> 
+<li><span>1</span> tsp vanilla</li> 
+<li><span>150</span> g all purpose flour</li> 
+<li><span>3/4</span> tsp baking powder</li> 
+<li><span>1/4</span> tsp salt</li> </ul> 
+<h4>Directions</h4> 
+<ul> 
+<li>Preheat oven to 350F convection</li> 
+<li>In the mixer bowl, cream together the peanut butter, butter, sugar, and brown sugar</li> 
+<li>Beat in the egg, vanilla, and milk</li> 
+<li>In a separate bowl, whisk together the flour, baking powder, and salt</li> 
+<li>Combine the dry ingredients in the mixer bowl with a spatula by hand, then mix with the mixer until smooth</li> 
+<li>Form 40 g dough balls and place on two parchment lined aluminum baking sheets</li> 
+<li>Press down the dough balls with a fork to form cookies</li> 
+<li>Bake for 13 minutes</li> 
+<li>Remove from oven and let cook for 20 minutes</li> </ul>
+<a href="https://www.allrecipes.com/recipe/11024/joeys-peanut-butter-cookies/">Source material</a> </div> 
+<div class="card"> 
+<h3>Pie Crust</h3> 
+<p>Category: Desserts</p> 
+<p>Servings: 2</p> 
+<h4>Ingredients</h4> 
+<ul> 
+<li><span>354</span> g AP flour</li> 
+<li><span>1</span> tsp salt</li> 
+<li><span>30</span> g sugar</li> 
+<li><span>12</span> TBSP butter</li> 
+<li><span>96</span> g vegetable shortening</li> 
+<li><span>4</span> oz vodka</li> </ul> 
+<h4>Directions</h4> 
+<ul> 
+<li>spray a large pie tin with flour baking spray</li> 
+<li>add flour, salt, sugar, butter, and margarine to large pot</li> 
+<li>cut together with pastry cutter until pea sized crumbs form</li> 
+<li>add vodka and water and cut together with pastry cutter</li> 
+<li>mix together with hands and form two round discs</li> 
+<li>lay down Saran Wrap on the counter, put dough round on top, then put another piece of Saran Wrap on top</li> 
+<li>roll out dough between Saran Wrap with rolling pin</li> 
+<li>remove one piece of Saran Wrap, then place the naked side of the dough into the greased pie tin, remove the other piece of Saran Wrap</li> </ul>
+<a href="https://www.seriouseats.com/cooks-illustrated-foolproof-pie-dough-recipe">Source material</a> </div> 
+<div class="card"> 
+<h3>Pumpkin Pie</h3> 
+<p>Category: Desserts</p> 
+<p>Servings: 8</p> 
+<h4>Ingredients</h4> 
+<ul> 
+<li><span>1</span> pie crust</li> 
+<li><span>15</span> oz can pumpkin</li> 
+<li><span>14</span> oz can sweetened condensed milk</li> 
+<li><span>2</span> eggs</li> 
+<li><span>1</span> TBSP pumpkin pie spice</li> 
+<li><span>1</span> tsp vanilla extract</li> </ul> 
+<h4>Directions</h4> 
+<ul> 
+<li>preheat oven to 425F</li> 
+<li>in a large bowl, whisk together all ingredients until smooth</li> 
+<li>pour into pie crust and bake for 15 minutes</li> 
+<li>lower oven temperature to 350F and bake for 45 more minutes</li> </ul>
+<a href="https://www.mccormick.com/recipes/dessert/signature-pumpkin-pie">Source material</a> </div> 
+<div class="card"> 
+<h3>Whipped Cream</h3> 
+<p>Category: Desserts</p> 
+<p>Servings: 8</p> 
+<h4>Ingredients</h4> 
+<ul> 
+<li><span>1</span> cup heavy cream</li> 
+<li><span>1</span> tsp vanilla extract</li> 
+<li><span>1</span> TBSP powdered sugar</li> </ul> 
+<h4>Directions</h4> 
+<ul> 
+<li>whip cream with whisk attachment in electric mixer until soft peaks form</li> 
+<li>add vanilla and sugar and whip until stiff peaks form</li> </ul>
+<a href="https://www.allrecipes.com/recipe/18352/whipped-cream/">Source material</a> </div>
+        <!-- end recipe divs-->
+        </div> 
+    </div>
+    <div id="info">
+        <p>text copied</p>
+    </div>
 </body>
-<script src="js/recipe_formatting.js?v=077"></script>
+<script src="js/recipe_formatting.js?v=082"></script>
+
 </html>

@@ -1,589 +1,359 @@
-interface GlyphUnit {
-    regex: RegExp;
-    replace: string;
-    plaintext: string;
+interface RecipeCard {
+    card: HTMLDivElement;
+    content: HTMLDivElement;
+    title: Title;
+    category: Category;
+    servings: Servings;
+    link: Link;
+}
+interface Title {
+    value: string;
+    element: HTMLHeadingElement | undefined;
+}
+interface Category {
+    value: string;
+    element: HTMLParagraphElement | undefined;
+}
+interface Servings {
+    value: number;
+    element: HTMLParagraphElement | undefined;
+}
+interface Link {
+    value: string | undefined;
+    element: HTMLAnchorElement | undefined;
 }
 
-let glyphMap = new Map<string, GlyphUnit>();
+const recipesMap: Map<string, Map<string, RecipeCard>> = new Map();
 
-glyphMap.set('\u00B0', { regex: /([0-9]+)\s*f\b/gi, replace: '$1\u00B0F', plaintext: '' });
-glyphMap.set('\u2189', { regex: /\b0\/3\b/gi, replace: '\u2189', plaintext: '0/3' });
-glyphMap.set('\u2152', { regex: /\b1\/10\b/gi, replace: '\u2152', plaintext: '1/10' });
-glyphMap.set('\u2151', { regex: /\b1\/9\b/gi, replace: '\u2151', plaintext: '1/9' });
-glyphMap.set('\u215B', { regex: /\b1\/8\b/gi, replace: '\u215B', plaintext: '1/8' });
-glyphMap.set('\u2150', { regex: /\b1\/7\b/gi, replace: '\u2150', plaintext: '1/7' });
-glyphMap.set('\u2159', { regex: /\b1\/6\b/gi, replace: '\u2159', plaintext: '1/6' });
-glyphMap.set('\u2155', { regex: /\b1\/5\b/gi, replace: '\u2155', plaintext: '1/5' });
-glyphMap.set('\u00BC', { regex: /\b1\/4\b/gi, replace: '\u00BC', plaintext: '1/4' });
-glyphMap.set('\u2153', { regex: /\b1\/3\b/gi, replace: '\u2153', plaintext: '1/3' });
-glyphMap.set('\u00BD', { regex: /\b1\/2\b/gi, replace: '\u00BD', plaintext: '1/2' });
-glyphMap.set('\u2156', { regex: /\b2\/5\b/gi, replace: '\u2156', plaintext: '2/5' });
-glyphMap.set('\u2154', { regex: /\b2\/3\b/gi, replace: '\u2154', plaintext: '2/3' });
-glyphMap.set('\u215C', { regex: /\b3\/8\b/gi, replace: '\u215C', plaintext: '3/8' });
-glyphMap.set('\u2157', { regex: /\b3\/5\b/gi, replace: '\u2157', plaintext: '3/5' });
-glyphMap.set('\u00BE', { regex: /\b3\/4\b/gi, replace: '\u00BE', plaintext: '3/4' });
-glyphMap.set('\u2158', { regex: /\b4\/5\b/gi, replace: '\u2158', plaintext: '4/5' });
-glyphMap.set('\u215D', { regex: /\b5\/8\b/gi, replace: '\u215D', plaintext: '5/8' });
-glyphMap.set('\u215A', { regex: /\b5\/6\b/gi, replace: '\u215A', plaintext: '5/6' });
-glyphMap.set('\u215E', { regex: /\b7\/8\b/gi, replace: '\u215E', plaintext: '7/8' });
-glyphMap.set('\u2013', { regex: /[-]+/gi, replace: '\u2013', plaintext: '-' });
-glyphMap.set('\u00d7', { regex: /([0-9])\s*x\s*([0-9])/gi, replace: '$1\u00d7$2', plaintext: 'x' });
+const categoryOrderMap: Map<string, number> = new Map();
+categoryOrderMap.set("Meals", categoryOrderMap.size + 1);
+categoryOrderMap.set("Sides", categoryOrderMap.size + 1);
+categoryOrderMap.set("Snacks", categoryOrderMap.size + 1);
+categoryOrderMap.set("Soups", categoryOrderMap.size + 1);
+categoryOrderMap.set("Dips And Sauces", categoryOrderMap.size + 1);
+categoryOrderMap.set("Drinks", categoryOrderMap.size + 1);
+categoryOrderMap.set("Desserts", categoryOrderMap.size + 1);
+categoryOrderMap.set("Household", categoryOrderMap.size + 1);
 
-interface RegexUnit {
-    replace: string;
-    regex: RegExp;
-    words: RegExp;
-}
-
-let unitMap = new Map<string, RegexUnit>();
-unitMap.set('TBSP', { replace: '$1 TBSP', regex: /([0-9]+)\s*TBSP/gi, words: /\b(tablespoons|tablespoon|tbsps)\b/gi });
-unitMap.set('tsp', { replace: '$1 tsp', regex: /([0-9]+)\s*tsp/gi, words: /\b(teaspoons|teaspoon|tsps)\b/gi });
-unitMap.set('g', { replace: '$1 g', regex: /([0-9]+)\s*g/gi, words: /\b(grams|gram|gs)\b/gi });
-unitMap.set('ml', { replace: '$1 ml', regex: /([0-9]+)\s*ml/gi, words: /\b(milliliters|milliliter|mls)\b/gi });
-unitMap.set('oz', { replace: '$1 oz', regex: /([0-9]+)\s*oz/gi, words: /\b(ounces|ounce|fluid ounces|fluid ounce|fl oz|floz)\b/gi });
-
-let categoryMap = new Map<number, string>();
-categoryMap.set(1, 'Meals');
-categoryMap.set(2, 'Sides');
-categoryMap.set(3, 'Snacks');
-categoryMap.set(4, 'Soups');
-categoryMap.set(5, 'Dips And Sauces');
-categoryMap.set(6, 'Drinks');
-categoryMap.set(7, 'Desserts');
-
-const bottomBarHeight: number = 60;
-
-let recipes = new Map<number, Map<string, any>>();
-let determineCategoryNumberFromCategoryName = function (category: string): number {
-    let maxNumber: number = 0;
-    for (let number of categoryMap.keys()) {
-        if (categoryMap.get(number).includes(category)) {
-            return number;
+const parseRecipes = () => {
+    console.log('typescript reached');
+    const cards = document.getElementsByClassName('card');
+    for (const item of cards) {
+        if (!(item instanceof HTMLDivElement)) {
+            continue;
         }
-        maxNumber = Math.max(number, maxNumber);
+        const card: HTMLDivElement = item as HTMLDivElement;
+        const content: HTMLDivElement = document.createElement('div');
+        let title: Title = { 'value': '', 'element': undefined };
+        let category: Category = { 'value': '', 'element': undefined };
+        let servings: Servings = { 'value': 1, 'element': undefined };
+        let link: Link = { 'value': undefined, 'element': undefined };
+        for (const child of card.childNodes) {
+            if (child instanceof HTMLHeadingElement) {
+                if ('h3' === child.tagName.toLowerCase()) {
+                    const titleString: string = !child.textContent ? '' : child.textContent;
+                    title = { 'value': titleString, 'element': child };
+                }
+            }
+            if (child instanceof HTMLParagraphElement) {
+                let textContent: string = !child.textContent ? '' : child.textContent;
+                {
+                    let searchPrefix: string = 'Servings: ';
+                    if (textContent.startsWith(searchPrefix)) {
+                        const servingsNumber: number = parseInt(textContent.substring(searchPrefix.length));
+                        servings = { 'value': servingsNumber, 'element': child };
+                    }
+                }
+                {
+                    let searchPrefix: string = 'Category: ';
+                    if (textContent.startsWith(searchPrefix)) {
+                        const categoryString: string = textContent.substring(searchPrefix.length);
+                        category = { 'value': categoryString, 'element': child };
+                    }
+                }
+            }
+            if (child instanceof HTMLAnchorElement) {
+                let linkItem: HTMLAnchorElement = child as HTMLAnchorElement;
+                let hrefContent: string = linkItem.href;
+                link = { 'value': hrefContent, 'element': linkItem }
+            }
+        }
+
+        if (!recipesMap.has(category.value)) {
+            recipesMap.set(category.value, new Map());
+        }
+        const mapValue = recipesMap.get(category.value)!;
+        mapValue.set(title.value, {
+            card: card,
+            content: content,
+            title: title,
+            category: category,
+            servings: servings,
+            link: link
+        });
+
     }
-    categoryMap.set(maxNumber + 1, category);
-    return maxNumber + 1;
-};
-let copyRecipe = function (event: MouseEvent): void {
-    copyToClipboard(event, false, false);
-};
-let copyMarkdown = function (event: MouseEvent): void {
-    copyToClipboard(event, true, false);
-};
-let copyPhone = function (event: MouseEvent): void {
-    copyToClipboard(event, true, true);
-};
-let copyToClipboard = function (event: MouseEvent, markdown: boolean, tag: boolean): void {
-    let target: EventTarget = event.target;
-    if (!(target instanceof HTMLElement)) {
+}
+
+
+const categorySortFunction = (first: string, second: string): number => {
+    const firstIndex: number | undefined = categoryOrderMap.get(first);
+    const secondIndex: number | undefined = categoryOrderMap.get(second);
+    if (firstIndex && secondIndex) {
+        if (firstIndex < secondIndex) {
+            return -1;
+        } else if (firstIndex > secondIndex) {
+            return 1;
+        } else {
+            return 0;
+        }
+    } else if (first) {
+        return -1;
+    } else if (second) {
+        return 1;
+    }
+    return first.localeCompare(second);
+}
+
+const buildSections = () => {
+    const recipesElement: HTMLElement | null = document.getElementById('recipes');
+    if (!recipesElement || !(recipesElement instanceof HTMLDivElement)) {
         return;
     }
-    let htmlTarget: HTMLElement = target as HTMLElement;
-    let id: string = htmlTarget.getAttribute('related');
-    let div: HTMLElement = document.getElementById(id);
-    let card: HTMLElement = div;
-    let text = formatCard(card, markdown, tag);
-    navigator.clipboard.writeText(text);
-    let info: HTMLElement = document.getElementById('info');
-    info.style.display = 'inline-block';
-    info.innerText = 'Copied ' + card.firstChild.firstChild.textContent + ' to clipboard';
-    startGradualFade(info);
-};
-let formatCard = function (card: HTMLElement, markdown: boolean, tag: boolean): string {
-    let doubleSpace: boolean = markdown && !tag;
-    let output: string = '';
-    let singleLine: string = '\n';
+    const recipesDiv: HTMLDivElement = recipesElement as HTMLDivElement;
+    const categoryKeys: string[] = Array.from(recipesMap.keys());
+    categoryKeys.sort(categorySortFunction);
+    for (const categoryKey of categoryKeys) {
 
-    let categoryHeader: string = card.getAttribute('category');
+        const h2 = document.createElement('h2');
+        h2.innerText = categoryKey;
+        recipesDiv.appendChild(h2);
 
-    let divElement: Element = card.children[0];
-    if (!(divElement instanceof HTMLElement)) {
-        return output;
-    }
-    let div: HTMLElement = divElement as HTMLElement;
-    let recipeHeaderElement: Element = div.children[0];
-    if (!(recipeHeaderElement instanceof HTMLElement)) {
-        return output;
-    }
-    let recipeHeader: HTMLElement = recipeHeaderElement as HTMLElement;
-    let recipeTitle = recipeHeader.innerText;
-
-    let linkText = undefined;
-    for (let linkImgElement of card.getElementsByClassName('link')) {
-        if (!(linkImgElement instanceof HTMLImageElement)) {
-            continue;
+        const categoryMap: Map<string, RecipeCard> = recipesMap.get(categoryKey)!;
+        const recipeKeys: string[] = Array.from(categoryMap.keys());
+        recipeKeys.sort();
+        for (const recipeKey of recipeKeys) {
+            const recipe: RecipeCard = categoryMap.get(recipeKey)!;
+            recipesDiv.appendChild(recipe.card);
+            recipe.category.element?.remove();
+            recipe.servings.element?.remove();
+            recipe.link.element?.remove();
+            generateRecipeButtons(recipe);
+            setTheSpans(recipe);
+            modifyRecipe(recipe.card, 1);
+            rehomeTheChildren(recipe);
         }
-        let linkImg: HTMLImageElement = linkImgElement as HTMLImageElement;
-        if (!(linkImg.parentElement instanceof HTMLAnchorElement)) {
-            continue;
-        }
-        let a = linkImg.parentElement as HTMLAnchorElement;
-        linkText = a.href;
     }
-
-    if (tag) {
-        output += '<div class="recipe" category="' + categoryHeader + '"';
-        if (undefined != linkText) {
-            output += ' link="' + linkText + '"';
+}
+const setTheSpans = (recipe: RecipeCard) => {
+    for (const listElement of recipe.card.getElementsByTagName('li')) {
+        for (const spanElement of listElement.getElementsByTagName('span')) {
+            const span: HTMLSpanElement = spanElement as HTMLSpanElement;
+            const text: string = !span.textContent ? '' : span.textContent;
+            let value: number = 0;
+            if (text.includes('/')) {
+                const parts: string[] = text.split('/');
+                value = parseFloat(parts[0]) / parseFloat(parts[1]);
+            } else {
+                value = parseFloat(text);
+            }
+            span.setAttribute('originalValue', value.toString());
+            span.classList.add('quantity');
         }
-        output += '>' + singleLine;
     }
+}
+const rehomeTheChildren = (recipe: RecipeCard) => {
+    while (recipe.card.firstElementChild) {
+        recipe.content.appendChild(recipe.card.firstElementChild);
+    }
+    recipe.title.element!.classList.add('title');
+    recipe.title.element!.addEventListener('click', showRecipe);
+    recipe.card.appendChild(recipe.title.element!);
 
-    for (let child of div.children) {
-        if (child instanceof HTMLHeadingElement) {
-            let header: HTMLHeadingElement = child as HTMLHeadingElement;
-            if ('H3' == header.tagName) {
-                if (markdown) {
-                    output += '# ';
-                }
-            } else if ('H4' == header.tagName) {
-                if (markdown) {
-                    output += '## ';
-                }
-            } else if ('H5' == header.tagName) {
-                if (markdown) {
-                    output += '### ';
-                }
-            } else if ('H6' == header.tagName) {
-                if (markdown) {
-                    output += '#### ';
+    addPin(recipe.card);
+
+    recipe.card.appendChild(recipe.content);
+    recipe.content.style.display = 'none';
+    recipe.content.style.position = 'relative';
+    recipe.content.style.paddingBottom = '50px';
+
+    recipe.card.setAttribute('servings', recipe.servings.value.toString());
+}
+
+const addPin = (card: HTMLDivElement) => {
+    let pinImg = document.createElement('img');
+    pinImg.classList.add('pin');
+    pinImg.setAttribute('src', 'img/pin.png?v=001');
+    pinImg.addEventListener('click', pinRecipe);
+    card.appendChild(pinImg);
+}
+
+const addUnPin = (card: HTMLDivElement) => {
+    let pinImg = document.createElement('img');
+    pinImg.classList.add('pin');
+    pinImg.setAttribute('src', 'img/pin_blu.png?v=001');
+    pinImg.addEventListener('click', unpinRecipe);
+    card.appendChild(pinImg);
+}
+
+const createHeader = (...input: string[]): string => {
+    let fullString = '_';
+    for (const item of input) {
+        fullString += item + "_";
+    }
+    return fullString.toUpperCase().replace(/[^A-Z0-9]/g, '_').replace(/^_/, '').replace(/_$/, '');
+}
+
+const generateRecipeButtons = (recipe: RecipeCard) => {
+    const divItem: HTMLDivElement = recipe.card;
+    const header2: HTMLHeadingElement = recipe.title.element!;
+    const id: string = createHeader(recipe.category.value, recipe.title.value);
+    divItem.setAttribute('id', id);
+
+    let servingsDiv = document.createElement('div');
+    servingsDiv.classList.add('servings');
+    divItem.insertBefore(servingsDiv, header2.nextSibling);
+    let servingsLabel = document.createElement('label');
+    servingsLabel.innerText = 'Servings: ';
+    servingsDiv.appendChild(servingsLabel);
+
+    let servingInput = document.createElement('input');
+    servingInput.type = 'text';
+    servingInput.value = recipe.servings.value.toString();
+    servingInput.setAttribute('originalValue', recipe.servings.value.toString());
+    servingInput.addEventListener('input', modifyRecipeByCallback);
+    servingInput.inputMode = 'decimal';
+    servingsDiv.appendChild(servingInput);
+
+    let resetImg = document.createElement('img');
+    resetImg.classList.add('reset');
+    resetImg.setAttribute('src', 'img/reset.png?v=001');
+    resetImg.setAttribute('related', id);
+    resetImg.addEventListener('click', resetRecipe);
+    servingsDiv.appendChild(resetImg);
+
+    let halveImg = document.createElement('img');
+    halveImg.classList.add('halve');
+    halveImg.setAttribute('src', 'img/divide_by_two.png?v=001');
+    halveImg.setAttribute('related', id);
+    halveImg.addEventListener('click', halveRecipe);
+    servingsDiv.appendChild(halveImg);
+
+    let doubleImg = document.createElement('img');
+    doubleImg.classList.add('double');
+    doubleImg.setAttribute('src', 'img/times_two.png?v=001');
+    doubleImg.setAttribute('related', id);
+    doubleImg.addEventListener('click', doubleRecipe);
+    servingsDiv.appendChild(doubleImg);
+
+    let closeButton = document.createElement('button');
+    closeButton.classList.add('close-recipe');
+    closeButton.innerText = '\u00D7';
+    closeButton.addEventListener('click', closeRecipes);
+    divItem.appendChild(closeButton);
+
+    let img = document.createElement('img');
+    img.classList.add('copy');
+    img.setAttribute('src', 'img/copy.png?v=001');
+    img.setAttribute('related', id);
+    img.addEventListener('click', copyRecipe);
+    divItem.appendChild(img);
+
+    let redditImg = document.createElement('img');
+    redditImg.classList.add('reddit');
+    redditImg.setAttribute('src', 'img/reddit_button.png?v=001');
+    redditImg.setAttribute('related', id);
+    redditImg.addEventListener('click', copyMarkdown);
+    divItem.appendChild(redditImg);
+
+    let printImg = document.createElement('img');
+    printImg.classList.add('ellis');
+    printImg.setAttribute('src', 'img/print.png?v=001');
+    printImg.setAttribute('related', id);
+    printImg.addEventListener('click', printRecipe);
+    divItem.appendChild(printImg);
+
+    if (recipe.link.value) {
+        let link = document.createElement('a');
+        link.setAttribute('href', recipe.link.value);
+        let linkImg = document.createElement('img');
+        linkImg.classList.add('link');
+        linkImg.setAttribute('src', 'img/link.png?v=001');
+        link.appendChild(linkImg);
+        divItem.appendChild(link);
+    }
+}
+const addCallbacks = () => {
+    const searchTextBox = document.getElementById('search');
+    searchTextBox?.addEventListener('input', executeSearch);
+
+    const searchClearButton = document.getElementById('search-clear');
+    searchClearButton?.addEventListener('click', clearSearch);
+}
+const removeDontShows = () => {
+    for (const item of document.getElementsByClassName('dont-show-if-no-js')) {
+        item.classList.remove('dont-show-if-no-js');
+    }
+}
+const executeSearch = (ev: Event) => {
+    const search: HTMLInputElement = (ev.target as HTMLInputElement);
+    searchBackend(search);
+}
+const clearSearch = (ev: Event) => {
+    const searchElement = document.getElementById('search');
+    const search: HTMLInputElement = (searchElement as HTMLInputElement);
+    search.value = '';
+    searchBackend(search);
+}
+const searchBackend = (search: HTMLInputElement): void => {
+    for (const element of Array.from(document.getElementsByClassName('hide'))) {
+        element.classList.remove('hide');
+    }
+    const searchValue: string = search.value;
+    if (!searchValue) {
+        return;
+    }
+    const searchTexts: string[] = searchValue.toLowerCase().split(/\s+/).filter(Boolean);
+
+    const recipesDiv = document.getElementById('recipes') as HTMLDivElement;
+    let previousGroup: HTMLHeadingElement | undefined = undefined;
+    let anyShownInGroup : boolean = false;
+    for(const child of recipesDiv.children) {
+        if(child instanceof HTMLHeadingElement) {
+            if(previousGroup && !anyShownInGroup) {
+                previousGroup.classList.add('hide');
+            }
+            const group : HTMLHeadingElement = child as HTMLHeadingElement;
+            previousGroup = group;
+            anyShownInGroup = false;
+        } else if (child instanceof HTMLDivElement && child.classList.contains('card')) {
+            const card : HTMLDivElement = child as HTMLDivElement;
+            const textContent : string = card.textContent!.toLocaleLowerCase();
+            let findCount : number = 0;
+            for(const searchText of searchTexts) {
+                if(textContent.includes(searchText.toLowerCase())) {
+                    findCount++;
                 }
             }
-            output += unglyph(header.innerText);
-            output += singleLine + singleLine;
-        } else if (child instanceof HTMLUListElement) {
-            let list: HTMLUListElement = child as HTMLUListElement;
-            for (let liCandidate of list.children) {
-                if (!(liCandidate instanceof HTMLLIElement)) {
-                    continue;
-                }
-                let li: HTMLLIElement = liCandidate as HTMLLIElement;
-                output += '- ' + unglyph(li.innerText);
-                output += singleLine;
-                if (doubleSpace) {
-                    output += singleLine;
-                }
-            }
-            if (!doubleSpace) {
-                output += singleLine;
-            }
-        } else if (child instanceof HTMLParagraphElement) {
-            let paragraph: HTMLParagraphElement = child as HTMLParagraphElement;
-            output += unglyph(paragraph.innerText);
-            output += singleLine;
-            if (doubleSpace) {
-                output += singleLine;
-            }
-        } else if (child instanceof HTMLDivElement) {
-            if(child.classList.contains('servings')) {
-                for(let input of child.getElementsByTagName('input')) {
-                    output += 'Servings: ' + input.value;
-                    output += singleLine + singleLine;
-                }
+            if(findCount == searchTexts.length) {
+                anyShownInGroup = true;
+            } else {
+                card.classList.add('hide');
             }
         }
     }
-
-    output = output.trim();
-
-    if (tag) {
-        output += singleLine;
-        output += '</div>' + singleLine;
-    }
-
-    return output;
-};
-let reformatAllCards = function (): void {
-    let contents: HTMLCollectionOf<Element> = document.getElementsByClassName('card-content');
-    let orderedCards: Map<number, HTMLDivElement> = new Map<number, HTMLDivElement>();
-    let output: string = '';
-    for (let content of contents) {
-        let htmlDivElement: HTMLDivElement = content as HTMLDivElement;
-        orderedCards.set(parseInt(content.getAttribute('originalIndex')), htmlDivElement);
-    }
-    let keys: number[] = [];
-    for (const [key, value] of orderedCards.entries()) {
-        keys.push(key);
-    }
-    let sortedKeys: number[] = keys.sort((a, b) => { return a - b; });
-    for (let key of sortedKeys) {
-        output += formatCard(orderedCards.get(key).parentElement, true, true);
-    }
-    console.log(output);
-};
-let unglyph = function (input) {
-    let output = input;
-    for (let key of glyphMap.keys()) {
-        let item = glyphMap.get(key);
-        output = output.replaceAll(key, item.plaintext);
-    }
-    return output;
-};
-let copyTimeout = undefined;
-let startGradualFade = function (element) {
-    element.style.opacity = 1;
-    clearTimeout(copyTimeout);
-    copyTimeout = setTimeout(gradualFade, 1500, element);
-};
-let gradualFade = function (element) {
-    element.style.opacity -= 0.01;
-    if (element.style.opacity > 0) {
-        copyTimeout = setTimeout(gradualFade, 10, element);
-    } else {
-        element.style.display = 'none';
-        copyTimeout = undefined;
-    }
-};
-let removeHiderDiv = function () {
-    let hideDiv = document.getElementById("hide");
-    hideDiv.remove();
-};
-let foldedHeight = undefined;
-let expandedHeight = undefined;
-let buffer = undefined;
-let scrollPos = undefined;
-let callbackClick = function (event) {
-    scrollPos = window.scrollY;
-    let body = document.getElementById('body');
-    body.classList.add('body-inactive');
-    window.scrollTo(0,0);
-    let wrapper = document.getElementById('wrapper');
-    wrapper.style.display = 'none';
-    let id = event.srcElement.getAttribute('related');
-    let div = document.getElementById(id);
-    div.classList.add('fill');
-    div.classList.add('higher');
-    div.style.display = 'block';
-};
-let capitalize = function (input: string): string {
-    let output = '';
-    let words = input.split(/\s+/).filter(Boolean);
-    for (let word of words) {
-        output += word[0].toUpperCase() + word.substr(1) + ' ';
-    }
-    return output.trim()
-};
-let sanitize = function (text: string): string {
-    text = text.replace(/\s+/g, ' ').trim();
-    for (let key of unitMap.keys()) {
-        let item = unitMap.get(key);
-        text = text.replace(item.words, key);
-    }
-    for (let key of unitMap.keys()) {
-        let item = unitMap.get(key);
-        text = text.replace(item.regex, item.replace);
-    }
-    return text;
-};
-let glyphParts = function (lineParts : HTMLSpanElement[] ) : HTMLSpanElement[] {
-    for(let linePart of lineParts) {
-        for (let key of glyphMap.keys()) {
-            let item = glyphMap.get(key);
-            linePart.innerText = linePart.innerText.replace(item.regex, item.replace);
-        }
-    }
-    return lineParts
-}
-interface RecipeJson {
-    title: string;
-    category: string;
-    categoryNumber: number;
-    linkText: string;
-    originalIndex: number;
-    div: HTMLDivElement;
-    servings: number;
-}
-let parseMarkdownRecipes = function (): void {
-    let servingsRegex = /^\s*servings[\s:]*([0-9]+)\s*/i;
-    let elements: HTMLCollectionOf<Element> = document.getElementsByClassName("recipe");
-    for (let i = elements.length - 1; i >= 0; i--) {
-        let element: Element = elements[i];
-        let text: string = element.textContent;
-        element.remove();
-        let category: string = capitalize(element.getAttribute('category'));
-        let categoryNumber: number = determineCategoryNumberFromCategoryName(category);
-        let linkText: string = undefined;
-        if (element.hasAttribute('link')) {
-            linkText = element.getAttribute('link');
-        }
-        let lines: string[] = text.split(/[\r\n]+/).map(line => line.trim()).filter(line => line.length > 0);
-        let recipeJson: RecipeJson = { 'title': '', 'category': category, 'categoryNumber': categoryNumber, 'linkText': linkText, 'originalIndex': i, 'div': undefined, 'servings': 2 };
-        let divItem: HTMLDivElement = document.createElement('div');
-        for (let lineIndex: number = 0; lineIndex < lines.length; lineIndex++) {
-            let line: string = lines[lineIndex];
-            if (line.match(servingsRegex)) {
-                recipeJson.servings = parseFloat(line.match(servingsRegex)[1]);
-            } else if (line.startsWith('# ') && !recipeJson.title) {
-                line = capitalize(line.substr(2));
-                recipeJson.title = line;
-            } else if (line.startsWith('## ')) {
-                line = capitalize(line.substr(3));
-                let element: HTMLHeadingElement = document.createElement('h4');
-                element.innerText = line;
-                divItem.appendChild(element);
-            } else if (line.startsWith('### ')) {
-                line = capitalize(line.substr(4));
-                let element: HTMLHeadingElement = document.createElement('h5');
-                element.innerText = line;
-                divItem.appendChild(element);
-            } else if (line.startsWith('#### ')) {
-                line = capitalize(line.substr(4));
-                let element: HTMLHeadingElement = document.createElement('h6');
-                element.innerText = line;
-                divItem.appendChild(element);
-            } else if (findIfBulletAndHowWide(line) > 0) {
-                let list: HTMLUListElement = document.createElement('ul');
-
-                lineIndex = lineIndex - 1;
-                while (lineIndex + 1 < lines.length && findIfBulletAndHowWide(lines[lineIndex + 1]) > 0) {
-                    lineIndex++;
-                    line = lines[lineIndex];
-                    let width = findIfBulletAndHowWide(line);
-                    line = sanitize(line.substr(width));
-                    let lineParts : HTMLSpanElement[] = splitIntoNumberAndPart(line);
-                    lineParts = glyphParts(lineParts);
-
-                    let element = document.createElement('li');
-                    for(let part of lineParts) {
-                        element.appendChild(part);
-                    }
-                    list.appendChild(element);
-                }
-                divItem.appendChild(list);
-            } else { // you shouldnt ever gethere but i suppose it wouldbe a paragraph element?
-                line = sanitize(line.trim());
-                let element: HTMLParagraphElement = document.createElement('p');
-                element.innerText = line;
-                divItem.appendChild(element);
-            }
-        }
-        recipeJson.div = divItem;
-        if (!recipes.has(categoryNumber)) {
-            recipes.set(categoryNumber, new Map<string, any>());
-        }
-        recipes.get(categoryNumber).set(recipeJson.title, recipeJson);
-    }
-};
-let splitIntoNumberAndPart = function (line : string) : HTMLSpanElement[] {
-    let numberAndWords = /^([0-9\/\.]*)(.*)$/
-    let result = numberAndWords.exec(line);
-    if(result[1].length > 0) {
-        let numberPart = document.createElement('span');
-        numberPart.innerText = result[1];
-        numberPart.setAttribute('originalValue', eval(result[1]).toString());
-        numberPart.classList.add('quantity');
-        let wordPart = document.createElement('span');
-        wordPart.innerText = result[2];
-        return [numberPart, wordPart];
-    } else {
-        let wordPart = document.createElement('span');
-        wordPart.innerText = result[2];
-        return [wordPart];
+    if(previousGroup && !anyShownInGroup) {
+        previousGroup.classList.add('hide');
     }
 }
-let findIfBulletAndHowWide = function (line: string): number {
-    let numberedLine: RegExp = /^([0-9]+\.\s+).*$/;
-    let starredLine: RegExp = /^(\*\s+).*$/;
-    let dashLine: RegExp = /^(\-\s+).*$/;
-    if (dashLine.test(line)) {
-        let match = line.match(dashLine);
-        return match[1].length;
-    } else if (starredLine.test(line)) {
-        let match = line.match(starredLine);
-        return match[1].length;
-    } else if (numberedLine.test(line)) {
-        let match = line.match(numberedLine);
-        return match[1].length;
+const modifyRecipe = (card: HTMLDivElement, multiplier: number) => {
+    for (const quantity of card.getElementsByClassName('quantity')) {
+        const newValue: number = parseFloat(quantity.getAttribute('originalvalue')!) * multiplier;
+        (quantity as HTMLSpanElement).innerText = toFractionIfApplicable(newValue);
     }
-
-    return -1;
 }
-let closeRecipes = function (): void {
-    let fills: HTMLCollectionOf<Element> = document.getElementsByClassName('fill');
-    for (let fill of fills) {
-        if (!(fill instanceof HTMLElement)) {
-            continue;
-        }
-        let fillHtmlElement: HTMLElement = fill as HTMLElement;
-        fillHtmlElement.classList.remove('fill');
-        fillHtmlElement.style.display = 'none';
-    }
-    let body = document.getElementById('body');
-    body.classList.remove('body-inactive');
-    let wrapper = document.getElementById('wrapper');
-    wrapper.style.display = 'block';
-    window.scrollTo(0, scrollPos);
-    scrollPos = undefined;
-}
-let buildRecipeCards = function (): void {
-    let body: Element = document.getElementById('body');
-    let content: Element = document.getElementById('recipes');
-    let categories: number[] = Array.from(recipes.keys());
-    categories.sort();
-    let j: number = 0;
-    for (let categoryNumber of categories) {
-        let category = categoryMap.get(categoryNumber);
-        let categoryHeader = document.createElement('h2');
-        categoryHeader.innerText = category;
-        content.appendChild(categoryHeader);
-        let recipeNames = Array.from(recipes.get(categoryNumber).keys());
-        recipeNames.sort();
-        for (let key of recipeNames) {
 
-            j = j + 1;
-
-            let id = 'id' + j;
-            let recipeJson = recipes.get(categoryNumber).get(key);
-
-            let card = createCard(recipeJson.title);
-
-            content.appendChild(card);
-            card.firstElementChild.setAttribute('related', id);
-            card.id = 'card' + j;
-
-            let divItem = recipeJson.div;
-            divItem.classList.add('card-content');
-            divItem.setAttribute('originalIndex', recipeJson.originalIndex);
-            let parentDiv = document.createElement('div');
-            parentDiv.classList.add('card');
-            parentDiv.setAttribute('category', category);
-            parentDiv.appendChild(divItem);
-            parentDiv.setAttribute('id', id);
-            let header2 = document.createElement('h3');
-            header2.textContent = recipeJson.title;
-            divItem.insertBefore(header2, divItem.firstChild);
-
-            let servingsDiv = document.createElement('div');
-            servingsDiv.classList.add('servings');
-            divItem.insertBefore(servingsDiv, header2.nextSibling);
-            let servingsLabel = document.createElement('label');
-            servingsLabel.innerText = 'Servings: ';
-            servingsDiv.appendChild(servingsLabel); 
-
-            let servingInput = document.createElement('input');
-            servingInput.type = 'text';
-            servingInput.value = recipeJson.servings.toString();
-            servingInput.setAttribute('originalValue', recipeJson.servings.toString());
-            servingInput.addEventListener('input', modifyRecipeByCallback);
-            servingInput.inputMode = 'decimal';
-            servingsDiv.appendChild(servingInput);
-
-            let resetImg = document.createElement('img');
-            resetImg.classList.add('reset');
-            resetImg.setAttribute('src', 'img/reset.png?v=001');
-            resetImg.setAttribute('related', id);
-            resetImg.addEventListener('click', resetRecipe);
-            servingsDiv.appendChild(resetImg);
-
-            let halveImg = document.createElement('img');
-            halveImg.classList.add('halve');
-            halveImg.setAttribute('src', 'img/divide_by_two.png?v=001');
-            halveImg.setAttribute('related', id);
-            halveImg.addEventListener('click', halveRecipe);
-            servingsDiv.appendChild(halveImg);
-
-            let doubleImg = document.createElement('img');
-            doubleImg.classList.add('double');
-            doubleImg.setAttribute('src', 'img/times_two.png?v=001');
-            doubleImg.setAttribute('related', id);
-            doubleImg.addEventListener('click', doubleRecipe);
-            servingsDiv.appendChild(doubleImg);
-
-            let closeButton = document.createElement('button');
-            closeButton.classList.add('close-recipe');
-            closeButton.innerText = '\u00D7';
-            closeButton.addEventListener('click', closeRecipes);
-            divItem.appendChild(closeButton);
-
-            let img = document.createElement('img');
-            img.classList.add('copy');
-            img.setAttribute('src', 'img/copy.png?v=001');
-            img.setAttribute('related', id);
-            img.onclick = copyRecipe;
-            divItem.appendChild(img);
-
-            let redditImg = document.createElement('img');
-            redditImg.classList.add('reddit');
-            redditImg.setAttribute('src', 'img/reddit_button.png?v=001');
-            redditImg.setAttribute('related', id);
-            redditImg.onclick = copyMarkdown;
-            divItem.appendChild(redditImg);
-
-            let printImg = document.createElement('img');
-            printImg.classList.add('ellis');
-            printImg.setAttribute('src', 'img/print.png?v=001');
-            printImg.setAttribute('related', id);
-            printImg.onclick = printRecipe;
-            divItem.appendChild(printImg);
-
-            if (undefined != recipeJson.linkText) {
-                let link = document.createElement('a');
-                link.setAttribute('href', recipeJson.linkText);
-                let linkImg = document.createElement('img');
-                linkImg.classList.add('link');
-                linkImg.setAttribute('src', 'img/link.png?v=001');
-                link.appendChild(linkImg);
-                divItem.appendChild(link);
-            }
-
-            parentDiv.style.display = 'none';
-            body.appendChild(parentDiv);
-        }
-    }
-    removeHiderDiv();
-};
-let doubleRecipe = function(this: HTMLElement, ev: Event) {
-    let servingsDiv = this.parentElement;
-    let input = servingsDiv.getElementsByTagName('input')[0];
-    let newValue = parseFloat(input.value) * 2.0;
-    if(!newValue) {
-        input.value = input.getAttribute('originalValue');
-    } else {
-        input.value = (newValue).toString();
-    }
-    let card = servingsDiv.parentElement;
-    modifyRecipeBy(card, input);
-};
-let halveRecipe = function(this: HTMLElement, ev: Event) {
-    let servingsDiv = this.parentElement;
-    let input = servingsDiv.getElementsByTagName('input')[0];
-    let newValue = parseFloat(input.value) / 2.0;
-    if(!newValue) {
-        input.value = input.getAttribute('originalValue');
-    } else {
-        input.value = (newValue).toString();
-    }
-    let card = servingsDiv.parentElement;
-    modifyRecipeBy(card, input);
-}
-let resetRecipe = function(this: HTMLElement, ev: Event) {
-    let servingsDiv = this.parentElement;
-    let input = servingsDiv.getElementsByTagName('input')[0];
-    input.value = input.getAttribute('originalValue');
-    let card = servingsDiv.parentElement;
-    modifyRecipeBy(card, input);
-}
-let modifyRecipeByCallback = function(this: HTMLInputElement, ev: Event){
-    modifyRecipeBy(this.parentElement.parentElement, this);
-}
-let modifyRecipeBy = function(card:HTMLElement, input:HTMLInputElement) {
-    let servings = parseFloat(input.value);
-    let originalServings = parseFloat(input.getAttribute('originalValue'));
-    let multiplier = servings / originalServings;
-    if(!multiplier) {
-        multiplier = 1;
-    }
-
-    let quantities = card.getElementsByClassName('quantity');
-    for(let quantity of quantities) {
-        let originalValue = parseFloat(quantity.getAttribute('originalValue'));
-        let newValue = originalValue * multiplier;
-        (quantity as HTMLElement).innerText = toFractionIfApplicable(newValue);
-    }
-    // search for servings bar
-};
-let toFractionIfApplicable = function (value : number) : string {
+const toFractionIfApplicable = (value: number): string => {
     if ((1 / 10) - 0.001 < value && value < (1 / 10) + 0.001) { return '\u2152'; }
     if ((1 / 9) - 0.001 < value && value < (1 / 9) + 0.001) { return '\u2151'; }
     if ((1 / 8) - 0.001 < value && value < (1 / 8) + 0.001) { return '\u215B'; }
@@ -604,131 +374,183 @@ let toFractionIfApplicable = function (value : number) : string {
     if ((7 / 8) - 0.001 < value && value < (7 / 8) + 0.001) { return '\u215E'; }
     return value.toString();
 }
-let createCard = function(title : string) : HTMLElement {
-    let card = document.createElement('div');
-    card.classList.add('outer');
-    card.classList.add('card');
 
-    let header = document.createElement('h3');
-    header.textContent = title;
-    header.onclick = callbackClick;
-    header.style.cursor = 'pointer';
-    card.appendChild(header);
-
-    let pinImg = document.createElement('img');
-    pinImg.classList.add('pin');
-    pinImg.setAttribute('src', 'img/pin.png?v=001');
-    pinImg.addEventListener('click', pinRecipe);
-    card.appendChild(pinImg);
-
-    return card;
-}
-let appendRemoveIcon = function (card : HTMLElement) {
-    let oldPins = card.getElementsByClassName('pin');
-    for(let oldPin of oldPins) {
-        oldPin.remove();
+const modifyRecipeByCallback = (ev: Event) => {
+    const input: HTMLInputElement = (ev.target as HTMLInputElement);
+    const card: HTMLDivElement = input.parentElement?.parentElement?.parentElement as HTMLDivElement;
+    let numerator = parseFloat(input.value);
+    const denominator: number = parseFloat(card.getAttribute('servings')!);
+    if (isNaN(numerator)) {
+        numerator = denominator;
     }
-    let pinImg = document.createElement('img');
-    pinImg.classList.add('pin');
-    pinImg.setAttribute('src', 'img/pin_blu.png?v=001');
-    pinImg.addEventListener('click', removePin);
-    card.appendChild(pinImg);
+    modifyRecipe(card, numerator / denominator);
+}
+const resetRecipe = (ev: Event) => {
+    const card: HTMLDivElement = (ev.target as HTMLElement).parentElement?.parentElement?.parentElement as HTMLDivElement;
+    const input: HTMLInputElement = card.getElementsByTagName('input')[0];
+    const denominator: number = parseFloat(card.getAttribute('servings')!);
+    const numerator: number = denominator;
+    modifyRecipe(card, numerator / denominator);
+    input.value = numerator.toString();
+}
+const halveRecipe = (ev: Event) => {
+    const card: HTMLDivElement = (ev.target as HTMLElement).parentElement?.parentElement?.parentElement as HTMLDivElement;
+    const input: HTMLInputElement = card.getElementsByTagName('input')[0];
+    let numerator: number = parseFloat(input.value);
+    const denominator: number = parseFloat(card.getAttribute('servings')!);
+    if (isNaN(numerator)) {
+        numerator = denominator;
+    }
+    numerator = numerator / 2;
+    modifyRecipe(card, numerator / denominator);
+    input.value = numerator.toString();
+}
+let scrollPos = 0;
+const doubleRecipe = (ev: Event) => {
+    const card: HTMLDivElement = (ev.target as HTMLElement).parentElement?.parentElement?.parentElement as HTMLDivElement;
+    const input: HTMLInputElement = card.getElementsByTagName('input')[0];
+    let numerator: number = parseFloat(input.value);
+    const denominator: number = parseFloat(card.getAttribute('servings')!);
+    if (isNaN(numerator)) {
+        numerator = denominator;
+    }
+    numerator = numerator * 2;
+    modifyRecipe(card, numerator / denominator);
+    input.value = numerator.toString();
+}
+const showRecipe = (ev: Event) => {
+    scrollPos = window.scrollY;
+    const wrapper: HTMLDivElement = document.getElementById('wrapper') as HTMLDivElement;
+    wrapper.style.display = 'none';
+    const card: HTMLDivElement = (ev.target as HTMLHeadingElement).parentElement! as HTMLDivElement;
+    for (const pin of card.getElementsByClassName('pin')) {
+        (pin as HTMLElement).style.display = 'none';
+    }
+    const contentDiv: HTMLDivElement = card.getElementsByTagName('div')[0];
+    contentDiv.style.display = 'block';
+    card.classList.add('fullscreen');
+    const placeholder = document.createElement('div');
+    placeholder.setAttribute('id', 'placeholder');
+    card.parentElement?.insertBefore(placeholder, card);
+    document.body.appendChild(card);
+    window.scrollTo(0, 0);
+}
+const closeRecipes = (ev: Event) => {
+    const wrapper: HTMLDivElement = document.getElementById('wrapper') as HTMLDivElement;
+    wrapper.style.display = '';
+    const contentDiv: HTMLDivElement = (ev.target as HTMLHeadingElement).parentElement as HTMLDivElement;
+    const card: HTMLDivElement = contentDiv.parentElement as HTMLDivElement;
+    for (const pin of card.getElementsByClassName('pin')) {
+        (pin as HTMLElement).style.display = '';
+    }
+    contentDiv.style.display = 'none';
+    card.classList.remove('fullscreen');
+    const placeholder: HTMLDivElement = document.getElementById('placeholder') as HTMLDivElement;
+    placeholder.parentElement?.insertBefore(card, placeholder);
+    placeholder.remove();
+    window.scrollTo(0, scrollPos);
+}
+const copyRecipe = (ev: Event) => {
+    const card: HTMLDivElement = (ev.target as HTMLElement).parentElement?.parentElement as HTMLDivElement;
+    const text = convertRecipeToMarkdown(card, false);
+    navigator.clipboard.writeText(text);
+    const info: HTMLElement = document.getElementById('info') as HTMLElement;
+    info.style.display = 'inline-block';
+    info.innerText = 'Copied ' + card.getElementsByTagName('h3')[0].textContent + ' to clipboard';
+    startGradualFade(info);
+}
+const copyMarkdown = (ev: Event) => {
+    const card: HTMLDivElement = (ev.target as HTMLElement).parentElement?.parentElement as HTMLDivElement;
+    const text = convertRecipeToMarkdown(card, true);
+    navigator.clipboard.writeText(text);
+    const info: HTMLElement = document.getElementById('info') as HTMLElement;
+    info.style.display = 'inline-block';
+    info.innerText = 'Copied ' + card.getElementsByTagName('h3')[0].textContent + ' to clipboard';
+    startGradualFade(info);
+}
+let copyTimeout: number | undefined = undefined;
+const startGradualFade = function (element: HTMLElement) {
+    element.style.opacity = '1';
+    clearTimeout(copyTimeout);
+    copyTimeout = setTimeout(gradualFade, 1500, element);
 };
-let removePin = function(this : HTMLElement , ev : Event) {
-    let card = this.parentElement;
-    let nodeId = card.getAttribute('true-node-id');
-    document.getElementById(nodeId).classList.remove('hidden-for-pin');
-    card.remove();
-    let pinnedHeader : HTMLElement = document.getElementById('pinned-header');
-    if('h2' == pinnedHeader.nextElementSibling.tagName.toLowerCase()) {
-        pinnedHeader.remove();
+const gradualFade = function (element: HTMLElement) {
+    const newVal = parseFloat(element.style.opacity) - 0.01;
+    if (newVal > 0) {
+        element.style.opacity = newVal.toString();
+        copyTimeout = setTimeout(gradualFade, 10, element);
+    } else {
+        element.style.display = 'none';
+        copyTimeout = undefined;
     }
+};
+const convertRecipeToMarkdown = (card: HTMLDivElement, markdown: boolean): string => {
+
+    let output = '';
+
+    const titleItem: HTMLHeadingElement = card.getElementsByTagName('h3')[0];
+
+    output += (markdown ? '# ' : '') + titleItem.textContent + '\n' + '\n';
+
+    const contentDiv: HTMLDivElement = card.getElementsByTagName('div')[0];
+
+    for (const child of contentDiv.children) {
+        if (child instanceof HTMLHeadingElement) {
+            if ('h4' === child.tagName.toLowerCase()) {
+                output += (markdown ? '## ' : '');
+            } else if ('h5' === child.tagName.toLowerCase()) {
+                output += (markdown ? '### ' : '');
+            } else if ('h4' === child.tagName.toLowerCase()) {
+                output += (markdown ? '#### ' : '');
+            }
+            output += child.textContent + '\n' + '\n';
+        } else if (child instanceof HTMLUListElement) {
+            const ul: HTMLUListElement = child as HTMLUListElement;
+            for (const listChild of ul.children) {
+                if (listChild instanceof HTMLLIElement) {
+                    output += '- ' + listChild.textContent!.replace(/[\s\r\n]+/g, ' ').trim() + '\n';
+                }
+            }
+            output += '\n';
+        } else if (child instanceof HTMLParagraphElement) {
+            output += child.textContent + '\n' + '\n';
+        }
+    }
+
+    return output.trim();
 }
-let pinRecipe = function(this: HTMLElement, ev: Event) {
-    let recipesDiv : HTMLElement = document.getElementById('recipes');
-    if (!recipesDiv) {
-        return;
-    }
-    let card : HTMLElement = this.parentElement;
-    let pinnedHeader : HTMLElement = document.getElementById('pinned-header');
-    if(!pinnedHeader) {
-        pinnedHeader = document.createElement('h2');
+const printRecipe = (ev: Event) => {
+    window.print();
+}
+const pinRecipe = (ev: Event) => {
+    const card: HTMLDivElement = (ev.target as HTMLElement).parentElement as HTMLDivElement;
+    const placeholder = document.createElement('div');
+    placeholder.setAttribute('id', 'p' + card.id);
+    card.parentElement?.insertBefore(placeholder, card);
+    let pinnedHeader: HTMLElement | null = document.getElementById('pinned-header');
+    if (!pinnedHeader) {
+        pinnedHeader = document.createElement("h2");
         pinnedHeader.innerText = 'Pinned';
         pinnedHeader.id = 'pinned-header';
-        recipesDiv.insertBefore(pinnedHeader, recipesDiv.firstChild);
+        card.parentElement?.insertBefore(pinnedHeader, card.parentElement.firstElementChild);
     }
-    pinnedHeader.classList.remove('not-visible');
-    card.classList.add('hidden-for-pin');
-    // create new card thing
-    let trueHeader = card.firstElementChild;
-    let clonedNode = createCard(trueHeader.textContent);
-    recipesDiv.insertBefore(clonedNode, pinnedHeader.nextElementSibling);
-    clonedNode.setAttribute('true-node-id', card.id);
-    clonedNode.firstElementChild.setAttribute('related', trueHeader.getAttribute('related'));
-    appendRemoveIcon(clonedNode);
-};
-let printRecipe = function () {
-    window.print();
-};
-let clearBarCallback = function (this: HTMLElement, ev: Event) {
-    let searchBar: HTMLElement = document.getElementById('search');
-    if (searchBar instanceof HTMLInputElement) {
-        searchBar.value = '';
-        search(undefined);
-    }
-};
-let searchBarCallback = function (this: HTMLElement, ev: Event) {
-    console.log(this);
-    console.log(ev);
-    if (this instanceof HTMLInputElement) {
-        let inputElement = this as HTMLInputElement;
-        search(inputElement.value);
-    } else {
-        search(undefined);
-    }
-};
-let search = function (term: string) {
-    let recipeDiv: HTMLElement = document.getElementById("recipes");
-    // let childrenToShow: Element[] = [...recipeDiv.children];
-    for (let child of recipeDiv.children) {
-        child.classList.remove('not-visible');
-    }
-    let previousHeader: HTMLHeadingElement = undefined;
-    let previousCount: number = 0;
-    if(!term) {
-        return;
-    }
-    for (let child of recipeDiv.children) {
-        if (child instanceof HTMLHeadingElement) {
-            togglePreviousHeader(previousHeader, previousCount);
-            previousHeader = child as HTMLHeadingElement;
-            previousCount = 0;
-        }
-        if (child instanceof HTMLDivElement) {
-            if (!!term && !child.innerText.toLowerCase().includes(term.toLowerCase())) {
-                child.classList.add('not-visible');
-            } else {
-                previousCount++;
-            }
-        }
-    }
-    togglePreviousHeader(previousHeader, previousCount);
-};
-let togglePreviousHeader = function (previousHeader: HTMLElement, previousCount: number) {
-    if (!previousHeader) {
-        return;
-    }
-    if (previousCount == 0) {
-        previousHeader.classList.add('not-visible');
-    }
-};
-parseMarkdownRecipes();
-buildRecipeCards();
-let searchBar: HTMLElement = document.getElementById('search');
-if (!!searchBar) {
-    searchBar.addEventListener('input', searchBarCallback);
+    card.parentElement?.insertBefore(card, pinnedHeader.nextElementSibling);
+    (ev.target as HTMLElement).remove();
+    addUnPin(card);
 }
-let searchClear: HTMLElement = document.getElementById('search-clear');
-if (!!searchClear) {
-    searchClear.addEventListener('click', clearBarCallback);
+const unpinRecipe = (ev: Event) => {
+    const card: HTMLDivElement = (ev.target as HTMLElement).parentElement as HTMLDivElement;
+    const placeholder: HTMLElement = document.getElementById('p' + card.id)!;
+    card.parentElement?.insertBefore(card, placeholder);
+    placeholder.remove();
+    let pinnedHeader: HTMLElement = document.getElementById('pinned-header')!;
+    if (pinnedHeader.tagName === pinnedHeader.nextElementSibling?.tagName) {
+        pinnedHeader.remove();
+    }
+    (ev.target as HTMLElement).remove();
+    addPin(card);
 }
+parseRecipes();
+buildSections();
+addCallbacks();
+removeDontShows();
