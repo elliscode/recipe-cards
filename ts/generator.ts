@@ -6,7 +6,7 @@ interface GlyphUnit {
 
 let glyphMap = new Map<string, GlyphUnit>();
 
-glyphMap.set('\u00B0', { regex: /([0-9]+)\s*f\b/gi, replace: '$1\u00B0F', plaintext: '' });
+glyphMap.set('\u00B0', { regex: /([0-9]+)\s*f\b/gi, replace: '$1\u00B0F', plaintext: '$1F' });
 glyphMap.set('\u2189', { regex: /\b0\/3\b/gi, replace: '\u2189', plaintext: '0/3' });
 glyphMap.set('\u2152', { regex: /\b1\/10\b/gi, replace: '\u2152', plaintext: '1/10' });
 glyphMap.set('\u2151', { regex: /\b1\/9\b/gi, replace: '\u2151', plaintext: '1/9' });
@@ -329,8 +329,9 @@ const generateCallback = (ev : Event) => {
     const generated : HTMLDivElement = buildRecipeCard(recipe);
     console.log(generated);
 
-    var s = new XMLSerializer();
-    var str = s.serializeToString(generated);
+    let s = new XMLSerializer();
+    let str = s.serializeToString(generated);
+    str = str.replace(/(<(div|h3|h4|h5|h6|ul|li|p|a))/g,"\n$1");
 
     navigator.clipboard.writeText(str);
     let info: HTMLElement = document.getElementById('info');
