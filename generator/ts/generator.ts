@@ -240,8 +240,14 @@ let parseMarkdownRecipe = function (text: string): RecipeJson {
     for (let lineIndex: number = 0; lineIndex < lines.length; lineIndex++) {
         let line: string = lines[lineIndex];
         const servingsPrefix = 'Servings: ';
-        if (line.startsWith(servingsPrefix)) {
+        const linkPrefix = 'Link: ';
+        const categoryPrefix = 'Category: ';
+        if (line.toLowerCase().startsWith(servingsPrefix.toLowerCase())) {
             recipeJson.servings = parseFloat(line.substring(servingsPrefix.length));
+        } else if (line.toLowerCase().startsWith(linkPrefix.toLowerCase())) {
+            recipeJson.linkText = line.substring(servingsPrefix.length);
+        } else if (line.toLowerCase().startsWith(categoryPrefix.toLowerCase())) {
+            recipeJson.category = line.substring(servingsPrefix.length);
         } else if (line.startsWith('# ')) {
             line = capitalize(line.substr(2));
             recipeJson.title = line;
