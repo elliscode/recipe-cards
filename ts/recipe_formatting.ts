@@ -306,30 +306,44 @@ const clearSearch = (ev: Event) => {
     searchBackend(search);
 }
 const searchBackend = (search: HTMLInputElement): void => {
-    for (const card of document.getElementsByClassName('card')) {
-        card.classList.remove('hide');
+    for (const element of document.getElementsByClassName('hide')) {
+        element.classList.remove('hide');
     }
     const searchValue: string = search.value;
     if (!searchValue) {
         return;
     }
     const searchTexts: string[] = searchValue.toLowerCase().split(/\s+/).filter(Boolean);
-    const categoryKeys: string[] = Array.from(recipesMap.keys());
-    for (const categoryKey of categoryKeys) {
-        const categoryMap: Map<string, RecipeCard> = recipesMap.get(categoryKey)!;
-        const recipeKeys: string[] = Array.from(categoryMap.keys());
-        for (const recipeKey of recipeKeys) {
-            let matches: number = 0;
-            const recipe = categoryMap.get(recipeKey)!;
-            for (const searchText of searchTexts) {
-                if (recipe.title.value.toLowerCase().includes(searchText)) {
-                    matches++;
+
+    const recipesDiv = document.getElementById('recipes') as HTMLDivElement;
+    let previousGroup: HTMLHeadingElement | undefined = undefined;
+    let anyShownInGroup : boolean = false;
+    for(const child of recipesDiv.children) {
+        if(child instanceof HTMLHeadingElement) {
+            if(previousGroup && !anyShownInGroup) {
+                previousGroup.classList.add('hide');
+            }
+            const group : HTMLHeadingElement = child as HTMLHeadingElement;
+            previousGroup = group;
+            anyShownInGroup = false;
+        } else if (child instanceof HTMLDivElement && child.classList.contains('card')) {
+            const card : HTMLDivElement = child as HTMLDivElement;
+            const textContent : string = card.textContent!.toLocaleLowerCase();
+            let findCount : number = 0;
+            for(const searchText of searchTexts) {
+                if(textContent.includes(searchText.toLowerCase())) {
+                    findCount++;
                 }
             }
-            if (matches != searchTexts.length) {
-                recipe.card.classList.add('hide');
+            if(findCount == searchTexts.length) {
+                anyShownInGroup = true;
+            } else {
+                card.classList.add('hide');
             }
         }
+    }
+    if(previousGroup && !anyShownInGroup) {
+        previousGroup.classList.add('hide');
     }
 }
 const modifyRecipe = (card: HTMLDivElement, multiplier: number) => {
