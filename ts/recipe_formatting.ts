@@ -306,7 +306,7 @@ const clearSearch = (ev: Event) => {
     searchBackend(search);
 }
 const searchBackend = (search: HTMLInputElement): void => {
-    for (const element of document.getElementsByClassName('hide')) {
+    for (const element of Array.from(document.getElementsByClassName('hide'))) {
         element.classList.remove('hide');
     }
     const searchValue: string = search.value;
