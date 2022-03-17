@@ -27,7 +27,7 @@ glyphMap.set('\u215D', { regex: /\b5\/8\b/gi, replace: '\u215D', plaintext: '5/8
 glyphMap.set('\u215A', { regex: /\b5\/6\b/gi, replace: '\u215A', plaintext: '5/6' });
 glyphMap.set('\u215E', { regex: /\b7\/8\b/gi, replace: '\u215E', plaintext: '7/8' });
 glyphMap.set('\u2013', { regex: /[-]+/gi, replace: '\u2013', plaintext: '-' });
-glyphMap.set('\u00d7', { regex: /([0-9])\s*x\s*([0-9])/gi, replace: '$1\u00d7$2', plaintext: 'x' });
+glyphMap.set('\u00d7', { regex: /([0-9])\s*x\s*([0-9])/gi, replace: '$1\u00d7$2', plaintext: '$1x$2' });
 
 interface RegexUnit {
     replace: string;
@@ -58,7 +58,7 @@ let recipeKeys: string[] = [];
 let determineCategoryNumberFromCategoryName = function (category: string): number {
     let maxNumber: number = 0;
     for (let number of categoryMap.keys()) {
-        if (categoryMap.get(number).includes(category)) {
+        if (categoryMap.get(number).toLowerCase().includes(category.toLowerCase())) {
             return number;
         }
         maxNumber = Math.max(number, maxNumber);
@@ -217,11 +217,15 @@ let sanitize = function (text: string): string {
     }
     return text;
 };
-let glyphParts = function (lineParts: HTMLSpanElement[]): HTMLSpanElement[] {
+let glyphParts = function (lineParts: Slottable[]): Slottable[] {
     for (let linePart of lineParts) {
         for (let key of glyphMap.keys()) {
             let item = glyphMap.get(key);
-            linePart.innerText = linePart.innerText.replace(item.regex, item.plaintext);
+            if (linePart instanceof Text) {
+                (linePart as Text).data = (linePart as Text).data.replace(item.regex, item.plaintext);
+            } else if (linePart instanceof HTMLSpanElement) {
+                (linePart as HTMLSpanElement).innerText = (linePart as HTMLSpanElement).innerText.replace(item.regex, item.plaintext);
+            }
         }
     }
     return lineParts
@@ -231,7 +235,7 @@ interface RecipeJson {
     category: string;
     linkText: string;
     servings: number;
-    div:HTMLDivElement;
+    div: HTMLDivElement;
 }
 let parseMarkdownRecipe = function (text: string): RecipeJson {
     let recipeJson: RecipeJson = { 'title': 'Untitled', 'category': 'Uncategorized', 'linkText': 'https://google.com', 'servings': 1, 'div': document.createElement('div') };
@@ -245,9 +249,9 @@ let parseMarkdownRecipe = function (text: string): RecipeJson {
         if (line.toLowerCase().startsWith(servingsPrefix.toLowerCase())) {
             recipeJson.servings = parseFloat(line.substring(servingsPrefix.length));
         } else if (line.toLowerCase().startsWith(linkPrefix.toLowerCase())) {
-            recipeJson.linkText = line.substring(servingsPrefix.length);
+            recipeJson.linkText = line.substring(linkPrefix.length);
         } else if (line.toLowerCase().startsWith(categoryPrefix.toLowerCase())) {
-            recipeJson.category = line.substring(servingsPrefix.length);
+            recipeJson.category = line.substring(categoryPrefix.length);
         } else if (line.startsWith('# ')) {
             line = capitalize(line.substr(2));
             recipeJson.title = line;
@@ -275,15 +279,16 @@ let parseMarkdownRecipe = function (text: string): RecipeJson {
                 line = lines[lineIndex];
                 let width = findIfBulletAndHowWide(line);
                 line = sanitize(line.substr(width));
-                let lineParts: HTMLSpanElement[] = splitIntoNumberAndPart(line);
+                let lineParts: Slottable[] = surroundIngredientNumbersWithSpan(line);
                 lineParts = glyphParts(lineParts);
 
                 let element = document.createElement('li');
-                if (lineParts.length > 1) {
-                    element.appendChild(lineParts[0]);
-                    element.appendChild(document.createTextNode(lineParts[1].innerText));
-                } else {
-                    element.appendChild(document.createTextNode(lineParts[0].innerText));
+                for (const part of lineParts) {
+                    if (part instanceof Text) {
+                        element.appendChild(part as Text);
+                    } else if (part instanceof HTMLSpanElement) {
+                        element.appendChild(part as HTMLSpanElement);
+                    }
                 }
                 list.appendChild(element);
             }
@@ -297,20 +302,43 @@ let parseMarkdownRecipe = function (text: string): RecipeJson {
     }
     return recipeJson;
 };
-let splitIntoNumberAndPart = function (line: string): HTMLSpanElement[] {
-    let numberAndWords = /^([0-9\/\.]*)(.*)$/
-    let result = numberAndWords.exec(line);
-    if (result[1].length > 0) {
-        let numberPart = document.createElement('span');
-        numberPart.innerText = result[1];
-        let wordPart = document.createElement('span');
-        wordPart.innerText = result[2];
-        return [numberPart, wordPart];
-    } else {
-        let wordPart = document.createElement('span');
-        wordPart.innerText = result[2];
-        return [wordPart];
+const regexIndexOf = (string : string, regex : RegExp, startpos : number) => {
+    var indexOf = string.substring(startpos || 0).search(regex);
+    return (indexOf >= 0) ? (indexOf + (startpos || 0)) : indexOf;
+}
+const surroundIngredientNumbersWithSpan = (line: string): Slottable[] => {
+    const unitRegexp: RegExp = /^([0-9\./]+)\s*(TBSP|tsp|g|ml|oz)/;
+    const firstCharacterRegexp: RegExp = /^([0-9\./]+)/;
+    const output: Slottable[] = [];
+
+    let currentIndex: number = 0;
+    let previousIndex: number = 0;
+    let regexp : RegExp = firstCharacterRegexp;
+    while (currentIndex < line.length && currentIndex > -1) {
+        currentIndex = regexIndexOf(line, /\d/, currentIndex);
+        if (currentIndex > -1) {
+            const result: RegExpExecArray | null = regexp.exec(line.substring(currentIndex));
+            if (result) {
+                output.push(document.createTextNode(line.substring(previousIndex, currentIndex)));
+                const span = document.createElement('span');
+                span.innerText = result[1];
+                output.push(span);
+                if(result[2]) {
+                    output.push(document.createTextNode(' ' + result[2]));
+                }
+                currentIndex = currentIndex + result[0].length;
+                previousIndex = currentIndex;
+            } else {
+                currentIndex++;
+            }
+        } else {
+            currentIndex = line.length;
+        }
+        regexp = unitRegexp;
     }
+    output.push(document.createTextNode(line.substring(previousIndex, currentIndex)));
+
+    return output;
 }
 let findIfBulletAndHowWide = function (line: string): number {
     let numberedLine: RegExp = /^([0-9]+\.\s+).*$/;
@@ -329,15 +357,15 @@ let findIfBulletAndHowWide = function (line: string): number {
 
     return -1;
 }
-const generateCallback = (ev : Event) => {
-    const textElement : HTMLTextAreaElement = document.getElementById('text') as HTMLTextAreaElement;
-    const recipe : RecipeJson = parseMarkdownRecipe(textElement.value);
-    const generated : HTMLDivElement = buildRecipeCard(recipe);
+const generateCallback = (ev: Event) => {
+    const textElement: HTMLTextAreaElement = document.getElementById('text') as HTMLTextAreaElement;
+    const recipe: RecipeJson = parseMarkdownRecipe(textElement.value);
+    const generated: HTMLDivElement = buildRecipeCard(recipe);
     console.log(generated);
 
     let s = new XMLSerializer();
     let str = s.serializeToString(generated);
-    str = str.replace(/(<(div|h3|h4|h5|h6|ul|li|p|a))/g,"\n$1");
+    str = str.replace(/(<(div|h3|h4|h5|h6|ul|li|p|a))/g, "\n$1");
 
     navigator.clipboard.writeText(str);
     let info: HTMLElement = document.getElementById('info');
@@ -345,7 +373,7 @@ const generateCallback = (ev : Event) => {
     info.innerText = 'Copied ' + recipe.title + ' to clipboard';
     startGradualFade(info);
 }
-let buildRecipeCard = function (recipeJson:RecipeJson): HTMLDivElement {
+let buildRecipeCard = function (recipeJson: RecipeJson): HTMLDivElement {
     let card = createCard();
     card.appendChild(recipeJson.div);
 
@@ -360,9 +388,12 @@ let buildRecipeCard = function (recipeJson:RecipeJson): HTMLDivElement {
     header2.textContent = recipeJson.title;
     divItem.insertBefore(header2, divItem.firstChild);
 
+    const categoryNumber = determineCategoryNumberFromCategoryName(recipeJson.category);
+    const category = categoryMap.get(categoryNumber);
+
     let categoryDiv = document.createElement('p');
     divItem.insertBefore(categoryDiv, header2.nextSibling);
-    categoryDiv.appendChild(document.createTextNode('Category: ' + recipeJson.category));
+    categoryDiv.appendChild(document.createTextNode('Category: ' + category));
 
     let servingsDiv = document.createElement('p');
     divItem.insertBefore(servingsDiv, categoryDiv.nextSibling);
