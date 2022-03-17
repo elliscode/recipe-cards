@@ -435,3 +435,22 @@ let createCard = function (): HTMLDivElement {
 
     return card;
 }
+let saveTimeout : number | undefined = undefined;
+const queueSaveToLocalStorage = () => {
+    if(saveTimeout) {
+        clearTimeout(saveTimeout);
+    }
+    saveTimeout = setTimeout(saveToLocalStorage, 1000);
+}
+const saveToLocalStorage = () => {
+    const textBox : HTMLTextAreaElement = document.getElementById('text') as HTMLTextAreaElement;
+    window.localStorage.setItem('recipe-text-box-data', textBox.value);
+}
+const loadLocalStorageToBox = () => {
+    const value = window.localStorage.getItem('recipe-text-box-data');
+    if(value) {
+        const textBox : HTMLTextAreaElement = document.getElementById('text') as HTMLTextAreaElement;
+        textBox.value = value;
+    }
+}
+loadLocalStorageToBox();
