@@ -449,13 +449,51 @@ const queueSaveToLocalStorage = () => {
 }
 const saveToLocalStorage = () => {
     const textBox : HTMLTextAreaElement = document.getElementById('text') as HTMLTextAreaElement;
-    window.localStorage.setItem('recipe-text-box-data', textBox.value);
-}
-const loadLocalStorageToBox = () => {
-    const value = window.localStorage.getItem('recipe-text-box-data');
-    if(value) {
-        const textBox : HTMLTextAreaElement = document.getElementById('text') as HTMLTextAreaElement;
-        textBox.value = value;
+    const saves = loadLocalStorage();
+    const key = determineKeyFromTextContent(textBox.value);
+    if(key) {
+        saves[key] = textBox.value;
+        window.localStorage.setItem('recipe-saves-by-title', JSON.stringify(saves));
+        updateButtonsFromLocalStorage();
     }
 }
-loadLocalStorageToBox();
+const determineKeyFromTextContent = (fullString : string) => {
+    const result = /\n# ([^\n]+)/.exec('\n' + fullString);
+    if(result) {
+        return result[1];
+    }
+}
+const loadLocalStorage = () : any => {
+    const value = window.localStorage.getItem('recipe-saves-by-title');
+    if (value) {
+        try {
+            return JSON.parse(value);
+        } catch (e) {
+            console.log(e);
+        }
+    }
+    return {};
+}
+const updateButtonsFromLocalStorage = () => {
+    for(const loadButton of Array.from(document.getElementsByClassName('load-button'))) {
+        loadButton.remove();
+    }
+    const saves : any = loadLocalStorage();
+    for(const key of Object.keys(saves)) {
+        const button = document.createElement('button');
+        button.innerText = key;
+        button.addEventListener('click', loadFromButton);
+        button.classList.add('load-button');
+        document.body.append(button)
+    }
+}
+const loadFromButton = (event : Event) => {
+    const key = (event.target as HTMLButtonElement).innerText;
+    const saves = loadLocalStorage();
+    const save = saves[key];
+    if(save) {
+        const textBox : HTMLTextAreaElement = document.getElementById('text') as HTMLTextAreaElement;
+        textBox.value = save;
+    }
+}
+updateButtonsFromLocalStorage();
