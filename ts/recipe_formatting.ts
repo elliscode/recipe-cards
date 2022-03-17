@@ -377,7 +377,11 @@ const toFractionIfApplicable = (value: number): string => {
     if ((5 / 8) - 0.001 < value && value < (5 / 8) + 0.001) { return '\u215D'; }
     if ((5 / 6) - 0.001 < value && value < (5 / 6) + 0.001) { return '\u215A'; }
     if ((7 / 8) - 0.001 < value && value < (7 / 8) + 0.001) { return '\u215E'; }
-    return value.toString();
+    let output = value.toString();
+    if(output.includes('.') && output.length > 6) {
+        output = value.toFixed(4);
+    }
+    return output;
 }
 
 const modifyRecipeByCallback = (ev: Event) => {
