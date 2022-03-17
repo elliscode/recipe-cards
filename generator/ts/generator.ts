@@ -319,6 +319,9 @@ const surroundIngredientNumbersWithSpan = (line: string): Slottable[] => {
     while (currentIndex < line.length && currentIndex > -1) {
         currentIndex = regexIndexOf(line, /\d/, currentIndex);
         if (currentIndex > -1) {
+            if(currentIndex > 0) {
+                regexp = unitRegexp;
+            }
             const result: RegExpExecArray | null = regexp.exec(line.substring(currentIndex));
             if (result) {
                 output.push(document.createTextNode(line.substring(previousIndex, currentIndex)));
@@ -336,7 +339,6 @@ const surroundIngredientNumbersWithSpan = (line: string): Slottable[] => {
         } else {
             currentIndex = line.length;
         }
-        regexp = unitRegexp;
     }
     output.push(document.createTextNode(line.substring(previousIndex, currentIndex)));
 
@@ -361,7 +363,8 @@ let findIfBulletAndHowWide = function (line: string): number {
 }
 const generateCallback = (ev: Event) => {
     const textElement: HTMLTextAreaElement = document.getElementById('text') as HTMLTextAreaElement;
-    const recipe: RecipeJson = parseMarkdownRecipe(textElement.value);
+    const unglyphed : string = unglyph(textElement.value);
+    const recipe: RecipeJson = parseMarkdownRecipe(unglyphed);
     const generated: HTMLDivElement = buildRecipeCard(recipe);
     console.log(generated);
 
