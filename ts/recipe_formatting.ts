@@ -33,7 +33,6 @@ categoryOrderMap.set("Soups", categoryOrderMap.size + 1);
 categoryOrderMap.set("Dips And Sauces", categoryOrderMap.size + 1);
 categoryOrderMap.set("Drinks", categoryOrderMap.size + 1);
 categoryOrderMap.set("Desserts", categoryOrderMap.size + 1);
-categoryOrderMap.set("Household", categoryOrderMap.size + 1);
 
 const parseRecipes = () => {
     console.log('typescript reached');
@@ -107,9 +106,9 @@ const categorySortFunction = (first: string, second: string): number => {
         } else {
             return 0;
         }
-    } else if (first) {
+    } else if (firstIndex) {
         return -1;
-    } else if (second) {
+    } else if (secondIndex) {
         return 1;
     }
     return first.localeCompare(second);
@@ -282,6 +281,12 @@ const generateRecipeButtons = (recipe: RecipeCard) => {
         link.appendChild(linkImg);
         divItem.appendChild(link);
     }
+
+    let categoryDiv = document.createElement('div');
+    categoryDiv.classList.add('category');
+    categoryDiv.style.display = 'none';
+    categoryDiv.innerText = recipe.category.value;
+    divItem.appendChild(categoryDiv);
 }
 const addCallbacks = () => {
     const searchTextBox = document.getElementById('search');
@@ -494,6 +499,9 @@ const convertRecipeToMarkdown = (card: HTMLDivElement, markdown: boolean): strin
 
     const contentDiv: HTMLDivElement = card.getElementsByTagName('div')[0];
 
+    let linkUrl : string = '';
+    let servings : string = '';
+    let category : string = '';
     for (const child of contentDiv.children) {
         if (child instanceof HTMLHeadingElement) {
             if ('h4' === child.tagName.toLowerCase()) {
@@ -514,7 +522,28 @@ const convertRecipeToMarkdown = (card: HTMLDivElement, markdown: boolean): strin
             output += '\n';
         } else if (child instanceof HTMLParagraphElement) {
             output += child.textContent + '\n' + '\n';
+        } else if (child instanceof HTMLAnchorElement) {
+            const link : HTMLAnchorElement = child as HTMLAnchorElement;
+            linkUrl = link.href;
+        } else if (child instanceof HTMLDivElement) {
+            if(child.classList.contains('servings')) {
+                servings = child.getElementsByTagName('input')[0].value;
+            } else if (child.classList.contains('category')) {
+                category = child.innerText;
+            }
+        } else {
+            console.log(child);
         }
+    }
+
+    if(servings) {
+        output += "Servings: " + servings + "\n";
+    }
+    if(category) {
+        output += "Category: " + category + "\n";
+    }
+    if(linkUrl) {
+        output += "Link: " + linkUrl + "\n";
     }
 
     return output.trim();

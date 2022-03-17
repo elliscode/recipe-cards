@@ -240,7 +240,7 @@ interface RecipeJson {
     div: HTMLDivElement;
 }
 let parseMarkdownRecipe = function (text: string): RecipeJson {
-    let recipeJson: RecipeJson = { 'title': 'Untitled', 'category': 'Uncategorized', 'linkText': 'https://google.com', 'servings': 1, 'div': document.createElement('div') };
+    let recipeJson: RecipeJson = { 'title': 'Untitled', 'category': 'Uncategorized', 'linkText': undefined, 'servings': 1, 'div': document.createElement('div') };
     let lines: string[] = text.split(/[\r\n]+/).map(line => line.trim()).filter(line => line.length > 0);
     let divItem: HTMLDivElement = recipeJson.div;
     for (let lineIndex: number = 0; lineIndex < lines.length; lineIndex++) {
@@ -480,12 +480,26 @@ const updateButtonsFromLocalStorage = () => {
     }
     const saves : any = loadLocalStorage();
     for(const key of Object.keys(saves)) {
+        const div = document.createElement('div');
+        div.classList.add('load-button');
+        div.style.display = 'block';
         const button = document.createElement('button');
         button.innerText = key;
         button.addEventListener('click', loadFromButton);
-        button.classList.add('load-button');
-        document.body.append(button)
+        div.appendChild(button);
+        const deleteButton = document.createElement('button');
+        deleteButton.innerHTML = '&times;'
+        deleteButton.addEventListener('click', deleteFromButton);
+        div.appendChild(deleteButton);
+        document.getElementById('navigation').append(div);
     }
+}
+const deleteFromButton = (event : Event) => {
+    const key = ((event.target as HTMLButtonElement).parentElement.firstElementChild as HTMLButtonElement).innerText;
+    const saves = loadLocalStorage();
+    delete saves[key];
+    window.localStorage.setItem('recipe-saves-by-title', JSON.stringify(saves));
+    updateButtonsFromLocalStorage();
 }
 const loadFromButton = (event : Event) => {
     const key = (event.target as HTMLButtonElement).innerText;
@@ -495,5 +509,12 @@ const loadFromButton = (event : Event) => {
         const textBox : HTMLTextAreaElement = document.getElementById('text') as HTMLTextAreaElement;
         textBox.value = save;
     }
+}
+const removeUnusualCharacters = (event : Event) => {
+    const textBox : HTMLTextAreaElement = document.getElementById('text') as HTMLTextAreaElement;
+    let text = textBox.value;
+    text = unglyph(text);
+    text = text.replace(/\n[^\u000A\u001F-\u007E]/g,'\n- ').replace(/[^\u000A\u001F-\u007E]/g,'');
+    textBox.value = text;
 }
 updateButtonsFromLocalStorage();
