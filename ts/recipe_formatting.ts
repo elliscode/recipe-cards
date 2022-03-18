@@ -537,6 +537,7 @@ const convertRecipeToMarkdown = (card: HTMLDivElement, markdown: boolean): strin
     let linkUrl : string = '';
     let servings : string = '';
     let category : string = '';
+    let tags : string = '';
     for (const child of contentDiv.children) {
         if (child instanceof HTMLHeadingElement) {
             if ('h4' === child.tagName.toLowerCase()) {
@@ -565,9 +566,14 @@ const convertRecipeToMarkdown = (card: HTMLDivElement, markdown: boolean): strin
                 servings = child.getElementsByTagName('input')[0].value;
             } else if (child.classList.contains('category')) {
                 category = child.innerText;
+            } else if (child.classList.contains('tags')) {
+                for(const span of child.getElementsByTagName('span')) {
+                    if(tags) {
+                        tags += ", ";
+                    }
+                    tags += span.innerText;
+                }
             }
-        } else {
-            console.log(child);
         }
     }
 
@@ -579,6 +585,9 @@ const convertRecipeToMarkdown = (card: HTMLDivElement, markdown: boolean): strin
     }
     if(linkUrl) {
         output += "Link: " + linkUrl + "\n";
+    }
+    if(tags) {
+        output += "Tags: " + tags + "\n";
     }
 
     return output.trim();

@@ -158,13 +158,12 @@
     .tags {
         display: block;
         position: absolute;
-        bottom: 0;
-        width:calc(100% - 216px);
-        min-width:200px;
+        top: 50px;
+        right:0px;
     }
     .tag {
         display: inline-block;
-        margin-right:10px;
+        margin-left:10px;
         margin-top:10px;
         border: 1px black solid;
         border-radius: 10px;
