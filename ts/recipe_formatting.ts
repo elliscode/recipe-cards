@@ -341,7 +341,27 @@ const clearSearch = (ev: Event) => {
     search.value = '';
     searchBackend(search);
 }
+let saveSearchCallback : number | undefined = undefined;
+const scheduleSaveSearch = () => {
+    if(saveSearchCallback) {
+        clearTimeout(saveSearchCallback);
+    }
+    saveSearchCallback = setTimeout(saveSearchToLocalStorage, 1000);
+}
+const saveSearchToLocalStorage = () => {
+    const search: HTMLInputElement = document.getElementById('search') as HTMLInputElement;
+    window.localStorage.setItem('ellis-recipes-search-term',search.value);
+}
+const loadSearchTermFromLocalStorage = () => {
+    const searchTerm : string | null = window.localStorage.getItem('ellis-recipes-search-term');
+    if(searchTerm) {
+        const search: HTMLInputElement = document.getElementById('search') as HTMLInputElement;
+        search.value = searchTerm;
+        searchBackend(search);
+    }
+}
 const searchBackend = (search: HTMLInputElement): void => {
+    scheduleSaveSearch();
     for (const element of Array.from(document.getElementsByClassName('hide'))) {
         element.classList.remove('hide');
     }
@@ -596,34 +616,77 @@ const printRecipe = (ev: Event) => {
     window.print();
 }
 const pinRecipe = (ev: Event) => {
-    const card: HTMLDivElement = (ev.target as HTMLElement).parentElement as HTMLDivElement;
-    const placeholder = document.createElement('div');
-    placeholder.setAttribute('id', 'p' + card.id);
-    card.parentElement?.insertBefore(placeholder, card);
-    let pinnedHeader: HTMLElement | null = document.getElementById('pinned-header');
-    if (!pinnedHeader) {
-        pinnedHeader = document.createElement("h2");
-        pinnedHeader.innerText = 'Pinned';
-        pinnedHeader.id = 'pinned-header';
-        card.parentElement?.insertBefore(pinnedHeader, card.parentElement.firstElementChild);
+    const pinImg : HTMLImageElement = (ev.target as HTMLImageElement);
+    const card: HTMLDivElement = pinImg.parentElement as HTMLDivElement;
+    pinRecipeBackend(pinImg, card);
+    addToPinsMemory(card.id);
+}
+const pinRecipeBackend = (pinImg : HTMLImageElement, card : HTMLDivElement) => {
+    const placeholderId = 'p' + card.id;
+    if(!document.getElementById(placeholderId)) {
+        const placeholder = document.createElement('div');
+        placeholder.setAttribute('id', placeholderId);
+        card.parentElement?.insertBefore(placeholder, card);
     }
-    card.parentElement?.insertBefore(card, pinnedHeader.nextElementSibling);
-    (ev.target as HTMLElement).remove();
+    card.parentElement?.insertBefore(card, card.parentElement.firstChild);
+    pinImg.remove();
     addUnPin(card);
 }
 const unpinRecipe = (ev: Event) => {
-    const card: HTMLDivElement = (ev.target as HTMLElement).parentElement as HTMLDivElement;
+    const pinImg : HTMLImageElement = (ev.target as HTMLImageElement);
+    const card: HTMLDivElement = pinImg.parentElement as HTMLDivElement;
+    unpinRecipeBackend(pinImg, card);
+    removeFromPinsMemory(card.id);
+}
+const unpinRecipeBackend = (pinImg : HTMLImageElement, card : HTMLDivElement) => {
     const placeholder: HTMLElement = document.getElementById('p' + card.id)!;
     card.parentElement?.insertBefore(card, placeholder);
     placeholder.remove();
-    let pinnedHeader: HTMLElement = document.getElementById('pinned-header')!;
-    if (pinnedHeader.tagName === pinnedHeader.nextElementSibling?.tagName) {
-        pinnedHeader.remove();
-    }
-    (ev.target as HTMLElement).remove();
+    pinImg.remove();
     addPin(card);
+}
+const loadPinsFromMemory = () => {
+    let output :string[] = [];
+    const savedPinsString : string | null = window.localStorage.getItem('ellis-recipes-pins');
+    if(savedPinsString) {
+        const parseResult = JSON.parse(savedPinsString);
+        if(parseResult instanceof Array) {
+            output = parseResult as Array<string>;
+        }
+    }
+    return output;
+}
+const addToPinsMemory = (id : string) => {
+    let savedPins : string[] = loadPinsFromMemory();
+    if(savedPins.indexOf(id) == -1) {
+        savedPins.push(id);
+    }
+    window.localStorage.setItem('ellis-recipes-pins', JSON.stringify(savedPins));
+}
+const removeFromPinsMemory = (id : string) => {
+    let savedPins : string[] = loadPinsFromMemory();
+    let index : number = savedPins.indexOf(id);
+    while(index > -1) {
+        savedPins.splice(index,1);
+        index = savedPins.indexOf(id); 
+    }
+    window.localStorage.setItem('ellis-recipes-pins', JSON.stringify(savedPins));
+}
+const loadAndSetPinsFromLocalStorage = () => {
+    let savedPins : string[] = loadPinsFromMemory();
+    for(const savedPin of savedPins) {
+        const item : HTMLDivElement = document.getElementById(savedPin) as HTMLDivElement;
+        if(item) {
+            const pinImg : HTMLImageElement = item.getElementsByClassName('pin')[0] as HTMLImageElement;
+            pinRecipeBackend(pinImg, item);
+        }
+    }
 }
 parseRecipes();
 buildSections();
 addCallbacks();
 removeDontShows();
+window.addEventListener("load", function () {
+    loadSearchTermFromLocalStorage();
+    loadAndSetPinsFromLocalStorage();
+});
