@@ -313,7 +313,7 @@ const regexIndexOf = (string : string, regex : RegExp, startpos : number) => {
     return (indexOf >= 0) ? (indexOf + (startpos || 0)) : indexOf;
 }
 const surroundIngredientNumbersWithSpan = (line: string): Slottable[] => {
-    const unitRegexp: RegExp = /^([0-9\./]+)\s*(TBSP|tsp|g|ml|oz)/;
+    const unitRegexp: RegExp = /^([0-9\./]+)\s*(TBSP|tsp|g|ml|oz|cup)/;
     const firstCharacterRegexp: RegExp = /^([0-9\./]+)/;
     const output: Slottable[] = [];
 
