@@ -236,11 +236,12 @@ interface RecipeJson {
     title: string;
     category: string;
     linkText: string;
+    tags:string;
     servings: number;
     div: HTMLDivElement;
 }
 let parseMarkdownRecipe = function (text: string): RecipeJson {
-    let recipeJson: RecipeJson = { 'title': 'Untitled', 'category': 'Uncategorized', 'linkText': undefined, 'servings': 1, 'div': document.createElement('div') };
+    let recipeJson: RecipeJson = { 'title': 'Untitled', 'category': 'Uncategorized', 'tags': undefined, 'linkText': undefined, 'servings': 1, 'div': document.createElement('div') };
     let lines: string[] = text.split(/[\r\n]+/).map(line => line.trim()).filter(line => line.length > 0);
     let divItem: HTMLDivElement = recipeJson.div;
     for (let lineIndex: number = 0; lineIndex < lines.length; lineIndex++) {
@@ -248,10 +249,13 @@ let parseMarkdownRecipe = function (text: string): RecipeJson {
         const servingsPrefix = 'Servings: ';
         const linkPrefix = 'Link: ';
         const categoryPrefix = 'Category: ';
+        const tagsPrefix = 'Tags: ';
         if (line.toLowerCase().startsWith(servingsPrefix.toLowerCase())) {
             recipeJson.servings = parseFloat(line.substring(servingsPrefix.length));
         } else if (line.toLowerCase().startsWith(linkPrefix.toLowerCase())) {
             recipeJson.linkText = line.substring(linkPrefix.length);
+        } else if (line.toLowerCase().startsWith(tagsPrefix.toLowerCase())) {
+            recipeJson.tags = line.substring(tagsPrefix.length);
         } else if (line.toLowerCase().startsWith(categoryPrefix.toLowerCase())) {
             recipeJson.category = line.substring(categoryPrefix.length);
         } else if (line.startsWith('# ')) {
@@ -409,6 +413,12 @@ let buildRecipeCard = function (recipeJson: RecipeJson): HTMLDivElement {
         link.setAttribute('href', recipeJson.linkText);
         link.innerText = "Source material"
         divItem.appendChild(link);
+    }
+
+    if (undefined != recipeJson.tags) {
+        let tagsDiv = document.createElement('p');
+        divItem.insertBefore(tagsDiv, servingsDiv.nextSibling);
+        tagsDiv.appendChild(document.createTextNode('Tags: ' + recipeJson.tags));
     }
 
     return card;

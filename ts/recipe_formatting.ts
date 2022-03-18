@@ -4,6 +4,7 @@ interface RecipeCard {
     title: Title;
     category: Category;
     servings: Servings;
+    tags: Tags;
     link: Link;
 }
 interface Title {
@@ -16,6 +17,10 @@ interface Category {
 }
 interface Servings {
     value: number;
+    element: HTMLParagraphElement | undefined;
+}
+interface Tags {
+    value: string[];
     element: HTMLParagraphElement | undefined;
 }
 interface Link {
@@ -46,6 +51,7 @@ const parseRecipes = () => {
         let title: Title = { 'value': '', 'element': undefined };
         let category: Category = { 'value': '', 'element': undefined };
         let servings: Servings = { 'value': 1, 'element': undefined };
+        let tags: Tags = { 'value': [], 'element': undefined };
         let link: Link = { 'value': undefined, 'element': undefined };
         for (const child of card.childNodes) {
             if (child instanceof HTMLHeadingElement) {
@@ -61,6 +67,17 @@ const parseRecipes = () => {
                     if (textContent.startsWith(searchPrefix)) {
                         const servingsNumber: number = parseInt(textContent.substring(searchPrefix.length));
                         servings = { 'value': servingsNumber, 'element': child };
+                    }
+                }
+                {
+                    let searchPrefix: string = 'Tags: ';
+                    if (textContent.startsWith(searchPrefix)) {
+                        let splitString : string[] = [];
+                        for(const part of textContent.substring(searchPrefix.length).split(/,/g)) {
+                            splitString.push(part.trim());
+                        }
+                        splitString.sort();
+                        tags = { 'value': splitString, 'element': child };
                     }
                 }
                 {
@@ -88,6 +105,7 @@ const parseRecipes = () => {
             title: title,
             category: category,
             servings: servings,
+            tags: tags,
             link: link
         });
 
@@ -287,6 +305,19 @@ const generateRecipeButtons = (recipe: RecipeCard) => {
     categoryDiv.style.display = 'none';
     categoryDiv.innerText = recipe.category.value;
     divItem.appendChild(categoryDiv);
+
+    if(recipe.tags.element) {
+        let tagsDiv = document.createElement('div');
+        tagsDiv.classList.add('tags');
+        for(const tag of recipe.tags.value) {
+            const span = document.createElement('span');
+            span.innerText = tag;
+            span.classList.add('tag');
+            tagsDiv.appendChild(span);
+        }
+        divItem.appendChild(tagsDiv);
+        recipe.tags.element.remove();
+    }
 }
 const addCallbacks = () => {
     const searchTextBox = document.getElementById('search');
