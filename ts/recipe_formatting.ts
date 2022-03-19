@@ -230,14 +230,18 @@ const touchy = (event : TouchEvent) => {
     console.log('one');
 }
 const touchy2 = (event:TouchEvent) => {
-    const xdiff = Math.min(0, event.touches[0].clientX - startX!);
-    ((event.target as HTMLElement).parentElement as HTMLElement).style.left = xdiff + 'px';
-    prevDiff = xdiff;
+    let xdiff = Math.min(0, event.touches[0].clientX - startX!);
     if(Math.abs(xdiff) > 5) {
         if (event.cancelable) {
             event.preventDefault();
+        } else {
+            xdiff = 0;
         }
+    } else {
+        xdiff = 0;
     }
+    prevDiff = xdiff;
+    ((event.target as HTMLElement).parentElement as HTMLElement).style.left = xdiff + 'px';
 }
 const touchy3 = (event:TouchEvent) => {
     const card = (event.target as HTMLHeadingElement).parentElement as HTMLDivElement;
