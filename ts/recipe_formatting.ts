@@ -198,19 +198,19 @@ const rehomeTheChildren = (recipe: RecipeCard) => {
 }
 
 const addPin = (card: HTMLDivElement) => {
-    let pinImg = document.createElement('img');
-    pinImg.classList.add('pin');
-    pinImg.setAttribute('src', 'img/pin.png?v=001');
-    pinImg.addEventListener('click', pinRecipe);
-    card.appendChild(pinImg);
+    // let pinImg = document.createElement('img');
+    // pinImg.classList.add('pin');
+    // pinImg.setAttribute('src', 'img/pin.png?v=001');
+    // pinImg.addEventListener('click', pinRecipe);
+    // card.appendChild(pinImg);
 }
 
 const addUnPin = (card: HTMLDivElement) => {
-    let pinImg = document.createElement('img');
-    pinImg.classList.add('pin');
-    pinImg.setAttribute('src', 'img/pin_blu.png?v=001');
-    pinImg.addEventListener('click', unpinRecipe);
-    card.appendChild(pinImg);
+    // let pinImg = document.createElement('img');
+    // pinImg.classList.add('pin');
+    // pinImg.setAttribute('src', 'img/pin_blu.png?v=001');
+    // pinImg.addEventListener('click', unpinRecipe);
+    // card.appendChild(pinImg);
 }
 
 const createHeader = (...input: string[]): string => {
@@ -220,12 +220,52 @@ const createHeader = (...input: string[]): string => {
     }
     return fullString.toUpperCase().replace(/[^A-Z0-9]/g, '_').replace(/^_/, '').replace(/_$/, '');
 }
-
+let startX : number | undefined = undefined;
+let prevDiff : number | undefined = undefined;
+const touchy = (event : TouchEvent) => {
+    const touch = event.touches[0];
+    if(!startX) {
+        startX = touch.clientX
+    }
+    console.log('one');
+}
+const touchy2 = (event:TouchEvent) => {
+    const xdiff = Math.min(0, event.touches[0].clientX - startX!);
+    ((event.target as HTMLElement).parentElement as HTMLElement).style.left = xdiff + 'px';
+    prevDiff = xdiff;
+    if(Math.abs(xdiff) > 5) {
+        if (event.cancelable) {
+            event.preventDefault();
+        }
+    }
+}
+const touchy3 = (event:TouchEvent) => {
+    const card = (event.target as HTMLHeadingElement).parentElement as HTMLDivElement;
+    if(Math.abs(prevDiff!) > 100) {
+        pinRecipe(event);
+    }
+    card.style.left = '0px';
+    startX = undefined;
+    prevDiff = undefined;
+}
+const touchy4 = (event:TouchEvent) => {
+    const card = (event.target as HTMLHeadingElement).parentElement as HTMLDivElement;
+    if(Math.abs(prevDiff!) > 100) {
+        unpinRecipe(event);
+    }
+    card.style.left = '0px';
+    startX = undefined;
+    prevDiff = undefined;
+}
 const generateRecipeButtons = (recipe: RecipeCard) => {
     const divItem: HTMLDivElement = recipe.card;
     const header2: HTMLHeadingElement = recipe.title.element!;
     const id: string = createHeader(recipe.category.value, recipe.title.value);
     divItem.setAttribute('id', id);
+
+    header2.addEventListener('touchstart', touchy, {passive: true});
+    header2.addEventListener('touchmove', touchy2, {passive: false});
+    header2.addEventListener('touchend', touchy3, {passive: true});
 
     let servingsDiv = document.createElement('div');
     servingsDiv.classList.add('servings');
@@ -616,10 +656,31 @@ const printRecipe = (ev: Event) => {
     window.print();
 }
 const pinRecipe = (ev: Event) => {
-    const pinImg : HTMLImageElement = (ev.target as HTMLImageElement);
-    const card: HTMLDivElement = pinImg.parentElement as HTMLDivElement;
-    pinRecipeBackend(pinImg, card);
-    addToPinsMemory(card.id);
+    let card: HTMLDivElement | undefined = undefined;
+    let current = ev.target as HTMLElement;
+    while (current) {
+        if (current instanceof HTMLDivElement) {
+            const div : HTMLDivElement = current as HTMLDivElement;
+            if (div.classList.contains('card')) {
+                card = div;
+                break;
+            }
+        }
+        current = current.parentElement as HTMLElement;
+    }
+    if(card)  {
+        const pinImg : HTMLImageElement = card.getElementsByClassName('pin')[0] as HTMLImageElement;
+        pinRecipeBackend(pinImg, card);
+        addToPinsMemory(card.id);
+
+        const header2 : HTMLHeadingElement = card.getElementsByTagName('h3')[0] as HTMLHeadingElement;
+        header2.removeEventListener('touchstart', touchy);
+        header2.removeEventListener('touchmove', touchy2);
+        header2.removeEventListener('touchend', touchy3);
+        header2.addEventListener('touchstart', touchy, {passive: true});
+        header2.addEventListener('touchmove', touchy2, {passive: false});
+        header2.addEventListener('touchend', touchy4, {passive: true});
+    }
 }
 const pinRecipeBackend = (pinImg : HTMLImageElement, card : HTMLDivElement) => {
     const placeholderId = 'p' + card.id;
@@ -629,20 +690,45 @@ const pinRecipeBackend = (pinImg : HTMLImageElement, card : HTMLDivElement) => {
         card.parentElement?.insertBefore(placeholder, card);
     }
     card.parentElement?.insertBefore(card, card.parentElement.firstChild);
-    pinImg.remove();
+    if(pinImg) {
+        pinImg.remove();
+    }
     addUnPin(card);
 }
 const unpinRecipe = (ev: Event) => {
-    const pinImg : HTMLImageElement = (ev.target as HTMLImageElement);
-    const card: HTMLDivElement = pinImg.parentElement as HTMLDivElement;
-    unpinRecipeBackend(pinImg, card);
-    removeFromPinsMemory(card.id);
+    let card: HTMLDivElement | undefined = undefined;
+    let current = ev.target as HTMLElement;
+    while (current) {
+        if (current instanceof HTMLDivElement) {
+            const div : HTMLDivElement = current as HTMLDivElement;
+            if (div.classList.contains('card')) {
+                card = div;
+                break;
+            }
+        }
+        current = current.parentElement as HTMLElement;
+    }
+    if(card)  {
+        const pinImg : HTMLImageElement = card.getElementsByClassName('pin')[0] as HTMLImageElement;
+        unpinRecipeBackend(pinImg, card);
+        removeFromPinsMemory(card.id);
+
+        const header2 : HTMLHeadingElement = card.getElementsByTagName('h3')[0] as HTMLHeadingElement;
+        header2.removeEventListener('touchstart', touchy);
+        header2.removeEventListener('touchmove', touchy2);
+        header2.removeEventListener('touchend', touchy4);
+        header2.addEventListener('touchstart', touchy, {passive: true});
+        header2.addEventListener('touchmove', touchy2, {passive: false});
+        header2.addEventListener('touchend', touchy3, {passive: true});
+    }
 }
 const unpinRecipeBackend = (pinImg : HTMLImageElement, card : HTMLDivElement) => {
     const placeholder: HTMLElement = document.getElementById('p' + card.id)!;
     card.parentElement?.insertBefore(card, placeholder);
     placeholder.remove();
-    pinImg.remove();
+    if(pinImg) {
+        pinImg.remove();
+    }
     addPin(card);
 }
 const loadPinsFromMemory = () => {
@@ -675,10 +761,18 @@ const removeFromPinsMemory = (id : string) => {
 const loadAndSetPinsFromLocalStorage = () => {
     let savedPins : string[] = loadPinsFromMemory();
     for(const savedPin of savedPins) {
-        const item : HTMLDivElement = document.getElementById(savedPin) as HTMLDivElement;
-        if(item) {
-            const pinImg : HTMLImageElement = item.getElementsByClassName('pin')[0] as HTMLImageElement;
-            pinRecipeBackend(pinImg, item);
+        const card : HTMLDivElement = document.getElementById(savedPin) as HTMLDivElement;
+        if(card) {
+            const pinImg : HTMLImageElement = card.getElementsByClassName('pin')[0] as HTMLImageElement;
+            pinRecipeBackend(pinImg, card);
+
+            const header2 : HTMLHeadingElement = card.getElementsByTagName('h3')[0] as HTMLHeadingElement;
+            header2.removeEventListener('touchstart', touchy);
+            header2.removeEventListener('touchmove', touchy2);
+            header2.removeEventListener('touchend', touchy3);
+            header2.addEventListener('touchstart', touchy, {passive: true});
+            header2.addEventListener('touchmove', touchy2, {passive: false});
+            header2.addEventListener('touchend', touchy4, {passive: true});
         }
     }
 }
