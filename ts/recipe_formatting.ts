@@ -1,3 +1,5 @@
+const ACCEPT_WIDTH : number = 45;
+const MARGIN : number = 10;
 interface RecipeCard {
     card: HTMLDivElement;
     content: HTMLDivElement;
@@ -158,6 +160,7 @@ const buildSections = () => {
             setTheSpans(recipe);
             modifyRecipe(recipe.card, 1);
             rehomeTheChildren(recipe);
+            addPinDiv(recipe);
         }
     }
 }
@@ -195,11 +198,30 @@ const rehomeTheChildren = (recipe: RecipeCard) => {
 
     recipe.card.setAttribute('servings', recipe.servings.value.toString());
 }
-
+const addPinDiv = (recipe: RecipeCard) => {
+    const div = document.createElement('div');
+    div.classList.add('pindragimg');
+    recipe.card.appendChild(div);
+    div.style.boxSizing = 'border-box';
+    div.style.width = '100%';
+    div.style.height = '100%';
+    div.style.position = 'absolute';
+    div.style.right = '0px';
+    div.style.top = '0px';
+    div.style.backgroundImage = 'url(img/pin_white.png)';
+    div.style.borderRadius = '10px';
+    div.style.backgroundRepeat = 'no-repeat';
+    div.style.backgroundPosition = 'right';
+    div.style.backgroundColor = '#77ff77';
+    div.style.borderColor = '#00ff00';
+    div.style.zIndex = '-5';
+    div.style.borderWidth = '2px';
+    div.style.borderStyle = 'solid';
+}
 const addPin = (card: HTMLDivElement) => {
     // let pinImg = document.createElement('img');
     // pinImg.classList.add('pin');
-    // pinImg.setAttribute('src', 'img/pin.png?v=001');
+    // pinImg.setAttribute('src', 'img/pin2.png?v=001');
     // pinImg.addEventListener('click', pinRecipe);
     // card.appendChild(pinImg);
 }
@@ -228,7 +250,6 @@ const touchy = (event : TouchEvent) => {
     }
 }
 const touchy2 = (event:TouchEvent) => {
-    const MARGIN = 10;
     let xdiff = Math.min(0, event.touches[0].clientX - startX!);
     if(Math.abs(xdiff) > MARGIN) {
         if (event.cancelable) {
@@ -240,23 +261,30 @@ const touchy2 = (event:TouchEvent) => {
         xdiff = 0;
     }
     prevDiff = xdiff;
-    ((event.target as HTMLElement).parentElement as HTMLElement).style.left = xdiff + 'px';
+    const card : HTMLElement = ((event.target as HTMLElement).parentElement as HTMLElement);
+    card.style.left = xdiff + 'px';
+    const pinDragImg = card.getElementsByClassName('pindragimg')[0] as HTMLDivElement;
+    pinDragImg.style.right = xdiff + 'px';
 }
 const touchy3 = (event:TouchEvent) => {
     const card = (event.target as HTMLHeadingElement).parentElement as HTMLDivElement;
-    if(Math.abs(prevDiff!) > 100) {
+    if(Math.abs(prevDiff!) > ACCEPT_WIDTH) {
         pinRecipe(event);
     }
     card.style.left = '0px';
+    const pinDragImg = card.getElementsByClassName('pindragimg')[0] as HTMLDivElement;
+    pinDragImg.style.right = 0 + 'px';
     startX = undefined;
     prevDiff = undefined;
 }
 const touchy4 = (event:TouchEvent) => {
     const card = (event.target as HTMLHeadingElement).parentElement as HTMLDivElement;
-    if(Math.abs(prevDiff!) > 100) {
+    if(Math.abs(prevDiff!) > ACCEPT_WIDTH) {
         unpinRecipe(event);
     }
     card.style.left = '0px';
+    const pinDragImg = card.getElementsByClassName('pindragimg')[0] as HTMLDivElement;
+    pinDragImg.style.right = 0 + 'px';
     startX = undefined;
     prevDiff = undefined;
 }
@@ -672,7 +700,7 @@ const pinRecipe = (ev: Event) => {
         current = current.parentElement as HTMLElement;
     }
     if(card)  {
-        const pinImg : HTMLImageElement = card.getElementsByClassName('pin')[0] as HTMLImageElement;
+        const pinImg : HTMLImageElement = card.getElementsByClassName('pindragimg')[0] as HTMLImageElement;
         pinRecipeBackend(pinImg, card);
         addToPinsMemory(card.id);
 
@@ -694,7 +722,8 @@ const pinRecipeBackend = (pinImg : HTMLImageElement, card : HTMLDivElement) => {
     }
     card.parentElement?.insertBefore(card, card.parentElement.firstChild);
     if(pinImg) {
-        pinImg.remove();
+        pinImg.style.backgroundColor = '#ff7777';
+        pinImg.style.borderColor = '#ff0000';
     }
     addUnPin(card);
 }
@@ -712,7 +741,7 @@ const unpinRecipe = (ev: Event) => {
         current = current.parentElement as HTMLElement;
     }
     if(card)  {
-        const pinImg : HTMLImageElement = card.getElementsByClassName('pin')[0] as HTMLImageElement;
+        const pinImg : HTMLImageElement = card.getElementsByClassName('pindragimg')[0] as HTMLImageElement;
         unpinRecipeBackend(pinImg, card);
         removeFromPinsMemory(card.id);
 
@@ -730,7 +759,8 @@ const unpinRecipeBackend = (pinImg : HTMLImageElement, card : HTMLDivElement) =>
     card.parentElement?.insertBefore(card, placeholder);
     placeholder.remove();
     if(pinImg) {
-        pinImg.remove();
+        pinImg.style.backgroundColor = '#77ff77';
+        pinImg.style.borderColor = '#00ff00';
     }
     addPin(card);
 }
@@ -766,7 +796,7 @@ const loadAndSetPinsFromLocalStorage = () => {
     for(const savedPin of savedPins) {
         const card : HTMLDivElement = document.getElementById(savedPin) as HTMLDivElement;
         if(card) {
-            const pinImg : HTMLImageElement = card.getElementsByClassName('pin')[0] as HTMLImageElement;
+            const pinImg : HTMLImageElement = card.getElementsByClassName('pindragimg')[0] as HTMLImageElement;
             pinRecipeBackend(pinImg, card);
 
             const header2 : HTMLHeadingElement = card.getElementsByTagName('h3')[0] as HTMLHeadingElement;
