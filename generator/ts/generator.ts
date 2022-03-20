@@ -490,18 +490,20 @@ const updateButtonsFromLocalStorage = () => {
     }
     const saves : any = loadLocalStorage();
     for(const key of Object.keys(saves)) {
-        const div = document.createElement('div');
-        div.classList.add('load-button');
-        div.style.display = 'block';
-        const button = document.createElement('button');
-        button.innerText = key;
-        button.addEventListener('click', loadFromButton);
-        div.appendChild(button);
-        const deleteButton = document.createElement('button');
-        deleteButton.innerHTML = '&times;'
-        deleteButton.addEventListener('click', deleteFromButton);
-        div.appendChild(deleteButton);
-        document.getElementById('navigation').append(div);
+        if(saves[key]) {
+            const div = document.createElement('div');
+            div.classList.add('load-button');
+            div.style.display = 'block';
+            const button = document.createElement('button');
+            button.innerText = key;
+            button.addEventListener('click', loadFromButton);
+            div.appendChild(button);
+            const deleteButton = document.createElement('button');
+            deleteButton.innerHTML = '&times;'
+            deleteButton.addEventListener('click', deleteFromButton);
+            div.appendChild(deleteButton);
+            document.getElementById('navigation').append(div);
+        }
     }
 }
 const deleteFromButton = (event : Event) => {
@@ -518,6 +520,9 @@ const loadFromButton = (event : Event) => {
     if(save) {
         const textBox : HTMLTextAreaElement = document.getElementById('text') as HTMLTextAreaElement;
         textBox.value = save;
+    } else {
+        delete saves[key];
+        window.localStorage.setItem('recipe-saves-by-title', JSON.stringify(saves));
     }
 }
 const removeUnusualCharacters = (event : Event) => {

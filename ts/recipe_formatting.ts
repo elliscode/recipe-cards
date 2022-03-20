@@ -230,8 +230,9 @@ const touchy = (event : TouchEvent) => {
     console.log('one');
 }
 const touchy2 = (event:TouchEvent) => {
+    const MARGIN = 10;
     let xdiff = Math.min(0, event.touches[0].clientX - startX!);
-    if(Math.abs(xdiff) > 5) {
+    if(Math.abs(xdiff) > MARGIN) {
         if (event.cancelable) {
             event.preventDefault();
         } else {
