@@ -225,9 +225,26 @@
     .dont-show-if-no-js {
         display:none!important;
     }
+    .pindragimg {
+        box-sizing: border-box;
+        width: 100%;
+        height: 100%;
+        position: absolute;
+        right: 0px;
+        top: 0px;
+        background-image: url(../img/pin_white.png);
+        border-radius: 10px;
+        background-repeat: no-repeat;
+        background-position: right;
+        background-color: #77ff77;
+        border-color: #00ff00;
+        z-index: -5;
+        border-width: 2px;
+        border-style: solid;
+    }
 }
 @media print {
-    #wrapper, #info {
+    #wrapper, #info, .pindragimg {
         display:none;
     }
     .tags {

@@ -1,4 +1,4 @@
-const ACCEPT_WIDTH : number = 45;
+const ACCEPT_WIDTH : number = 40;
 const MARGIN : number = 10;
 interface RecipeCard {
     card: HTMLDivElement;
@@ -202,21 +202,6 @@ const addPinDiv = (recipe: RecipeCard) => {
     const div = document.createElement('div');
     div.classList.add('pindragimg');
     recipe.card.appendChild(div);
-    div.style.boxSizing = 'border-box';
-    div.style.width = '100%';
-    div.style.height = '100%';
-    div.style.position = 'absolute';
-    div.style.right = '0px';
-    div.style.top = '0px';
-    div.style.backgroundImage = 'url(img/pin_white.png)';
-    div.style.borderRadius = '10px';
-    div.style.backgroundRepeat = 'no-repeat';
-    div.style.backgroundPosition = 'right';
-    div.style.backgroundColor = '#77ff77';
-    div.style.borderColor = '#00ff00';
-    div.style.zIndex = '-5';
-    div.style.borderWidth = '2px';
-    div.style.borderStyle = 'solid';
 }
 const addPin = (card: HTMLDivElement) => {
     // let pinImg = document.createElement('img');
