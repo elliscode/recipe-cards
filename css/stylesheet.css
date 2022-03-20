@@ -236,11 +236,13 @@
         border-radius: 10px;
         background-repeat: no-repeat;
         background-position: right;
-        background-color: #77ff77;
-        border-color: #00ff00;
         z-index: -5;
-        border-width: 2px;
-        border-style: solid;
+    }
+    .green {
+        background-color: rgb(66, 206, 66);
+    }
+    .red {
+        background-color: #ff7777;
     }
 }
 @media print {

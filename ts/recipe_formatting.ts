@@ -201,6 +201,7 @@ const rehomeTheChildren = (recipe: RecipeCard) => {
 const addPinDiv = (recipe: RecipeCard) => {
     const div = document.createElement('div');
     div.classList.add('pindragimg');
+    div.classList.add('green');
     recipe.card.appendChild(div);
 }
 const addPin = (card: HTMLDivElement) => {
@@ -707,8 +708,8 @@ const pinRecipeBackend = (pinImg : HTMLImageElement, card : HTMLDivElement) => {
     }
     card.parentElement?.insertBefore(card, card.parentElement.firstChild);
     if(pinImg) {
-        pinImg.style.backgroundColor = '#ff7777';
-        pinImg.style.borderColor = '#ff0000';
+        pinImg.classList.remove('green');
+        pinImg.classList.add('red');
     }
     addUnPin(card);
 }
@@ -744,8 +745,8 @@ const unpinRecipeBackend = (pinImg : HTMLImageElement, card : HTMLDivElement) =>
     card.parentElement?.insertBefore(card, placeholder);
     placeholder.remove();
     if(pinImg) {
-        pinImg.style.backgroundColor = '#77ff77';
-        pinImg.style.borderColor = '#00ff00';
+        pinImg.classList.remove('red');
+        pinImg.classList.add('green');
     }
     addPin(card);
 }
