@@ -40,7 +40,6 @@ categoryOrderMap.set("Drinks", categoryOrderMap.size + 1);
 categoryOrderMap.set("Desserts", categoryOrderMap.size + 1);
 
 const parseRecipes = () => {
-    console.log('typescript reached');
     const cards = document.getElementsByClassName('card');
     for (const item of cards) {
         if (!(item instanceof HTMLDivElement)) {
@@ -227,7 +226,6 @@ const touchy = (event : TouchEvent) => {
     if(!startX) {
         startX = touch.clientX
     }
-    console.log('one');
 }
 const touchy2 = (event:TouchEvent) => {
     const MARGIN = 10;
