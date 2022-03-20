@@ -131,8 +131,10 @@
         right:0;
         padding:10px;
         margin:0px;
-        background-color:#e2fad8;
-        border: 2px #79d870 solid;
+        background-color:white;
+        border-width: 2px;
+        border-style:solid;
+        border-color: black;
         border-radius:10px;
         position:fixed;
         bottom:0px;
@@ -239,10 +241,24 @@
         z-index: -5;
     }
     .green {
-        background-color: rgb(66, 206, 66);
+        background-color: rgb(66, 206, 66) !important;
+        border-color: rgb(0, 206, 0) !important;
+        color: white !important;
     }
     .red {
-        background-color: #ff7777;
+        background-color: #ff7777 !important;
+        border-color: rgb(255, 0, 0) !important;
+        color: black !important;
+    }
+    .lightgreen {
+        background-color: rgb(174, 255, 174) !important;
+        border-color: rgb(0, 206, 0)  !important;
+        color: black !important;
+    }
+    .lightred {
+        background-color: #ffc1c1 !important;
+        border-color: rgb(255, 0, 0) !important;
+        color: black !important;
     }
 }
 @media print {

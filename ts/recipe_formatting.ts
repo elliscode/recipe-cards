@@ -571,18 +571,24 @@ const copyRecipe = (ev: Event) => {
     const card: HTMLDivElement = (ev.target as HTMLElement).parentElement?.parentElement as HTMLDivElement;
     const text = convertRecipeToMarkdown(card, false);
     navigator.clipboard.writeText(text);
-    const info: HTMLElement = document.getElementById('info') as HTMLElement;
-    info.style.display = 'inline-block';
-    info.innerText = 'Copied ' + card.getElementsByTagName('h3')[0].textContent + ' to clipboard';
-    startGradualFade(info);
+    displayAlert('Copied ' + card.getElementsByTagName('h3')[0].textContent + ' to clipboard', 'lightgreen');
 }
 const copyMarkdown = (ev: Event) => {
     const card: HTMLDivElement = (ev.target as HTMLElement).parentElement?.parentElement as HTMLDivElement;
     const text = convertRecipeToMarkdown(card, true);
     navigator.clipboard.writeText(text);
+    displayAlert('Copied ' + card.getElementsByTagName('h3')[0].textContent + ' to clipboard', 'lightgreen');
+}
+const displayAlert = (alertText : string, ...cssClasses : string[]) => {
     const info: HTMLElement = document.getElementById('info') as HTMLElement;
     info.style.display = 'inline-block';
-    info.innerText = 'Copied ' + card.getElementsByTagName('h3')[0].textContent + ' to clipboard';
+    info.innerText = alertText;
+    for(const cssClass of Array.from(info.classList)) {
+        info.classList.remove(cssClass);
+    }
+    for(const classToAdd of cssClasses) {
+        info.classList.add(classToAdd);
+    }
     startGradualFade(info);
 }
 let copyTimeout: number | undefined = undefined;
@@ -697,6 +703,8 @@ const pinRecipe = (ev: Event) => {
         header2.addEventListener('touchstart', touchy, {passive: true});
         header2.addEventListener('touchmove', touchy2, {passive: false});
         header2.addEventListener('touchend', touchy4, {passive: true});
+
+        displayAlert('Pinned ' + header2.textContent! + ' to top of page!', 'lightgreen');
     }
 }
 const pinRecipeBackend = (pinImg : HTMLImageElement, card : HTMLDivElement) => {
@@ -738,6 +746,8 @@ const unpinRecipe = (ev: Event) => {
         header2.addEventListener('touchstart', touchy, {passive: true});
         header2.addEventListener('touchmove', touchy2, {passive: false});
         header2.addEventListener('touchend', touchy3, {passive: true});
+
+        displayAlert('Removed ' + header2.textContent! + ' from pinned group!', 'lightred');
     }
 }
 const unpinRecipeBackend = (pinImg : HTMLImageElement, card : HTMLDivElement) => {
