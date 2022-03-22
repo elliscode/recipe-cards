@@ -8,7 +8,7 @@ const VARIABLE_NAME = 'recipe-saves-by-title';
 
 let glyphMap = new Map<string, GlyphUnit>();
 
-glyphMap.set('\u00B0', { regex: /([0-9]+)\s*f\b/gi, replace: '$1\u00B0F', plaintext: '$1F' });
+glyphMap.set('\u00B0', { regex: /([0-9]+)\s*f\b/gi, replace: '$1\u00B0F', plaintext: '$' });
 glyphMap.set('\u2189', { regex: /\b0\/3\b/gi, replace: '\u2189', plaintext: '0/3' });
 glyphMap.set('\u2152', { regex: /\b1\/10\b/gi, replace: '\u2152', plaintext: '1/10' });
 glyphMap.set('\u2151', { regex: /\b1\/9\b/gi, replace: '\u2151', plaintext: '1/9' });
@@ -31,7 +31,7 @@ glyphMap.set('\u215E', { regex: /\b7\/8\b/gi, replace: '\u215E', plaintext: '7/8
 glyphMap.set('\u2013', { regex: /[-]+/gi, replace: '\u2013', plaintext: '-' });
 glyphMap.set('\u00E9', { regex: /\u00e9/gi, replace: '\u00E9', plaintext: 'e' });
 glyphMap.set('\u00F1', { regex: /\u00F1/gi, replace: '\u00F1', plaintext: 'n' });
-glyphMap.set('\u00d7', { regex: /([0-9])\s*x\s*([0-9])/gi, replace: '$1\u00d7$2', plaintext: '$1x$2' });
+glyphMap.set('\u00d7', { regex: /([0-9])\s*x\s*([0-9])/gi, replace: '$1\u00d7$2', plaintext: 'x' });
 
 interface RegexUnit {
     replace: string;
