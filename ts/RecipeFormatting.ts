@@ -10,27 +10,20 @@ export default class RecipeFormatting {
     readonly MARGIN: number = 10;
 
     readonly recipesMap: Map<string, Map<string, RecipeCard>> = new Map();
-    startX: number | undefined;
-    prevDiff: number | undefined;
-    saveSearchCallback: number | undefined;
-    scrollPos: number;
-    copyTimeout: number | undefined;
+    startX: number | undefined = undefined;
+    prevDiff: number | undefined = undefined;
+    saveSearchCallback: number | undefined = undefined;
+    scrollPos: number = 0;
+    copyTimeout: number | undefined = undefined;
 
-    readonly categoryOrderMap: Map<string, number> = new Map();
-    constructor() {
-        this.categoryOrderMap.set("Meals", this.categoryOrderMap.size + 1);
-        this.categoryOrderMap.set("Sides", this.categoryOrderMap.size + 1);
-        this.categoryOrderMap.set("Snacks", this.categoryOrderMap.size + 1);
-        this.categoryOrderMap.set("Soups", this.categoryOrderMap.size + 1);
-        this.categoryOrderMap.set("Dips And Sauces", this.categoryOrderMap.size + 1);
-        this.categoryOrderMap.set("Drinks", this.categoryOrderMap.size + 1);
-        this.categoryOrderMap.set("Desserts", this.categoryOrderMap.size + 1);
-        this.startX = undefined;
-        this.prevDiff = undefined;
-        this.saveSearchCallback = undefined;
-        this.scrollPos = 0;
-        this.copyTimeout = undefined;
-    }
+    static readonly categoryOrderMap: Map<string, number> = new Map(
+        [["Meals", 1],
+        ["Sides", 2],
+        ["Snacks", 3],
+        ["Soups", 4],
+        ["Dips And Sauces", 5],
+        ["Drinks", 6],
+        ["Desserts", 7]]);
 
     public readonly parseRecipes = () => {
         const cards = document.getElementsByClassName('card');
@@ -106,8 +99,8 @@ export default class RecipeFormatting {
 
 
     readonly categorySortFunction = (first: string, second: string): number => {
-        const firstIndex: number | undefined = this.categoryOrderMap.get(first);
-        const secondIndex: number | undefined = this.categoryOrderMap.get(second);
+        const firstIndex: number | undefined = RecipeFormatting.categoryOrderMap.get(first);
+        const secondIndex: number | undefined = RecipeFormatting.categoryOrderMap.get(second);
         if (firstIndex && secondIndex) {
             if (firstIndex < secondIndex) {
                 return -1;
@@ -576,21 +569,21 @@ export default class RecipeFormatting {
         for (const classToAdd of cssClasses) {
             info.classList.add(classToAdd);
         }
-        this.startGradualFade(info);
+        RecipeFormatting.startGradualFade(info, this.copyTimeout);
     }
-    readonly startGradualFade = (element: HTMLElement) => {
+    static readonly startGradualFade = (element: HTMLElement, timeout: number | undefined) => {
         element.style.opacity = '1';
-        clearTimeout(this.copyTimeout);
-        this.copyTimeout = setTimeout(this.gradualFade, 1500, element);
+        clearTimeout(timeout);
+        timeout = setTimeout(RecipeFormatting.gradualFade, 1500, element, timeout);
     };
-    readonly gradualFade = (element: HTMLElement) => {
+    static readonly gradualFade = (element: HTMLElement, timeout: number | undefined) => {
         const newVal = parseFloat(element.style.opacity) - 0.01;
         if (newVal > 0) {
             element.style.opacity = newVal.toString();
-            this.copyTimeout = setTimeout(this.gradualFade, 10, element);
+            timeout = setTimeout(this.gradualFade, 10, element);
         } else {
             element.style.display = 'none';
-            this.copyTimeout = undefined;
+            timeout = undefined;
         }
     };
     readonly convertRecipeToMarkdown = (card: HTMLDivElement, markdown: boolean): string => {
