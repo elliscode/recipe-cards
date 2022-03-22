@@ -9,13 +9,24 @@
     <meta name="author" content="elliscode.com" />
 </head>
 
-<body style="overflow:hidden;">
-    <textarea oninput="queueSaveToLocalStorage()" rows="15" style="width:100%;resize:none;font-size:20px;" id="text"></textarea>
-    <button onclick="removeUnusualCharacters()">To ASCII</button>
-    <button onclick="generateCallback()">Generate!</button>
-    <p id="info" style="display:none;">Nothing here</p>
+<body>
+    <p id="info"
+        style="position:fixed;top:0;right:0;background-color:#cccccccc;border-radius:15px;padding:5px 15px 5px 15px;display:none;">Nothing here</p>
+    <div style="width:100%;box-sizing: border-box;">
+        <textarea oninput="queueSaveToLocalStorage()" rows="15"
+            style="width:100%;resize:none;font-size:20px;box-sizing: border-box;" id="text"></textarea>
+    </div>
+    <div>
+        <button onclick="removeUnusualCharacters()">To ASCII</button>
+        <button onclick="bulletNewLinesWhereAppropriate()">Add Bullets</button>
+        <button onclick="addFields()">Add Fields</button>
+        <button onclick="generateCallback()">Generate!</button>
+    </div>
+    <div>
+        <button onclick="copyLocalStorage()">Copy local storage (debug)</button>
+    </div>
     <div id="navigation"></div>
 </body>
-<script src="js/generator.js?v=014"></script>
+<script src="js/generator.js?v=020"></script>
 
 </html>

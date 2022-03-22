@@ -4,6 +4,8 @@ interface GlyphUnit {
     plaintext: string;
 }
 
+const VARIABLE_NAME = 'recipe-saves-by-title';
+
 let glyphMap = new Map<string, GlyphUnit>();
 
 glyphMap.set('\u00B0', { regex: /([0-9]+)\s*f\b/gi, replace: '$1\u00B0F', plaintext: '$1F' });
@@ -377,9 +379,12 @@ const generateCallback = (ev: Event) => {
     str = str.replace(/(<(div|h3|h4|h5|h6|ul|li|p|a))/g, "\n$1");
 
     navigator.clipboard.writeText(str);
+    displayInfo('Copied ' + recipe.title + ' to clipboard');
+}
+const displayInfo = (text : string) => {
     let info: HTMLElement = document.getElementById('info');
     info.style.display = 'inline-block';
-    info.innerText = 'Copied ' + recipe.title + ' to clipboard';
+    info.innerText = text;
     startGradualFade(info);
 }
 let buildRecipeCard = function (recipeJson: RecipeJson): HTMLDivElement {
@@ -460,10 +465,10 @@ const queueSaveToLocalStorage = () => {
 const saveToLocalStorage = () => {
     const textBox : HTMLTextAreaElement = document.getElementById('text') as HTMLTextAreaElement;
     const saves = loadLocalStorage();
-    const key = determineKeyFromTextContent(textBox.value);
+    const key = determineKeyFromTextContent(textBox.value).trim();
     if(key) {
         saves[key] = textBox.value;
-        window.localStorage.setItem('recipe-saves-by-title', JSON.stringify(saves));
+        window.localStorage.setItem(VARIABLE_NAME, JSON.stringify(saves));
         updateButtonsFromLocalStorage();
     }
 }
@@ -474,10 +479,18 @@ const determineKeyFromTextContent = (fullString : string) => {
     }
 }
 const loadLocalStorage = () : any => {
-    const value = window.localStorage.getItem('recipe-saves-by-title');
+    const value = window.localStorage.getItem(VARIABLE_NAME);
     if (value) {
         try {
-            return JSON.parse(value);
+            const tempValue = JSON.parse(value);
+            for(const key of Object.keys(tempValue)) {
+                if(key != key.trim()) {
+                    const memory = tempValue[key];
+                    delete tempValue[key];
+                    tempValue[key.trim()] = memory;
+                }
+            }
+            return tempValue;
         } catch (e) {
             console.log(e);
         }
@@ -510,8 +523,9 @@ const deleteFromButton = (event : Event) => {
     const key = ((event.target as HTMLButtonElement).parentElement.firstElementChild as HTMLButtonElement).innerText;
     const saves = loadLocalStorage();
     delete saves[key];
-    window.localStorage.setItem('recipe-saves-by-title', JSON.stringify(saves));
+    window.localStorage.setItem(VARIABLE_NAME, JSON.stringify(saves));
     updateButtonsFromLocalStorage();
+    displayInfo('Deleted!');
 }
 const loadFromButton = (event : Event) => {
     const key = (event.target as HTMLButtonElement).innerText;
@@ -520,9 +534,10 @@ const loadFromButton = (event : Event) => {
     if(save) {
         const textBox : HTMLTextAreaElement = document.getElementById('text') as HTMLTextAreaElement;
         textBox.value = save;
+        displayInfo('Loaded ' + key + '!');
     } else {
         delete saves[key];
-        window.localStorage.setItem('recipe-saves-by-title', JSON.stringify(saves));
+        window.localStorage.setItem(VARIABLE_NAME, JSON.stringify(saves));
     }
 }
 const removeUnusualCharacters = (event : Event) => {
@@ -531,5 +546,54 @@ const removeUnusualCharacters = (event : Event) => {
     text = unglyph(text);
     text = text.replace(/\n[^\u000A\u001F-\u007E]/g,'\n- ').replace(/[^\u000A\u001F-\u007E]/g,'');
     textBox.value = text;
+    displayInfo('Sanitized text!');
+}
+const fields : string[] = ['Link:', 'Category:', 'Tags:', 'Servings:'];
+const bulletNewLinesWhereAppropriate = (event : Event) => {
+    const textBox : HTMLTextAreaElement = document.getElementById('text') as HTMLTextAreaElement;
+    let text = textBox.value;
+    const lines : string[] = text.split(/\n/);
+    for(let i = 0; i < lines.length; i++) {
+        if(/^[a-z0-9]/.exec(lines[i].trim())) {
+            let kill : boolean = false;
+            for(const field of fields) {
+                if(lines[i].startsWith(field)) {
+                    kill = true;
+                }
+            }
+            if(kill) {
+                continue;
+            }
+            lines[i] = '- ' + lines[i];
+        }
+    }
+    textBox.value = lines.join('\n');
+    displayInfo('Added bullet points!');
+}
+const addFields = () => {
+    const textBox : HTMLTextAreaElement = document.getElementById('text') as HTMLTextAreaElement;
+    let text = textBox.value;
+    const lines : string[] = text.split(/\n/);
+    const fieldsToIgnore : string[] = [];
+    for(let i = 0; i < lines.length; i++) {
+        for(const field of fields) {
+            if(lines[i].startsWith(field)) {
+                fieldsToIgnore.push(field);
+            }
+        }
+    }
+    let prefixText = '';
+    for(const field of fields) {
+        if(-1 == fieldsToIgnore.indexOf(field)) {
+            prefixText += field + ' ' + '\n';
+        }
+    }
+    textBox.value = prefixText + lines.join('\n');
+    displayInfo('Added fields!');
+}
+const copyLocalStorage = () => {
+    const text = window.localStorage.getItem(VARIABLE_NAME);
+    navigator.clipboard.writeText(text);
+    displayInfo('Copied ' + VARIABLE_NAME + ' to clipboard');
 }
 updateButtonsFromLocalStorage();
