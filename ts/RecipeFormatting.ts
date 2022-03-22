@@ -13,7 +13,7 @@ export default class RecipeFormatting {
     startX: number | undefined;
     prevDiff: number | undefined;
     saveSearchCallback: number | undefined;
-    scrollPos : number;
+    scrollPos: number;
     copyTimeout: number | undefined;
 
     readonly categoryOrderMap: Map<string, number> = new Map();
