@@ -9,7 +9,8 @@
     ],
     "downlevelIteration": true,
     "outFile": "js/script.js",
-    "strict": true
+    "strict": true,
+    "esModuleInterop": true
   },
   "include": [
     "ts/**/*"

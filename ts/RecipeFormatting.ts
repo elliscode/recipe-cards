@@ -5,6 +5,7 @@ import Tags from './Tags'
 import Title from './Title'
 import RecipeCard from './RecipeCard'
 import Timeout from './Timeout'
+import NoSleep from './nosleep';
 
 export default class RecipeFormatting {
     readonly ACCEPT_WIDTH: number = 40;
@@ -16,6 +17,7 @@ export default class RecipeFormatting {
     saveSearchCallback: Timeout = new Timeout();
     scrollPos: number = 0;
     copyTimeout: Timeout = new Timeout();
+    noSleep : NoSleep = new NoSleep();
 
     static readonly categoryOrderMap: Map<string, number> = new Map(
         [["Meals", 1],
@@ -515,6 +517,7 @@ export default class RecipeFormatting {
         input.value = numerator.toString();
     }
     readonly showRecipe = (ev: Event) => {
+        this.noSleep.enable();
         this.scrollPos = window.scrollY;
         const wrapper: HTMLDivElement = document.getElementById('wrapper') as HTMLDivElement;
         wrapper.style.display = 'none';
@@ -532,6 +535,7 @@ export default class RecipeFormatting {
         window.scrollTo(0, 0);
     }
     readonly closeRecipes = (ev: Event) => {
+        this.noSleep.disable();
         const wrapper: HTMLDivElement = document.getElementById('wrapper') as HTMLDivElement;
         wrapper.style.display = '';
         const contentDiv: HTMLDivElement = (ev.target as HTMLHeadingElement).parentElement as HTMLDivElement;
