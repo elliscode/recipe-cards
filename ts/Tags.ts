@@ -1,4 +1,4 @@
 export default interface Tags {
     value: string[];
-    element: HTMLParagraphElement | undefined;
+    element?: HTMLParagraphElement | undefined;
 }

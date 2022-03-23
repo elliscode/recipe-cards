@@ -38,16 +38,14 @@ export default class Generator {
         ['ml', { replace: '$1 ml', regex: /([0-9]+)\s*ml/gi, words: /\b(milliliters|milliliter|mls)\b/gi }],
         ['oz', { replace: '$1 oz', regex: /([0-9]+)\s*oz/gi, words: /\b(ounces|ounce|fluid ounces|fluid ounce|fl oz|floz)\b/gi }]]);
 
-    readonly determineCategoryNumberFromCategoryName = function (category: string): number {
-        let maxNumber: number = 0;
+    readonly determineCategoryNameFromCategoryName = function (category: string): String {
         for (let currentCategory of RecipeFormatting.categoryOrderMap.keys()) {
             if (currentCategory.toLowerCase().includes(category.toLowerCase())) {
-                return RecipeFormatting.categoryOrderMap.get(currentCategory)!;
+                return currentCategory;
             }
-            maxNumber = Math.max(RecipeFormatting.categoryOrderMap.get(currentCategory)!, maxNumber);
         }
-        RecipeFormatting.categoryOrderMap.set(category, maxNumber + 1);
-        return maxNumber + 1;
+        RecipeFormatting.categoryOrderMap.set(category, RecipeFormatting.categoryOrderMap.size);
+        return category;
     };
     readonly formatCard = function (card: HTMLElement, markdown: boolean, tag: boolean): string {
         let doubleSpace: boolean = markdown && !tag;
@@ -162,14 +160,6 @@ export default class Generator {
         return output;
     };
     copyTimeout: number | undefined = undefined;
-    static readonly capitalize = function (input: string): string {
-        let output = '';
-        let words = input.split(/\s+/).filter(Boolean);
-        for (let word of words) {
-            output += word[0].toUpperCase() + word.substr(1) + ' ';
-        }
-        return output.trim()
-    };
     static readonly sanitize = function (text: string): string {
         text = text.replace(/\s+/g, ' ').trim();
         for (let key of Generator.unitMap.keys()) {
@@ -196,9 +186,17 @@ export default class Generator {
         return lineParts
     }
     readonly parseMarkdownRecipe = function (text: string): RecipeCard {
-        let recipeJson: RecipeCard = { 'title': 'Untitled', 'category': 'Uncategorized', 'tags': undefined, 'linkText': undefined, 'servings': 1, 'div': document.createElement('div') };
+        let recipeJson: RecipeCard = {
+            title: { 'value': 'Untitled' },
+            category: { value: 'Uncategorized' },
+            tags: { value: [] },
+            link: { value: undefined },
+            servings: { value: 1 },
+            content: document.createElement('div'),
+            card: document.createElement('div')
+        };
         let lines: string[] = text.split(/[\r\n]+/).map(line => line.trim()).filter(line => line.length > 0);
-        let divItem: HTMLDivElement = recipeJson.div;
+        let divItem: HTMLDivElement = recipeJson.content;
         for (let lineIndex: number = 0; lineIndex < lines.length; lineIndex++) {
             let line: string = lines[lineIndex];
             const servingsPrefix = 'Servings: ';
@@ -206,42 +204,42 @@ export default class Generator {
             const categoryPrefix = 'Category: ';
             const tagsPrefix = 'Tags: ';
             if (line.toLowerCase().startsWith(servingsPrefix.toLowerCase())) {
-                recipeJson.servings = parseFloat(line.substring(servingsPrefix.length));
+                recipeJson.servings.value = parseFloat(line.substring(servingsPrefix.length));
             } else if (line.toLowerCase().startsWith(linkPrefix.toLowerCase())) {
-                recipeJson.linkText = line.substring(linkPrefix.length);
+                recipeJson.link.value = line.substring(linkPrefix.length);
             } else if (line.toLowerCase().startsWith(tagsPrefix.toLowerCase())) {
-                recipeJson.tags = line.substring(tagsPrefix.length);
+                recipeJson.tags.value = line.substring(tagsPrefix.length).split(/,/);
             } else if (line.toLowerCase().startsWith(categoryPrefix.toLowerCase())) {
-                recipeJson.category = line.substring(categoryPrefix.length);
+                recipeJson.category.value = line.substring(categoryPrefix.length);
             } else if (line.startsWith('# ')) {
-                line = capitalize(line.substr(2));
-                recipeJson.title = line;
+                line = RecipeFormatting.createHeader(line.substring(2));
+                recipeJson.title.value = line;
             } else if (line.startsWith('## ')) {
-                line = capitalize(line.substr(3));
+                line = RecipeFormatting.createHeader(line.substr(3));
                 let element: HTMLHeadingElement = document.createElement('h4');
                 element.innerText = line;
                 divItem.appendChild(element);
             } else if (line.startsWith('### ')) {
-                line = capitalize(line.substr(4));
+                line = RecipeFormatting.createHeader(line.substr(4));
                 let element: HTMLHeadingElement = document.createElement('h5');
                 element.innerText = line;
                 divItem.appendChild(element);
             } else if (line.startsWith('#### ')) {
-                line = capitalize(line.substr(4));
+                line = RecipeFormatting.createHeader(line.substr(4));
                 let element: HTMLHeadingElement = document.createElement('h6');
                 element.innerText = line;
                 divItem.appendChild(element);
-            } else if (findIfBulletAndHowWide(line) > 0) {
+            } else if (Generator.findIfBulletAndHowWide(line) > 0) {
                 let list: HTMLUListElement = document.createElement('ul');
 
                 lineIndex = lineIndex - 1;
-                while (lineIndex + 1 < lines.length && findIfBulletAndHowWide(lines[lineIndex + 1]) > 0) {
+                while (lineIndex + 1 < lines.length && Generator.findIfBulletAndHowWide(lines[lineIndex + 1]) > 0) {
                     lineIndex++;
                     line = lines[lineIndex];
-                    let width = findIfBulletAndHowWide(line);
-                    line = sanitize(line.substr(width));
-                    let lineParts: Slottable[] = surroundIngredientNumbersWithSpan(line);
-                    lineParts = glyphParts(lineParts);
+                    let width = Generator.findIfBulletAndHowWide(line);
+                    line = Generator.sanitize(line.substr(width));
+                    let lineParts: Slottable[] = Generator.surroundIngredientNumbersWithSpan(line);
+                    lineParts = Generator.glyphParts(lineParts);
 
                     let element = document.createElement('li');
                     for (const part of lineParts) {
@@ -255,7 +253,7 @@ export default class Generator {
                 }
                 divItem.appendChild(list);
             } else {
-                line = sanitize(line.trim());
+                line = Generator.sanitize(line.trim());
                 let element: HTMLParagraphElement = document.createElement('p');
                 element.innerText = line;
                 divItem.appendChild(element);
@@ -324,7 +322,7 @@ export default class Generator {
         const textElement: HTMLTextAreaElement = document.getElementById('text') as HTMLTextAreaElement;
         const unglyphed: string = Generator.unglyph(textElement.value);
         const recipe: RecipeCard = this.parseMarkdownRecipe(unglyphed);
-        const generated: HTMLDivElement = buildRecipeCard(recipe);
+        const generated: HTMLDivElement = this.buildRecipeCard(recipe);
         console.log(generated);
 
         let s = new XMLSerializer();
@@ -332,7 +330,7 @@ export default class Generator {
         str = str.replace(/(<(div|h3|h4|h5|h6|ul|li|p|a))/g, "\n$1");
 
         navigator.clipboard.writeText(str);
-        this.displayInfo('Copied ' + recipe.title + ' to clipboard');
+        this.displayInfo('Copied ' + recipe.title.value + ' to clipboard');
     }
     readonly displayInfo = (text: string) => {
         let info: HTMLElement = document.getElementById('info')!;
@@ -340,23 +338,22 @@ export default class Generator {
         info.innerText = text;
         RecipeFormatting.startGradualFade(info, this.copyTimeout);
     }
-    readonly buildRecipeCard = function (recipeJson: RecipeCard): HTMLDivElement {
-        let card = createCard();
-        card.appendChild(recipeJson.div);
+    readonly buildRecipeCard = (recipeJson: RecipeCard): HTMLDivElement => {
+        let card = Generator.createCard();
+        card.appendChild(recipeJson.content);
 
-        while (recipeJson.div.firstElementChild) {
-            card.appendChild(recipeJson.div.firstElementChild);
+        while (recipeJson.content.firstElementChild) {
+            card.appendChild(recipeJson.content.firstElementChild);
         }
 
-        recipeJson.div.remove();
+        recipeJson.content.remove();
 
         let divItem = card;
         let header2 = document.createElement('h3');
-        header2.textContent = recipeJson.title;
+        header2.textContent = recipeJson.title.value;
         divItem.insertBefore(header2, divItem.firstChild);
 
-        const categoryNumber = determineCategoryNumberFromCategoryName(recipeJson.category);
-        const category = RecipeFormatting.categoryOrderMap.get(categoryNumber);
+        const category = this.determineCategoryNameFromCategoryName(recipeJson.category.value);
 
         let categoryDiv = document.createElement('p');
         divItem.insertBefore(categoryDiv, header2.nextSibling);
@@ -366,9 +363,9 @@ export default class Generator {
         divItem.insertBefore(servingsDiv, categoryDiv.nextSibling);
         servingsDiv.appendChild(document.createTextNode('Servings: ' + recipeJson.servings.toString()));
 
-        if (undefined != recipeJson.linkText) {
+        if (recipeJson.link.value) {
             let link = document.createElement('a');
-            link.setAttribute('href', recipeJson.linkText);
+            link.setAttribute('href', recipeJson.link.value);
             link.innerText = "Source material"
             divItem.appendChild(link);
         }
@@ -418,7 +415,7 @@ export default class Generator {
     readonly saveToLocalStorage = () => {
         const textBox: HTMLTextAreaElement = document.getElementById('text') as HTMLTextAreaElement;
         const saves = this.loadLocalStorage();
-        const key = Generator.determineKeyFromTextContent(textBox.value)!.trim();
+        const key = Generator.determineKeyFromTextContent(textBox.value)!.replace(/\s+/g, ' ').trim();
         if (key) {
             saves[key] = textBox.value;
             window.localStorage.setItem(Generator.VARIABLE_NAME, JSON.stringify(saves));
@@ -437,10 +434,11 @@ export default class Generator {
             try {
                 const tempValue = JSON.parse(value);
                 for (const key of Object.keys(tempValue)) {
-                    if (key != key.trim()) {
+                    const sanitizedKey = key.replace(/\s+/g, ' ').trim();
+                    if (key != sanitizedKey) {
                         const memory = tempValue[key];
                         delete tempValue[key];
-                        tempValue[key.trim()] = memory;
+                        tempValue[sanitizedKey] = memory;
                     }
                 }
                 return tempValue;
@@ -550,4 +548,3 @@ export default class Generator {
         this.displayInfo('Copied ' + Generator.VARIABLE_NAME + ' to clipboard');
     }
 }
-// updateButtonsFromLocalStorage();

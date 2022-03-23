@@ -1,4 +1,4 @@
 export default interface Category {
     value: string;
-    element: HTMLParagraphElement | undefined;
+    element?: HTMLParagraphElement | undefined;
 }

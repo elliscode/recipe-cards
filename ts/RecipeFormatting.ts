@@ -204,7 +204,7 @@ export default class RecipeFormatting {
         // card.appendChild(pinImg);
     }
 
-    readonly createHeader = (...input: string[]): string => {
+    static readonly createHeader = (...input: string[]): string => {
         let fullString = '_';
         for (const item of input) {
             fullString += item + "_";
@@ -259,7 +259,7 @@ export default class RecipeFormatting {
     readonly generateRecipeButtons = (recipe: RecipeCard) => {
         const divItem: HTMLDivElement = recipe.card;
         const header2: HTMLHeadingElement = recipe.title.element!;
-        const id: string = this.createHeader(recipe.category.value, recipe.title.value);
+        const id: string = RecipeFormatting.createHeader(recipe.category.value, recipe.title.value);
         divItem.setAttribute('id', id);
 
         header2.addEventListener('touchstart', this.touchy, { passive: true });
@@ -580,7 +580,7 @@ export default class RecipeFormatting {
         const newVal = parseFloat(element.style.opacity) - 0.01;
         if (newVal > 0) {
             element.style.opacity = newVal.toString();
-            timeout = setTimeout(this.gradualFade, 10, element);
+            timeout = setTimeout(RecipeFormatting.gradualFade, 10, element);
         } else {
             element.style.display = 'none';
             timeout = undefined;

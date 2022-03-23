@@ -13,20 +13,20 @@
     <p id="info"
         style="position:fixed;top:0;right:0;background-color:#cccccccc;border-radius:15px;padding:5px 15px 5px 15px;display:none;">Nothing here</p>
     <div style="width:100%;box-sizing: border-box;">
-        <textarea oninput="queueSaveToLocalStorage()" rows="15"
+        <textarea rows="15"
             style="width:100%;resize:none;font-size:20px;box-sizing: border-box;" id="text"></textarea>
     </div>
     <div>
-        <button onclick="removeUnusualCharacters()">To ASCII</button>
-        <button onclick="bulletNewLinesWhereAppropriate()">Add Bullets</button>
-        <button onclick="addFields()">Add Fields</button>
-        <button onclick="generateCallback()">Generate!</button>
+        <button id="to-ascii">To ASCII</button>
+        <button id="add-bullets">Add Bullets</button>
+        <button id="add-fields">Add Fields</button>
+        <button id="generate">Generate!</button>
     </div>
     <div>
-        <button onclick="copyLocalStorage()">Copy local storage (debug)</button>
+        <button id="copy-local-storage">Copy local storage (debug)</button>
     </div>
     <div id="navigation"></div>
 </body>
-<script src="js/generator.js?v=021"></script>
+<script data-main="../js/main_GeneratorMain" src="../js/require.js"></script>
 
 </html>

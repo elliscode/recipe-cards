@@ -1,4 +1,4 @@
 export default interface Title {
     value: string;
-    element: HTMLHeadingElement | undefined;
+    element?: HTMLHeadingElement | undefined;
 }
