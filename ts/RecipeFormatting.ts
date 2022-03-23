@@ -13,7 +13,7 @@ export default class RecipeFormatting {
     readonly recipesMap: Map<string, Map<string, RecipeCard>> = new Map();
     startX: number | undefined = undefined;
     prevDiff: number | undefined = undefined;
-    saveSearchCallback: number | undefined = undefined;
+    saveSearchCallback: Timeout = new Timeout();
     scrollPos: number = 0;
     copyTimeout: Timeout = new Timeout();
 
@@ -382,10 +382,8 @@ export default class RecipeFormatting {
         this.searchBackend(search);
     }
     readonly scheduleSaveSearch = () => {
-        if (this.saveSearchCallback) {
-            clearTimeout(this.saveSearchCallback);
-        }
-        this.saveSearchCallback = setTimeout(this.saveSearchToLocalStorage, 1000);
+        clearTimeout(this.saveSearchCallback.value);
+        this.saveSearchCallback.value = setTimeout(this.saveSearchToLocalStorage, 1000);
     }
     readonly saveSearchToLocalStorage = () => {
         const search: HTMLInputElement = document.getElementById('search') as HTMLInputElement;
