@@ -3,10 +3,10 @@
 ## setup
 
 ```
-./configure.sh
+tsc
 ```
 
-This will clone the https://github.com/elliscode/container-weights-calculator and https://github.com/elliscode/serving-calculator utilities as subdirectories, which the navigation links at the top of the page refer to.
+this will compile all the typescript modules, then you can open `index.html` or `generator/index.html` to use the webpage
 
 ## info
 

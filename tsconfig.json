@@ -1,9 +1,14 @@
 {
   "compilerOptions": {
-    "target": "es2015",
-    "module": "commonjs",
-    "outDir": "js",
-    "sourceMap": true,
+    "module": "amd",
+    "lib": [
+      "es5",
+      "es6",
+      "dom",
+      "dom.iterable"
+    ],
+    "downlevelIteration": true,
+    "outFile": "js/script.js",
     "strict": true
   },
   "include": [
