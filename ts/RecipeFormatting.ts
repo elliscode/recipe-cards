@@ -4,6 +4,7 @@ import Servings from './Servings'
 import Tags from './Tags'
 import Title from './Title'
 import RecipeCard from './RecipeCard'
+import Timeout from './Timeout'
 
 export default class RecipeFormatting {
     readonly ACCEPT_WIDTH: number = 40;
@@ -14,7 +15,7 @@ export default class RecipeFormatting {
     prevDiff: number | undefined = undefined;
     saveSearchCallback: number | undefined = undefined;
     scrollPos: number = 0;
-    copyTimeout: number | undefined = undefined;
+    copyTimeout: Timeout = new Timeout();
 
     static readonly categoryOrderMap: Map<string, number> = new Map(
         [["Meals", 1],
@@ -571,19 +572,19 @@ export default class RecipeFormatting {
         }
         RecipeFormatting.startGradualFade(info, this.copyTimeout);
     }
-    static readonly startGradualFade = (element: HTMLElement, timeout: number | undefined) => {
+    static readonly startGradualFade = (element: HTMLElement, timeout: Timeout) : void => {
         element.style.opacity = '1';
-        clearTimeout(timeout);
-        timeout = setTimeout(RecipeFormatting.gradualFade, 1500, element, timeout);
+        clearTimeout(timeout.value);
+        timeout.value = setTimeout(RecipeFormatting.gradualFade, 1500, element, timeout);
     };
-    static readonly gradualFade = (element: HTMLElement, timeout: number | undefined) => {
+    static readonly gradualFade = (element: HTMLElement, timeout: Timeout) => {
         const newVal = parseFloat(element.style.opacity) - 0.01;
         if (newVal > 0) {
             element.style.opacity = newVal.toString();
-            timeout = setTimeout(RecipeFormatting.gradualFade, 10, element);
+            timeout.value = setTimeout(RecipeFormatting.gradualFade, 10, element, timeout);
         } else {
             element.style.display = 'none';
-            timeout = undefined;
+            timeout.value = undefined;
         }
     };
     readonly convertRecipeToMarkdown = (card: HTMLDivElement, markdown: boolean): string => {

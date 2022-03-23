@@ -2,6 +2,7 @@ import GlyphUnit from './GlyphUnit'
 import RegexUnit from './RegexUnit'
 import RecipeCard from './RecipeCard'
 import RecipeFormatting from './RecipeFormatting'
+import Timeout from './Timeout'
 
 export default class Generator {
     static readonly VARIABLE_NAME = 'recipe-saves-by-title';
@@ -159,7 +160,7 @@ export default class Generator {
         }
         return output;
     };
-    copyTimeout: number | undefined = undefined;
+    copyTimeout: Timeout = new Timeout();
     static readonly sanitize = function (text: string): string {
         text = text.replace(/\s+/g, ' ').trim();
         for (let key of Generator.unitMap.keys()) {
