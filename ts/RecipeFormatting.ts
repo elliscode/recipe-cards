@@ -697,6 +697,7 @@ export default class RecipeFormatting {
         if (!document.getElementById(placeholderId)) {
             const placeholder = document.createElement('div');
             placeholder.setAttribute('id', placeholderId);
+            placeholder.style.display = 'none';
             card.parentElement?.insertBefore(placeholder, card);
         }
         card.parentElement?.insertBefore(card, card.parentElement.firstChild);
