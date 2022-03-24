@@ -1,6 +1,31 @@
 * {
     font-family: Georgia, 'Times New Roman', Times, serif;
 }
+@media screen and (max-width: 600px) {
+    #recipes > .card {
+        width: calc(100% - 10px);
+    }
+}
+@media screen and (min-width: 600px) and (max-width: 900px) {
+    #recipes > .card {
+        width: calc(50% - 10px);
+    }
+}
+@media screen and (min-width: 900px) and (max-width: 1200px) {
+    #recipes > .card {
+        width: calc(33% - 10px);
+    }
+}
+@media screen and (min-width: 1200px) and (max-width: 1500px) {
+    #recipes > .card {
+        width: calc(25% - 10px);
+    }
+}
+@media screen and (min-width: 1500px) {
+    #recipes > .card {
+        width: calc(20% - 10px);
+    }
+}
 @media screen {
     #recipes {
         display: none;
@@ -17,7 +42,7 @@
         margin:0;
     }
     .hide {
-        display:none;
+        display:none!important;
     }
     h1 {
         margin-top:13px;
@@ -27,15 +52,18 @@
     h2 {
         border-top: 3px black solid;
         padding-top:10px;
-        margin-top:19px;
+        margin-top:10px;
     }
     h3 {
         margin:0px;
     }
+    .close-div {
+        position:absolute;
+        top:-50px;
+        right:70px;
+    }
     .close-recipe {
         position:fixed;
-        top:4px;
-        right:4px;
         font-size:30px;
         border-radius: 15px;
         border-style: none;
@@ -46,9 +74,12 @@
         background-color:rgba(216, 245, 250, 0.8);
         touch-action: manipulation;
         user-select: none;
+        z-index:1000;
+        width:70px;
     }
     .title {
         cursor:pointer;
+        white-space: nowrap;
     }
     .servings {
         position:relative;
@@ -155,8 +186,9 @@
         border: 2px #70c8d8 solid;
         box-sizing:border-box;
         position:relative;
-        margin:10px 0px;
+        margin:0px 5px 10px 5px;
         border-radius:10px;
+        display:inline-block;
     }
     .tags {
         display: block;
@@ -175,7 +207,9 @@
         font-size:16px;
     }
     .fullscreen {
-        margin:0px;
+        margin:auto;
+        display:block;
+        max-width:600px;
     }
     .higher {
         z-index:4;
@@ -220,6 +254,7 @@
     }
     #search-group {
         position:relative;
+        margin-bottom:10px;
     }
     .not-visible {
         display:none;

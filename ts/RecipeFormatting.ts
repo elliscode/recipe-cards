@@ -305,11 +305,14 @@ export default class RecipeFormatting {
         doubleImg.addEventListener('click', this.doubleRecipe);
         servingsDiv.appendChild(doubleImg);
 
+        let closeDiv = document.createElement('div');
+        closeDiv.classList.add('close-div');
         let closeButton = document.createElement('button');
         closeButton.classList.add('close-recipe');
         closeButton.innerText = '\u00D7';
         closeButton.addEventListener('click', this.closeRecipes);
-        divItem.appendChild(closeButton);
+        closeDiv.appendChild(closeButton);
+        divItem.appendChild(closeDiv);
 
         let img = document.createElement('img');
         img.classList.add('copy');
@@ -538,7 +541,7 @@ export default class RecipeFormatting {
         this.noSleep.disable();
         const wrapper: HTMLDivElement = document.getElementById('wrapper') as HTMLDivElement;
         wrapper.style.display = '';
-        const contentDiv: HTMLDivElement = (ev.target as HTMLHeadingElement).parentElement as HTMLDivElement;
+        const contentDiv: HTMLDivElement = ((ev.target as HTMLHeadingElement).parentElement as HTMLElement).parentElement as HTMLDivElement;
         const card: HTMLDivElement = contentDiv.parentElement as HTMLDivElement;
         for (const pin of card.getElementsByClassName('pin')) {
             (pin as HTMLElement).style.display = '';
