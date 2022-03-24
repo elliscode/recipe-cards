@@ -2,4 +2,7 @@
     #recipes {
         display: block!important;
     }
+    #loading {
+        display:none!important;
+    }
 }

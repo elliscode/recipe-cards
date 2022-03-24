@@ -13,3 +13,9 @@ if(recipes && recipes instanceof HTMLDivElement) {
     const recipesElement = recipes as HTMLDivElement;
     recipesElement.style.display = 'block';
 }
+
+const loading = document.getElementById('loading');
+if(loading && loading instanceof HTMLDivElement) {    
+    const loadingElement = loading as HTMLDivElement;
+    loadingElement.style.display = 'none';
+}
