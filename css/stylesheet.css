@@ -1,31 +1,6 @@
 * {
     font-family: Georgia, 'Times New Roman', Times, serif;
 }
-@media screen and (max-width: 600px) {
-    #recipes > .card {
-        width: calc(100% - 10px);
-    }
-}
-@media screen and (min-width: 600px) and (max-width: 900px) {
-    #recipes > .card {
-        width: calc(50% - 10px);
-    }
-}
-@media screen and (min-width: 900px) and (max-width: 1200px) {
-    #recipes > .card {
-        width: calc(33% - 10px);
-    }
-}
-@media screen and (min-width: 1200px) and (max-width: 1500px) {
-    #recipes > .card {
-        width: calc(25% - 10px);
-    }
-}
-@media screen and (min-width: 1500px) {
-    #recipes > .card {
-        width: calc(20% - 10px);
-    }
-}
 @media screen {
     #recipes {
         display: none;
@@ -38,21 +13,20 @@
         margin:0;
     }
     #wrapper {
-        padding:18px;
+        padding:18px 8px 18px 8px;
         margin:0;
     }
     .hide {
         display:none!important;
     }
     h1 {
-        margin-top:13px;
-        margin-bottom:21px;
+        margin:0px 8px 10px 8px;
         font-size:32px;
     }
     h2 {
         border-top: 3px black solid;
         padding-top:10px;
-        margin-top:10px;
+        margin:0px 5px 10px 5px;
     }
     h3 {
         margin:0px;
@@ -253,17 +227,15 @@
         border-color:rgb(118,118,118);
     }
     #search-group {
+        display:none;
         position:relative;
-        margin-bottom:10px;
+        margin:0px 5px 10px 5px;
     }
     .not-visible {
         display:none;
     }
     .hidden-for-pin {
         display:none;
-    }
-    .dont-show-if-no-js {
-        display:none!important;
     }
     .pindragimg {
         box-sizing: border-box;

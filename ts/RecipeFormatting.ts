@@ -221,8 +221,9 @@ export default class RecipeFormatting {
         }
     };
     readonly touchy2 = (event: TouchEvent) => {
-        let xdiff = Math.min(0, event.touches[0].clientX - this.startX!);
-        if (Math.abs(xdiff) > this.MARGIN) {
+        const multiplier : number = 5;
+        let xdiff = Math.abs(Math.min(0, event.touches[0].clientX - this.startX!));
+        if (xdiff > this.MARGIN) {
             if (event.cancelable) {
                 event.preventDefault();
             } else {
@@ -231,11 +232,16 @@ export default class RecipeFormatting {
         } else {
             xdiff = 0;
         }
+        if(xdiff > this.ACCEPT_WIDTH) {
+            let remainder = xdiff - this.ACCEPT_WIDTH;
+            xdiff = this.ACCEPT_WIDTH + Math.sqrt(remainder);
+        }
         this.prevDiff = xdiff;
         const card: HTMLElement = ((event.target as HTMLElement).parentElement as HTMLElement);
-        card.style.left = xdiff + 'px';
+        card.style.left = '-' + xdiff + 'px';
         const pinDragImg = card.getElementsByClassName('pindragimg')[0] as HTMLDivElement;
-        pinDragImg.style.right = xdiff + 'px';
+        pinDragImg.style.right = '-' + xdiff + 'px';
+        pinDragImg.style.opacity = Math.min(xdiff / this.ACCEPT_WIDTH, 1).toString();
     }
     readonly touchy3 = (event: TouchEvent) => {
         const card = (event.target as HTMLHeadingElement).parentElement as HTMLDivElement;
@@ -370,11 +376,6 @@ export default class RecipeFormatting {
 
         const searchClearButton = document.getElementById('search-clear');
         searchClearButton?.addEventListener('click', this.clearSearch);
-    }
-    readonly removeDontShows = () => {
-        for (const item of document.getElementsByClassName('dont-show-if-no-js')) {
-            item.classList.remove('dont-show-if-no-js');
-        }
     }
     readonly executeSearch = (ev: Event) => {
         const search: HTMLInputElement = (ev.target as HTMLInputElement);
