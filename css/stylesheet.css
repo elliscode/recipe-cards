@@ -2,6 +2,9 @@
     font-family: Georgia, 'Times New Roman', Times, serif;
 }
 @media screen {
+    #recipes {
+        display: none;
+    }
     html {
         -webkit-text-size-adjust: 100%; /* Prevent font scaling in landscape while allowing user zoom */
     }    
