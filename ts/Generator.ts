@@ -8,7 +8,7 @@ export default class Generator {
     static readonly VARIABLE_NAME = 'recipe-saves-by-title';
 
     static readonly glyphMap: Map<string, GlyphUnit> = new Map<string, GlyphUnit>(
-        [['\u00B0', { regex: /([0-9]+)\s*f\b/gi, replace: '$1\u00B0F', plaintext: '$' }],
+        [['\u00B0', { regex: /([0-9]+)\s*f\b/gi, replace: '$1\u00B0F', plaintext: '$F' }],
         ['\u2189', { regex: /\b0\/3\b/gi, replace: '\u2189', plaintext: '0/3' }],
         ['\u2152', { regex: /\b1\/10\b/gi, replace: '\u2152', plaintext: '1/10' }],
         ['\u2151', { regex: /\b1\/9\b/gi, replace: '\u2151', plaintext: '1/9' }],
@@ -186,7 +186,15 @@ export default class Generator {
         }
         return lineParts
     }
-    readonly parseMarkdownRecipe = function (text: string): RecipeCard {
+    readonly capitalize = (text: string): string => {
+        let output: string = ' ';
+        const words = text.split(/\s+/);
+        for (const word of words) {
+            output += word.substring(0, 1).toUpperCase() + word.substring(1).toLowerCase() + ' ';
+        }
+        return output.trim();
+    }
+    readonly parseMarkdownRecipe = (text: string): RecipeCard => {
         let recipeJson: RecipeCard = {
             title: { 'value': 'Untitled' },
             category: { value: 'Uncategorized' },
@@ -213,20 +221,20 @@ export default class Generator {
             } else if (line.toLowerCase().startsWith(categoryPrefix.toLowerCase())) {
                 recipeJson.category.value = line.substring(categoryPrefix.length);
             } else if (line.startsWith('# ')) {
-                line = RecipeFormatting.createHeader(line.substring(2));
+                line = this.capitalize(line.substring(2));
                 recipeJson.title.value = line;
             } else if (line.startsWith('## ')) {
-                line = RecipeFormatting.createHeader(line.substr(3));
+                line = this.capitalize(line.substr(3));
                 let element: HTMLHeadingElement = document.createElement('h4');
                 element.innerText = line;
                 divItem.appendChild(element);
             } else if (line.startsWith('### ')) {
-                line = RecipeFormatting.createHeader(line.substr(4));
+                line = this.capitalize(line.substr(4));
                 let element: HTMLHeadingElement = document.createElement('h5');
                 element.innerText = line;
                 divItem.appendChild(element);
             } else if (line.startsWith('#### ')) {
-                line = RecipeFormatting.createHeader(line.substr(4));
+                line = this.capitalize(line.substr(4));
                 let element: HTMLHeadingElement = document.createElement('h6');
                 element.innerText = line;
                 divItem.appendChild(element);
@@ -362,7 +370,7 @@ export default class Generator {
 
         let servingsDiv = document.createElement('p');
         divItem.insertBefore(servingsDiv, categoryDiv.nextSibling);
-        servingsDiv.appendChild(document.createTextNode('Servings: ' + recipeJson.servings.toString()));
+        servingsDiv.appendChild(document.createTextNode('Servings: ' + recipeJson.servings.value.toString()));
 
         if (recipeJson.link.value) {
             let link = document.createElement('a');
@@ -374,7 +382,7 @@ export default class Generator {
         if (undefined != recipeJson.tags) {
             let tagsDiv = document.createElement('p');
             divItem.insertBefore(tagsDiv, servingsDiv.nextSibling);
-            tagsDiv.appendChild(document.createTextNode('Tags: ' + recipeJson.tags));
+            tagsDiv.appendChild(document.createTextNode('Tags: ' + recipeJson.tags.value));
         }
 
         return card;

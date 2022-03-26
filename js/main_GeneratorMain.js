@@ -1,4 +1,5 @@
 requirejs.config({
+    urlArgs: "cachebust=008",
     bundles: {
         '../js/script.js': ['GeneratorMain']
     }
