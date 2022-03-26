@@ -19,6 +19,22 @@ export default class RecipeFormatting {
     copyTimeout: Timeout = new Timeout();
     noSleep : NoSleep = new NoSleep();
 
+
+    readonly fractionMap : Map<number, string> = new Map();
+
+    constructor () {
+        for(let i = 2; i <= 64; i++) {
+            for(let j = 1; j < i; j++) {
+                const roundedValue = Math.round((j / i) * 1e5)/1e5;
+                if(this.fractionMap.has(roundedValue)) {
+                    continue;
+                }
+                const fractionString : string = j.toString() + '/' + i.toString();
+                this.fractionMap.set(roundedValue, fractionString);
+            }
+        }
+    }
+
     static readonly categoryOrderMap: Map<string, number> = new Map(
         [["Meals", 1],
         ["Sides", 2],
@@ -157,11 +173,13 @@ export default class RecipeFormatting {
                 const span: HTMLSpanElement = spanElement as HTMLSpanElement;
                 const text: string = !span.textContent ? '' : span.textContent;
                 let value: number = 0;
-                if (text.includes('/')) {
-                    const parts: string[] = text.split('/');
-                    value = parseFloat(parts[0]) / parseFloat(parts[1]);
-                } else {
-                    value = parseFloat(text);
+                for(const textPart of text.split(' ')) {
+                    if (textPart.includes('/')) {
+                        const parts: string[] = textPart.split('/');
+                        value += parseFloat(parts[0]) / parseFloat(parts[1]);
+                    } else {
+                        value += parseFloat(textPart);
+                    }
                 }
                 span.setAttribute('originalValue', value.toString());
                 span.classList.add('quantity');
@@ -447,33 +465,18 @@ export default class RecipeFormatting {
     }
     readonly modifyRecipe = (card: HTMLDivElement, multiplier: number) => {
         for (const quantity of card.getElementsByClassName('quantity')) {
-            const newValue: number = parseFloat(quantity.getAttribute('originalvalue')!) * multiplier;
+            const newValue: number = parseFloat(quantity.getAttribute('originalValue')!) * multiplier;
             (quantity as HTMLSpanElement).innerText = this.toFractionIfApplicable(newValue);
         }
     }
-
     readonly toFractionIfApplicable = (value: number): string => {
-        if ((1 / 10) - 0.001 < value && value < (1 / 10) + 0.001) { return '\u2152'; }
-        if ((1 / 9) - 0.001 < value && value < (1 / 9) + 0.001) { return '\u2151'; }
-        if ((1 / 8) - 0.001 < value && value < (1 / 8) + 0.001) { return '\u215B'; }
-        if ((1 / 7) - 0.001 < value && value < (1 / 7) + 0.001) { return '\u2150'; }
-        if ((1 / 6) - 0.001 < value && value < (1 / 6) + 0.001) { return '\u2159'; }
-        if ((1 / 5) - 0.001 < value && value < (1 / 5) + 0.001) { return '\u2155'; }
-        if ((1 / 4) - 0.001 < value && value < (1 / 4) + 0.001) { return '\u00BC'; }
-        if ((1 / 3) - 0.001 < value && value < (1 / 3) + 0.001) { return '\u2153'; }
-        if ((1 / 2) - 0.001 < value && value < (1 / 2) + 0.001) { return '\u00BD'; }
-        if ((2 / 5) - 0.001 < value && value < (2 / 5) + 0.001) { return '\u2156'; }
-        if ((2 / 3) - 0.001 < value && value < (2 / 3) + 0.001) { return '\u2154'; }
-        if ((3 / 8) - 0.001 < value && value < (3 / 8) + 0.001) { return '\u215C'; }
-        if ((3 / 5) - 0.001 < value && value < (3 / 5) + 0.001) { return '\u2157'; }
-        if ((3 / 4) - 0.001 < value && value < (3 / 4) + 0.001) { return '\u00BE'; }
-        if ((4 / 5) - 0.001 < value && value < (4 / 5) + 0.001) { return '\u2158'; }
-        if ((5 / 8) - 0.001 < value && value < (5 / 8) + 0.001) { return '\u215D'; }
-        if ((5 / 6) - 0.001 < value && value < (5 / 6) + 0.001) { return '\u215A'; }
-        if ((7 / 8) - 0.001 < value && value < (7 / 8) + 0.001) { return '\u215E'; }
-        let output = value.toString();
+        const roundedValue : number = Math.round(value * 1e5) / 1e5;
+        if(this.fractionMap.has(roundedValue)) {
+            return this.fractionMap.get(roundedValue)!;
+        }
+        let output = roundedValue.toString();
         if (output.includes('.') && output.length > 6) {
-            output = value.toFixed(4);
+            output = roundedValue.toFixed(4);
         }
         return output;
     }

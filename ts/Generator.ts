@@ -8,7 +8,7 @@ export default class Generator {
     static readonly VARIABLE_NAME = 'recipe-saves-by-title';
 
     static readonly glyphMap: Map<string, GlyphUnit> = new Map<string, GlyphUnit>(
-        [['\u00B0', { regex: /([0-9]+)\s*f\b/gi, replace: '$1\u00B0F', plaintext: '$F' }],
+        [['\u00B0', { regex: /([0-9]+)\s*f\b/gi, replace: '$1\u00B0F', plaintext: '' }],
         ['\u2189', { regex: /\b0\/3\b/gi, replace: '\u2189', plaintext: '0/3' }],
         ['\u2152', { regex: /\b1\/10\b/gi, replace: '\u2152', plaintext: '1/10' }],
         ['\u2151', { regex: /\b1\/9\b/gi, replace: '\u2151', plaintext: '1/9' }],
@@ -29,7 +29,7 @@ export default class Generator {
         ['\u215A', { regex: /\b5\/6\b/gi, replace: '\u215A', plaintext: '5/6' }],
         ['\u215E', { regex: /\b7\/8\b/gi, replace: '\u215E', plaintext: '7/8' }],
         ['\u2013', { regex: /[-]+/gi, replace: '\u2013', plaintext: '-' }],
-        ['\u00E9', { regex: /\u00e9/gi, replace: '\u00E9', plaintext: 'e' }],
+        ['\u00E9', { regex: /\u00E9/gi, replace: '\u00E9', plaintext: 'e' }],
         ['\u00F1', { regex: /\u00F1/gi, replace: '\u00F1', plaintext: 'n' }],
         ['\u00d7', { regex: /([0-9])\s*x\s*([0-9])/gi, replace: '$1\u00d7$2', plaintext: 'x' }]]);
     static readonly unitMap: Map<string, RegexUnit> = new Map<string, RegexUnit>(
@@ -156,7 +156,8 @@ export default class Generator {
         let output = input;
         for (let key of Generator.glyphMap.keys()) {
             let item = Generator.glyphMap.get(key)!;
-            output = output.replace(key, item.plaintext);
+            output = output.replace(item.regex, item.replace);
+            output = output.replace(new RegExp(item.replace,'g'), item.plaintext);
         }
         return output;
     };
@@ -275,8 +276,8 @@ export default class Generator {
         return (indexOf >= 0) ? (indexOf + (startpos || 0)) : indexOf;
     }
     static readonly surroundIngredientNumbersWithSpan = (line: string): Slottable[] => {
-        const unitRegexp: RegExp = /^([0-9\./]+)\s*(TBSP|tsp|g|ml|oz|cup)/;
-        const firstCharacterRegexp: RegExp = /^([0-9\./]+)/;
+        const unitRegexp: RegExp = /^([0-9\./ ]*[0-9]+\/[0-9]+|[0-9\./]+)\s*(TBSP|tsp|g|ml|oz|cup)/;
+        const firstCharacterRegexp: RegExp = /^([0-9\./ ]*[0-9]+\/[0-9]+|[0-9\./]+)/;
         const output: Slottable[] = [];
 
         let currentIndex: number = 0;
@@ -387,27 +388,6 @@ export default class Generator {
 
         return card;
     };
-    static readonly toFractionIfApplicable = function (value: number): string {
-        if ((1 / 10) - 0.001 < value && value < (1 / 10) + 0.001) { return '\u2152'; }
-        if ((1 / 9) - 0.001 < value && value < (1 / 9) + 0.001) { return '\u2151'; }
-        if ((1 / 8) - 0.001 < value && value < (1 / 8) + 0.001) { return '\u215B'; }
-        if ((1 / 7) - 0.001 < value && value < (1 / 7) + 0.001) { return '\u2150'; }
-        if ((1 / 6) - 0.001 < value && value < (1 / 6) + 0.001) { return '\u2159'; }
-        if ((1 / 5) - 0.001 < value && value < (1 / 5) + 0.001) { return '\u2155'; }
-        if ((1 / 4) - 0.001 < value && value < (1 / 4) + 0.001) { return '\u00BC'; }
-        if ((1 / 3) - 0.001 < value && value < (1 / 3) + 0.001) { return '\u2153'; }
-        if ((1 / 2) - 0.001 < value && value < (1 / 2) + 0.001) { return '\u00BD'; }
-        if ((2 / 5) - 0.001 < value && value < (2 / 5) + 0.001) { return '\u2156'; }
-        if ((2 / 3) - 0.001 < value && value < (2 / 3) + 0.001) { return '\u2154'; }
-        if ((3 / 8) - 0.001 < value && value < (3 / 8) + 0.001) { return '\u215C'; }
-        if ((3 / 5) - 0.001 < value && value < (3 / 5) + 0.001) { return '\u2157'; }
-        if ((3 / 4) - 0.001 < value && value < (3 / 4) + 0.001) { return '\u00BE'; }
-        if ((4 / 5) - 0.001 < value && value < (4 / 5) + 0.001) { return '\u2158'; }
-        if ((5 / 8) - 0.001 < value && value < (5 / 8) + 0.001) { return '\u215D'; }
-        if ((5 / 6) - 0.001 < value && value < (5 / 6) + 0.001) { return '\u215A'; }
-        if ((7 / 8) - 0.001 < value && value < (7 / 8) + 0.001) { return '\u215E'; }
-        return value.toString();
-    }
     static readonly createCard = function (): HTMLDivElement {
         let card = document.createElement('div');
         card.classList.add('card');
@@ -424,11 +404,14 @@ export default class Generator {
     readonly saveToLocalStorage = () => {
         const textBox: HTMLTextAreaElement = document.getElementById('text') as HTMLTextAreaElement;
         const saves = this.loadLocalStorage();
-        const key = Generator.determineKeyFromTextContent(textBox.value)!.replace(/\s+/g, ' ').trim();
-        if (key) {
-            saves[key] = textBox.value;
-            window.localStorage.setItem(Generator.VARIABLE_NAME, JSON.stringify(saves));
-            this.updateButtonsFromLocalStorage();
+        const rawKey = Generator.determineKeyFromTextContent(textBox.value);
+        if (rawKey) {
+            const key = rawKey.replace(/\s+/g, ' ').trim();
+            if (key) {
+                saves[key] = textBox.value;
+                window.localStorage.setItem(Generator.VARIABLE_NAME, JSON.stringify(saves));
+                this.updateButtonsFromLocalStorage();
+            }
         }
     }
     static readonly determineKeyFromTextContent = (fullString: string) => {
@@ -504,7 +487,10 @@ export default class Generator {
         const textBox: HTMLTextAreaElement = document.getElementById('text') as HTMLTextAreaElement;
         let text = textBox.value;
         text = Generator.unglyph(text);
-        text = text.replace(/\n[^\u000A\u001F-\u007E]/g, '\n- ').replace(/[^\u000A\u001F-\u007E]/g, '');
+        // these are all the weird unicode spaces
+        text = text.replace(/[\u0020\u00A0\u1680\u2000\u2001\u2002\u2003\u2004\u2005\u2006\u2007\u2008\u2009\u200A\u202F\u205F\u3000]/g, ' ');
+        // this is every non ascii character getting deleted
+        text = text.replace(/[^\u000A\u001F-\u007E]/g, '');
         textBox.value = text;
         this.displayInfo('Sanitized text!');
     }
@@ -514,7 +500,7 @@ export default class Generator {
         let text = textBox.value;
         const lines: string[] = text.split(/\n/);
         for (let i = 0; i < lines.length; i++) {
-            if (/^[a-z0-9]/.exec(lines[i].trim())) {
+            if (/^[a-zA-Z0-9]/.exec(lines[i].trim())) {
                 let kill: boolean = false;
                 for (const field of Generator.fields) {
                     if (lines[i].startsWith(field)) {
