@@ -352,6 +352,13 @@ export default class RecipeFormatting {
         redditImg.addEventListener('click', this.copyMarkdown);
         divItem.appendChild(redditImg);
 
+        let cronometerImg = document.createElement('img');
+        cronometerImg.classList.add('cronometer');
+        cronometerImg.setAttribute('src', 'img/cronometer_button.png?v=001');
+        cronometerImg.setAttribute('related', id);
+        cronometerImg.addEventListener('click', this.copyCronometer);
+        divItem.appendChild(cronometerImg);
+
         let printImg = document.createElement('img');
         printImg.classList.add('ellis');
         printImg.setAttribute('src', 'img/print.png?v=001');
@@ -559,13 +566,19 @@ export default class RecipeFormatting {
     }
     readonly copyRecipe = (ev: Event) => {
         const card: HTMLDivElement = (ev.target as HTMLElement).parentElement?.parentElement as HTMLDivElement;
-        const text = this.convertRecipeToMarkdown(card, false);
+        const text = this.convertRecipeToMarkdown(card, 'plain');
         navigator.clipboard.writeText(text);
         this.displayAlert('Copied ' + card.getElementsByTagName('h3')[0].textContent + ' to clipboard', 'lightgreen');
     }
     readonly copyMarkdown = (ev: Event) => {
         const card: HTMLDivElement = (ev.target as HTMLElement).parentElement?.parentElement as HTMLDivElement;
-        const text = this.convertRecipeToMarkdown(card, true);
+        const text = this.convertRecipeToMarkdown(card, 'markdown');
+        navigator.clipboard.writeText(text);
+        this.displayAlert('Copied ' + card.getElementsByTagName('h3')[0].textContent + ' to clipboard', 'lightgreen');
+    }
+    readonly copyCronometer = (ev : Event) => {
+        const card: HTMLDivElement = (ev.target as HTMLElement).parentElement?.parentElement as HTMLDivElement;
+        const text = this.convertRecipeToMarkdown(card, 'cronometer');
         navigator.clipboard.writeText(text);
         this.displayAlert('Copied ' + card.getElementsByTagName('h3')[0].textContent + ' to clipboard', 'lightgreen');
     }
@@ -596,13 +609,18 @@ export default class RecipeFormatting {
             timeout.value = undefined;
         }
     };
-    readonly convertRecipeToMarkdown = (card: HTMLDivElement, markdown: boolean): string => {
+    readonly convertRecipeToMarkdown = (card: HTMLDivElement, type: string): string => {
 
         let output = '';
 
         const titleItem: HTMLHeadingElement = card.getElementsByTagName('h3')[0];
 
-        output += (markdown ? '# ' : '') + titleItem.textContent + '\n' + '\n';
+        const markdown = 'markdown' == type;
+        const ingredientsOnly = 'cronometer' == type;
+
+        if(!ingredientsOnly) {
+            output += (markdown ? '# ' : '') + titleItem.textContent + '\n' + '\n';
+        }
 
         const contentDiv: HTMLDivElement = card.getElementsByTagName('div')[0];
 
@@ -611,7 +629,7 @@ export default class RecipeFormatting {
         let category: string = '';
         let tags: string = '';
         for (const child of contentDiv.children) {
-            if (child instanceof HTMLHeadingElement) {
+            if (!ingredientsOnly && child instanceof HTMLHeadingElement) {
                 if ('h4' === child.tagName.toLowerCase()) {
                     output += (markdown ? '## ' : '');
                 } else if ('h5' === child.tagName.toLowerCase()) {
@@ -624,16 +642,21 @@ export default class RecipeFormatting {
                 const ul: HTMLUListElement = child as HTMLUListElement;
                 for (const listChild of ul.children) {
                     if (listChild instanceof HTMLLIElement) {
-                        output += '- ' + listChild.textContent!.replace(/[\s\r\n]+/g, ' ').trim() + '\n';
+                        const lineContent = (ingredientsOnly ? '' : '- ') + listChild.textContent!.replace(/[\s\r\n]+/g, ' ').trim();
+                        if(/^[0-9].*$/.exec(lineContent) || !ingredientsOnly) {
+                            output += lineContent + '\n';
+                        }
                     }
                 }
-                output += '\n';
-            } else if (child instanceof HTMLParagraphElement) {
+                if(!ingredientsOnly) {
+                    output += '\n';
+                }
+            } else if (!ingredientsOnly && child instanceof HTMLParagraphElement) {
                 output += child.textContent + '\n' + '\n';
-            } else if (child instanceof HTMLAnchorElement) {
+            } else if (!ingredientsOnly && child instanceof HTMLAnchorElement) {
                 const link: HTMLAnchorElement = child as HTMLAnchorElement;
                 linkUrl = link.href;
-            } else if (child instanceof HTMLDivElement) {
+            } else if (!ingredientsOnly && child instanceof HTMLDivElement) {
                 if (child.classList.contains('servings')) {
                     servings = child.getElementsByTagName('input')[0].value;
                 } else if (child.classList.contains('category')) {
@@ -649,16 +672,16 @@ export default class RecipeFormatting {
             }
         }
 
-        if (servings) {
+        if (servings && markdown) {
             output += "Servings: " + servings + "\n";
         }
-        if (category) {
+        if (category && markdown) {
             output += "Category: " + category + "\n";
         }
         if (linkUrl) {
-            output += "Link: " + linkUrl + "\n";
+            output += (markdown ? "Link: " : '') + linkUrl + "\n";
         }
-        if (tags) {
+        if (tags && markdown) {
             output += "Tags: " + tags + "\n";
         }
 

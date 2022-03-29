@@ -105,7 +105,7 @@
     .ellis {
         position:absolute;
         bottom:0;
-        right:112px;
+        right:166px;
         cursor:pointer;
         touch-action: manipulation;
         user-select: none;
@@ -114,6 +114,14 @@
         position:absolute;
         bottom:0;
         right:58px;
+        cursor:pointer;
+        touch-action: manipulation;
+        user-select: none;
+    }
+    .cronometer {
+        position:absolute;
+        bottom:0;
+        right:112px;
         cursor:pointer;
         touch-action: manipulation;
         user-select: none;

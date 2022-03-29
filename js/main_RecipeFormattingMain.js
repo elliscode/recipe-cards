@@ -1,5 +1,5 @@
 requirejs.config({
-    urlArgs: "cachebust=009",
+    urlArgs: "cachebust=010",
     bundles: {
         'js/script.js': ['RecipeFormattingMain']
     }
