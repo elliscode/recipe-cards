@@ -8,7 +8,7 @@ export default class Generator {
     static readonly VARIABLE_NAME = 'recipe-saves-by-title';
 
     static readonly glyphMap: Map<string, GlyphUnit> = new Map<string, GlyphUnit>(
-        [['\u00B0', { regex: /([0-9]+)\s*f\b/gi, replace: '$1\u00B0F', plaintext: '' }],
+        [['\u00B0', { regex: /([0-9]+)\s*f\b/gi, replace: '$1\u00B0F', plaintext: '$1F' }],
         ['\u2189', { regex: /\b0\/3\b/gi, replace: '\u2189', plaintext: '0/3' }],
         ['\u2152', { regex: /\b1\/10\b/gi, replace: '\u2152', plaintext: '1/10' }],
         ['\u2151', { regex: /\b1\/9\b/gi, replace: '\u2151', plaintext: '1/9' }],
@@ -157,10 +157,13 @@ export default class Generator {
         for (let key of Generator.glyphMap.keys()) {
             let item = Generator.glyphMap.get(key)!;
             output = output.replace(item.regex, item.replace);
-            output = output.replace(new RegExp(item.replace,'g'), item.plaintext);
+            output = output.replace(new RegExp(Generator.removeDollarSignThings(item.replace),'g'), Generator.removeDollarSignThings(item.plaintext));
         }
         return output;
     };
+    static readonly removeDollarSignThings = function (text : string) : string {
+        return text.replace(/\$[0-9]+/g,'');
+    }
     copyTimeout: Timeout = new Timeout();
     static readonly sanitize = function (text: string): string {
         text = text.replace(/\s+/g, ' ').trim();
