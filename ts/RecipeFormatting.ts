@@ -191,7 +191,7 @@ export default class RecipeFormatting {
             recipe.content.appendChild(recipe.card.firstElementChild);
         }
         recipe.title.element!.classList.add('title');
-        recipe.title.element!.addEventListener('click', this.showRecipe);
+        recipe.title.element!.addEventListener('click', this.showRecipeCallback);
         recipe.card.appendChild(recipe.title.element!);
 
         this.addPin(recipe.card);
@@ -334,7 +334,7 @@ export default class RecipeFormatting {
         let closeButton = document.createElement('button');
         closeButton.classList.add('close-recipe');
         closeButton.innerText = '\u00D7';
-        closeButton.addEventListener('click', this.closeRecipes);
+        closeButton.addEventListener('click', this.closeRecipeCallback);
         closeDiv.appendChild(closeButton);
         divItem.appendChild(closeDiv);
 
@@ -530,12 +530,17 @@ export default class RecipeFormatting {
         this.modifyRecipe(card, numerator / denominator);
         input.value = numerator.toString();
     }
-    readonly showRecipe = (ev: Event) => {
+    readonly showRecipeCallback = (ev: Event) => {
+        if(ev.target instanceof HTMLHeadingElement) {    
+            const card: HTMLDivElement = (ev.target as HTMLHeadingElement).parentElement! as HTMLDivElement;
+            this.showRecipe(card);
+        }
+    }
+    readonly showRecipe = (card : HTMLDivElement) => {
         this.noSleep.enable();
         this.scrollPos = window.scrollY;
         const wrapper: HTMLDivElement = document.getElementById('wrapper') as HTMLDivElement;
         wrapper.style.display = 'none';
-        const card: HTMLDivElement = (ev.target as HTMLHeadingElement).parentElement! as HTMLDivElement;
         for (const pin of card.getElementsByClassName('pin')) {
             (pin as HTMLElement).style.display = 'none';
         }
@@ -548,12 +553,25 @@ export default class RecipeFormatting {
         document.body.appendChild(card);
         window.scrollTo(0, 0);
     }
-    readonly closeRecipes = (ev: Event) => {
+    readonly closeRecipeCallback = (ev: Event) => {
+        if(ev.target instanceof HTMLButtonElement) {
+            const contentDiv: HTMLDivElement = ((ev.target as HTMLButtonElement).parentElement as HTMLElement).parentElement as HTMLDivElement;
+            const card: HTMLDivElement = contentDiv.parentElement as HTMLDivElement;
+            this.closeRecipe(card);
+        }
+    }
+    readonly closeRecipes = () => {
+        for(const card of document.getElementsByClassName('card')) {
+            if(card.classList.contains('fullscreen')) {
+                this.closeRecipe(card as HTMLDivElement);
+            }
+        }
+    }
+    readonly closeRecipe = (card : HTMLDivElement) => {
         this.noSleep.disable();
         const wrapper: HTMLDivElement = document.getElementById('wrapper') as HTMLDivElement;
         wrapper.style.display = '';
-        const contentDiv: HTMLDivElement = ((ev.target as HTMLHeadingElement).parentElement as HTMLElement).parentElement as HTMLDivElement;
-        const card: HTMLDivElement = contentDiv.parentElement as HTMLDivElement;
+        const contentDiv: HTMLDivElement = card.getElementsByTagName('div')[0];
         for (const pin of card.getElementsByClassName('pin')) {
             (pin as HTMLElement).style.display = '';
         }
