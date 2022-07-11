@@ -534,6 +534,11 @@ export default class RecipeFormatting {
         if(ev.target instanceof HTMLHeadingElement) {    
             const card: HTMLDivElement = (ev.target as HTMLHeadingElement).parentElement! as HTMLDivElement;
             this.showRecipe(card);
+            window.removeEventListener('hashChange', this.showRecipeInUrl);
+            const title:string = card.getElementsByTagName('h3')[0].innerText.trim();
+            const sanitizedTitle:string = title.replace(/[^a-z0-9]+/gi,'_').toLowerCase();
+            history.replaceState("", "", window.location.pathname + window.location.search + '#' + sanitizedTitle);
+            window.addEventListener('hashchange', this.showRecipeInUrl);
         }
     }
     readonly showRecipe = (card : HTMLDivElement) => {
@@ -552,6 +557,23 @@ export default class RecipeFormatting {
         card.parentElement?.insertBefore(placeholder, card);
         document.body.appendChild(card);
         window.scrollTo(0, 0);
+        const title:string = card.getElementsByTagName('h3')[0].innerText.trim();
+        document.title = title;
+    }
+    readonly showRecipeInUrl = () => {
+        const recipeTitle = decodeURIComponent(window.location.hash.substring(1));
+        this.closeRecipes();
+        if(recipeTitle) {
+            const sanitizedRecipeTitle = recipeTitle.trim().replace(/[^a-z0-9]+/gi,'_').toLowerCase();
+            for(const hItem of document.getElementsByTagName('h3')) {
+                const sanitizedHeader = hItem.innerText.trim().replace(/[^a-z0-9]+/gi,'_').toLowerCase();
+                if(sanitizedHeader == sanitizedRecipeTitle) {
+                    const card: HTMLDivElement = (hItem as HTMLHeadingElement).parentElement! as HTMLDivElement;
+                    this.showRecipe(card);
+                    break;
+                }
+            }
+        }
     }
     readonly closeRecipeCallback = (ev: Event) => {
         if(ev.target instanceof HTMLButtonElement) {
@@ -559,6 +581,9 @@ export default class RecipeFormatting {
             const card: HTMLDivElement = contentDiv.parentElement as HTMLDivElement;
             this.closeRecipe(card);
         }
+        window.removeEventListener('hashChange', this.showRecipeInUrl);
+        history.replaceState("", "", window.location.pathname + window.location.search);
+        window.addEventListener('hashchange', this.showRecipeInUrl);
     }
     readonly closeRecipes = () => {
         for(const card of document.getElementsByClassName('card')) {
@@ -581,6 +606,7 @@ export default class RecipeFormatting {
         placeholder.parentElement?.insertBefore(card, placeholder);
         placeholder.remove();
         window.scrollTo(0, this.scrollPos);
+        document.title = 'Ellis Recipes';
     }
     readonly copyRecipe = (ev: Event) => {
         const card: HTMLDivElement = (ev.target as HTMLElement).parentElement?.parentElement as HTMLDivElement;
