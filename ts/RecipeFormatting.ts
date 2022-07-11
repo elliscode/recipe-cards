@@ -530,13 +530,22 @@ export default class RecipeFormatting {
         this.modifyRecipe(card, numerator / denominator);
         input.value = numerator.toString();
     }
+    static readonly getCardTitle = (card : HTMLDivElement) : string => {
+        for(const h of card.getElementsByTagName('h3')) {
+            return h.innerText.trim();
+        }
+        return '';
+    }
+    static readonly sanitizeTitle = (title : string) : string => {
+        return title.trim().replace(/[^a-z0-9]+/gi,'_').toLowerCase();
+    }
     readonly showRecipeCallback = (ev: Event) => {
         if(ev.target instanceof HTMLHeadingElement) {    
             const card: HTMLDivElement = (ev.target as HTMLHeadingElement).parentElement! as HTMLDivElement;
             this.showRecipe(card);
+            const title : string = RecipeFormatting.getCardTitle(card);
+            const sanitizedTitle:string = RecipeFormatting.sanitizeTitle(title);
             window.removeEventListener('hashChange', this.showRecipeInUrl);
-            const title:string = card.getElementsByTagName('h3')[0].innerText.trim();
-            const sanitizedTitle:string = title.replace(/[^a-z0-9]+/gi,'_').toLowerCase();
             history.replaceState("", "", window.location.pathname + window.location.search + '#' + sanitizedTitle);
             window.addEventListener('hashchange', this.showRecipeInUrl);
         }
@@ -564,9 +573,9 @@ export default class RecipeFormatting {
         const recipeTitle = decodeURIComponent(window.location.hash.substring(1));
         this.closeRecipes();
         if(recipeTitle) {
-            const sanitizedRecipeTitle = recipeTitle.trim().replace(/[^a-z0-9]+/gi,'_').toLowerCase();
+            const sanitizedRecipeTitle = RecipeFormatting.sanitizeTitle(recipeTitle);
             for(const hItem of document.getElementsByTagName('h3')) {
-                const sanitizedHeader = hItem.innerText.trim().replace(/[^a-z0-9]+/gi,'_').toLowerCase();
+                const sanitizedHeader = RecipeFormatting.sanitizeTitle(hItem.innerText);
                 if(sanitizedHeader == sanitizedRecipeTitle) {
                     const card: HTMLDivElement = (hItem as HTMLHeadingElement).parentElement! as HTMLDivElement;
                     this.showRecipe(card);
