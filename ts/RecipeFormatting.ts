@@ -582,6 +582,7 @@ export default class RecipeFormatting {
                 }
             }
         }
+        window.addEventListener('hashchange', this.showRecipeInUrl);
     }
     readonly closeRecipeCallback = (ev: Event) => {
         if(ev.target instanceof HTMLButtonElement) {
