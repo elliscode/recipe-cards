@@ -368,6 +368,13 @@ export default class RecipeFormatting {
         printImg.addEventListener('click', this.printRecipe);
         divItem.appendChild(printImg);
 
+        let share = document.createElement('img');
+        share.classList.add('share');
+        share.setAttribute('src', 'img/share_button.png?v=001');
+        share.setAttribute('related', id);
+        share.addEventListener('click', this.shareRecipe);
+        divItem.appendChild(share);
+
         if (recipe.link.value) {
             let link = document.createElement('a');
             link.setAttribute('href', recipe.link.value);
@@ -616,6 +623,13 @@ export default class RecipeFormatting {
         placeholder.remove();
         window.scrollTo(0, this.scrollPos);
         document.title = 'Ellis Recipes';
+    }
+    readonly shareRecipe = (ev: Event) => {
+        const card: HTMLDivElement = (ev.target as HTMLElement).parentElement?.parentElement as HTMLDivElement;
+        const title : string = RecipeFormatting.getCardTitle(card);
+        const text = 'https://ellisrecipes.com/index.html#' + Utilities.sanitizeTitle(title);
+        navigator.clipboard.writeText(text);
+        this.displayAlert('Copied link for ' + card.getElementsByTagName('h3')[0].textContent + ' to clipboard', 'lightgreen');
     }
     readonly copyRecipe = (ev: Event) => {
         const card: HTMLDivElement = (ev.target as HTMLElement).parentElement?.parentElement as HTMLDivElement;

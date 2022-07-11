@@ -133,10 +133,18 @@
         touch-action: manipulation;
         user-select: none;
     }
+    .share {
+        position:absolute;
+        bottom:0;
+        right:220px;
+        cursor:pointer;
+        touch-action: manipulation;
+        user-select: none;
+    }
     .link {
         position:absolute;
         bottom:0;
-        right:166px;
+        right:276px;
         cursor:pointer;
         touch-action: manipulation;
         user-select: none;
