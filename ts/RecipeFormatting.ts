@@ -627,7 +627,7 @@ export default class RecipeFormatting {
     readonly shareRecipe = (ev: Event) => {
         const card: HTMLDivElement = (ev.target as HTMLElement).parentElement?.parentElement as HTMLDivElement;
         const title : string = RecipeFormatting.getCardTitle(card);
-        const text = 'https://ellisrecipes.com/index.html#' + Utilities.sanitizeTitle(title);
+        const text = 'https://ellisrecipes.com/#' + Utilities.sanitizeTitle(title);
         navigator.clipboard.writeText(text);
         this.displayAlert('Copied link for ' + card.getElementsByTagName('h3')[0].textContent + ' to clipboard', 'lightgreen');
     }
