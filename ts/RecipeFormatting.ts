@@ -191,7 +191,7 @@ export default class RecipeFormatting {
             recipe.content.appendChild(recipe.card.firstElementChild);
         }
         recipe.title.element!.classList.add('title');
-        recipe.title.element!.addEventListener('click', this.showRecipe);
+        recipe.title.element!.addEventListener('click', this.showRecipeCallback);
         recipe.card.appendChild(recipe.title.element!);
 
         this.addPin(recipe.card);
@@ -334,7 +334,7 @@ export default class RecipeFormatting {
         let closeButton = document.createElement('button');
         closeButton.classList.add('close-recipe');
         closeButton.innerText = '\u00D7';
-        closeButton.addEventListener('click', this.closeRecipes);
+        closeButton.addEventListener('click', this.closeRecipeCallback);
         closeDiv.appendChild(closeButton);
         divItem.appendChild(closeDiv);
 
@@ -530,12 +530,31 @@ export default class RecipeFormatting {
         this.modifyRecipe(card, numerator / denominator);
         input.value = numerator.toString();
     }
-    readonly showRecipe = (ev: Event) => {
+    static readonly getCardTitle = (card : HTMLDivElement) : string => {
+        for(const h of card.getElementsByTagName('h3')) {
+            return h.innerText.trim();
+        }
+        return '';
+    }
+    static readonly sanitizeTitle = (title : string) : string => {
+        return title.trim().replace(/[^a-z0-9]+/gi,'_').toLowerCase();
+    }
+    readonly showRecipeCallback = (ev: Event) => {
+        if(ev.target instanceof HTMLHeadingElement) {    
+            const card: HTMLDivElement = (ev.target as HTMLHeadingElement).parentElement! as HTMLDivElement;
+            this.showRecipe(card);
+            const title : string = RecipeFormatting.getCardTitle(card);
+            const sanitizedTitle:string = RecipeFormatting.sanitizeTitle(title);
+            window.removeEventListener('hashChange', this.showRecipeInUrl);
+            history.replaceState("", "", window.location.pathname + window.location.search + '#' + sanitizedTitle);
+            window.addEventListener('hashchange', this.showRecipeInUrl);
+        }
+    }
+    readonly showRecipe = (card : HTMLDivElement) => {
         this.noSleep.enable();
         this.scrollPos = window.scrollY;
         const wrapper: HTMLDivElement = document.getElementById('wrapper') as HTMLDivElement;
         wrapper.style.display = 'none';
-        const card: HTMLDivElement = (ev.target as HTMLHeadingElement).parentElement! as HTMLDivElement;
         for (const pin of card.getElementsByClassName('pin')) {
             (pin as HTMLElement).style.display = 'none';
         }
@@ -547,13 +566,46 @@ export default class RecipeFormatting {
         card.parentElement?.insertBefore(placeholder, card);
         document.body.appendChild(card);
         window.scrollTo(0, 0);
+        const title:string = card.getElementsByTagName('h3')[0].innerText.trim();
+        document.title = title;
     }
-    readonly closeRecipes = (ev: Event) => {
+    readonly showRecipeInUrl = () => {
+        const recipeTitle = decodeURIComponent(window.location.hash.substring(1));
+        this.closeRecipes();
+        if(recipeTitle) {
+            const sanitizedRecipeTitle = RecipeFormatting.sanitizeTitle(recipeTitle);
+            for(const hItem of document.getElementsByTagName('h3')) {
+                const sanitizedHeader = RecipeFormatting.sanitizeTitle(hItem.innerText);
+                if(sanitizedHeader == sanitizedRecipeTitle) {
+                    const card: HTMLDivElement = (hItem as HTMLHeadingElement).parentElement! as HTMLDivElement;
+                    this.showRecipe(card);
+                    break;
+                }
+            }
+        }
+    }
+    readonly closeRecipeCallback = (ev: Event) => {
+        if(ev.target instanceof HTMLButtonElement) {
+            const contentDiv: HTMLDivElement = ((ev.target as HTMLButtonElement).parentElement as HTMLElement).parentElement as HTMLDivElement;
+            const card: HTMLDivElement = contentDiv.parentElement as HTMLDivElement;
+            this.closeRecipe(card);
+        }
+        window.removeEventListener('hashChange', this.showRecipeInUrl);
+        history.replaceState("", "", window.location.pathname + window.location.search);
+        window.addEventListener('hashchange', this.showRecipeInUrl);
+    }
+    readonly closeRecipes = () => {
+        for(const card of document.getElementsByClassName('card')) {
+            if(card.classList.contains('fullscreen')) {
+                this.closeRecipe(card as HTMLDivElement);
+            }
+        }
+    }
+    readonly closeRecipe = (card : HTMLDivElement) => {
         this.noSleep.disable();
         const wrapper: HTMLDivElement = document.getElementById('wrapper') as HTMLDivElement;
         wrapper.style.display = '';
-        const contentDiv: HTMLDivElement = ((ev.target as HTMLHeadingElement).parentElement as HTMLElement).parentElement as HTMLDivElement;
-        const card: HTMLDivElement = contentDiv.parentElement as HTMLDivElement;
+        const contentDiv: HTMLDivElement = card.getElementsByTagName('div')[0];
         for (const pin of card.getElementsByClassName('pin')) {
             (pin as HTMLElement).style.display = '';
         }
@@ -563,6 +615,7 @@ export default class RecipeFormatting {
         placeholder.parentElement?.insertBefore(card, placeholder);
         placeholder.remove();
         window.scrollTo(0, this.scrollPos);
+        document.title = 'Ellis Recipes';
     }
     readonly copyRecipe = (ev: Event) => {
         const card: HTMLDivElement = (ev.target as HTMLElement).parentElement?.parentElement as HTMLDivElement;

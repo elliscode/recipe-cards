@@ -32,6 +32,7 @@ const unHide = () => {
         const recipesElement = recipes as HTMLDivElement;
         recipesElement.style.display = 'block';
     }
+    setTimeout(r.showRecipeInUrl, 1);
 }
 
 setTimeout(unHide, 1);
