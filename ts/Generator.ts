@@ -3,6 +3,7 @@ import RegexUnit from './RegexUnit'
 import RecipeCard from './RecipeCard'
 import RecipeFormatting from './RecipeFormatting'
 import Timeout from './Timeout'
+import Utilities from './Utilities';
 
 export default class Generator {
     static readonly VARIABLE_NAME = 'recipe-saves-by-title';
@@ -363,7 +364,10 @@ export default class Generator {
 
         let divItem = card;
         let header2 = document.createElement('h3');
-        header2.textContent = recipeJson.title.value;
+        let headerNamedAnchor = document.createElement('a');
+        headerNamedAnchor.name = Utilities.sanitizeTitle(recipeJson.title.value);
+        headerNamedAnchor.textContent = recipeJson.title.value;
+        header2.appendChild(headerNamedAnchor);
         divItem.insertBefore(header2, divItem.firstChild);
 
         const category = this.determineCategoryNameFromCategoryName(recipeJson.category.value);

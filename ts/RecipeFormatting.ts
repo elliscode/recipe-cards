@@ -6,6 +6,7 @@ import Title from './Title'
 import RecipeCard from './RecipeCard'
 import Timeout from './Timeout'
 import NoSleep from './nosleep';
+import Utilities from './Utilities';
 
 export default class RecipeFormatting {
     readonly ACCEPT_WIDTH: number = 40;
@@ -60,6 +61,7 @@ export default class RecipeFormatting {
             for (const child of card.childNodes) {
                 if (child instanceof HTMLHeadingElement) {
                     if ('h3' === child.tagName.toLowerCase()) {
+                        child.textContent = null == child.textContent ? '' : child.textContent;
                         const titleString: string = !child.textContent ? '' : child.textContent;
                         title = { 'value': titleString, 'element': child };
                     }
@@ -536,15 +538,12 @@ export default class RecipeFormatting {
         }
         return '';
     }
-    static readonly sanitizeTitle = (title : string) : string => {
-        return title.trim().replace(/[^a-z0-9]+/gi,'_').toLowerCase();
-    }
     readonly showRecipeCallback = (ev: Event) => {
         if(ev.target instanceof HTMLHeadingElement) {    
             const card: HTMLDivElement = (ev.target as HTMLHeadingElement).parentElement! as HTMLDivElement;
             this.showRecipe(card);
             const title : string = RecipeFormatting.getCardTitle(card);
-            const sanitizedTitle:string = RecipeFormatting.sanitizeTitle(title);
+            const sanitizedTitle:string = Utilities.sanitizeTitle(title);
             window.removeEventListener('hashChange', this.showRecipeInUrl);
             history.replaceState("", "", window.location.pathname + window.location.search + '#' + sanitizedTitle);
             window.addEventListener('hashchange', this.showRecipeInUrl);
@@ -573,9 +572,9 @@ export default class RecipeFormatting {
         const recipeTitle = decodeURIComponent(window.location.hash.substring(1));
         this.closeRecipes();
         if(recipeTitle) {
-            const sanitizedRecipeTitle = RecipeFormatting.sanitizeTitle(recipeTitle);
+            const sanitizedRecipeTitle = Utilities.sanitizeTitle(recipeTitle);
             for(const hItem of document.getElementsByTagName('h3')) {
-                const sanitizedHeader = RecipeFormatting.sanitizeTitle(hItem.innerText);
+                const sanitizedHeader = Utilities.sanitizeTitle(hItem.innerText);
                 if(sanitizedHeader == sanitizedRecipeTitle) {
                     const card: HTMLDivElement = (hItem as HTMLHeadingElement).parentElement! as HTMLDivElement;
                     this.showRecipe(card);
